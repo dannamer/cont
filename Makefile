@@ -30,8 +30,6 @@ valgrind: clean
 	gcc  --coverage -I. ./tests/main.cpp lib/*.cpp -o test -lgtest -lstdc++ -lm
 	valgrind --leak-check=full ./test
 
-.PHONY: push
-
 push:
 	$(eval MSG := $(shell bash -c 'read -p "Enter commit message: " msg; echo $$msg'))
 	git add .
