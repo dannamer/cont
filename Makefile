@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -std=c++17 -Wall -Werror -Wextra -Ilib/stack/ -Ilib/queue/ -Ilib/ContainerBase/
 
+
 SRCS := $(wildcard tests/*.cpp)
 OBJS := $(patsubst tests/%.cpp,OBJ/%.o,$(SRCS))
 OBJ_DIR = OBJ
@@ -29,7 +30,10 @@ valgrind: clean
 	gcc  --coverage -I. ./tests/main.cpp lib/*.cpp -o test -lgtest -lstdc++ -lm
 	valgrind --leak-check=full ./test
 
+.PHONY: push
+
 push:
+	$(eval MSG := $(shell bash -c 'read -p "Enter commit message: " msg; echo $$msg'))
 	git add .
-	git commit -m "count"
+	git commit -m "$(MSG)"
 	git push
