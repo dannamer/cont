@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jan 11 15:07:41 2024
+# Make data base, printed on Thu Jan 11 16:10:22 2024
 
 # Variables
 
@@ -68,6 +68,8 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 LESSOPEN = | /usr/bin/lesspipe %s
 # makefile (from 'Makefile', line 4)
 SRCS := tests/main.cpp tests/testList.cpp tests/testQueue.cpp tests/testStack.cpp tests/testVector.cpp
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2023121309/translations/extensions/vscode.markdown-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -211,7 +213,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=100/1024=10%, Rehash=0, Collisions=13/139=9%
+# Load=101/1024=10%, Rehash=0, Collisions=14/140=10%
 
 # Pattern-specific Variable Values
 
@@ -219,10 +221,10 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 66311, inode 7477527): 9 files, no impossibilities.
+# . (device 66311, inode 7477527): 16 files, no impossibilities.
 # tests (device 66311, inode 7477665): 7 files, no impossibilities.
 
-# 16 files, no impossibilities in 2 directories.
+# 23 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -237,7 +239,7 @@ OBJ/%.o: tests/%.cpp
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-01-04 14:37:34.953025
+#  Last modified 2024-01-11 16:07:48.178725249
 #  File has been updated.
 #  Successfully updated.
 
@@ -270,6 +272,16 @@ clang:
 	clang-format -i *.cpp *.h
 	clang-format -n *.cpp *.h
 
+push:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 33):
+	git add .
+	git commit -m "count"
+	git push
+
+ 
 # Not a target:
 OBJ/testVector.o:
 #  Implicit rule search has not been done.
@@ -285,7 +297,6 @@ OBJ/main.o: tests/main.cpp
 # automatic
 # @ := OBJ/main.o
 # automatic
- 
 # * := main
 # automatic
 # < := tests/main.cpp
@@ -360,19 +371,19 @@ OBJ/testList.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/39=0%
+# Load=16/1024=2%, Rehash=0, Collisions=0/40=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 337 B / avg = 10 B
-# current buf: size = 8162 B / used = 337 B / count = 33 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 41 / storage = 407 B / avg = 9 B
+# current buf: size = 8162 B / used = 407 B / count = 41 / avg = 9 B
 
-# strcache performance: lookups = 51 / hit rate = 35%
+# strcache performance: lookups = 60 / hit rate = 31%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=0/51=0%
-# Finished Make data base on Thu Jan 11 15:07:41 2024
+# Load=41/8192=1%, Rehash=0, Collisions=0/60=0%
+# Finished Make data base on Thu Jan 11 16:10:22 2024
 
  

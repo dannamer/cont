@@ -50,6 +50,7 @@ class list {
     }
   }
   void split(list<T>& source, list<T>& left, list<T>& right);
+  lololol;
 };
 #include "list.tpp"
 }  // namespace s21
