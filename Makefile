@@ -28,3 +28,8 @@ clean:
 valgrind: clean
 	gcc  --coverage -I. ./tests/main.cpp lib/*.cpp -o test -lgtest -lstdc++ -lm
 	valgrind --leak-check=full ./test
+
+push:
+	git add .
+	git commit -m "count"
+	git push
