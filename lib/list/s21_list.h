@@ -49,6 +49,7 @@ class list {
       throw std::runtime_error("Список пуст");
     }
   }
+  void split(list<T>& source, list<T>& left, list<T>& right);
 };
 #include "list.tpp"
 }  // namespace s21

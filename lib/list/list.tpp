@@ -108,7 +108,7 @@ void list<T>::pop_back() {
     delete tail_;
     head_ = tail_ = nullptr;
   } else {
-    node<T>* temp = tail_;
+    Node<T>* temp = tail_;
     tail_ = tail_->prev;
     tail_->next = nullptr;
     delete temp;
@@ -123,7 +123,7 @@ void list<T>::pop_front() {
     delete tail_;
     head_ = tail_ = nullptr;
   } else {
-    node<T>* temp = head_;
+    Node<T>* temp = head_;
     head_ = head_->next;
     head_->prev = nullptr;
     delete temp;
