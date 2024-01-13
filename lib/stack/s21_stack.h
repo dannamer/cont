@@ -1,8 +1,8 @@
 #ifndef S21_STACK_H_
 #define S21_STACK_H_
 #include <stdexcept>
-
-#include "ContainerBase.h"
+#include "../ContainerBase/ContainerBase.h"
+// #include "ContainerBase.h"
 namespace s21 {
 template <typename T>
 class stack : public ContainerBase<T> {

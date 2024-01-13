@@ -21,7 +21,7 @@ class vector : public ContainerBase<T> {
   vector() {}
   ~vector() {}
   vector(size_type n) {
-    this->size_ = n;
+    this->size_ = n;  
     this->capacity_ = n;
     this->data_ = new T[n]();
   }

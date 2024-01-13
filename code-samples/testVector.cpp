@@ -57,3 +57,7 @@ void Vector<T>::push_back(T v)
 
 // externalizing template instances for correct linking, feel free to find more information
 template class Vector<int>;
+template class Vector<float>;
+template class Vector<char>;
+template class Vector<short>;
+template class Vector<double>;

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jan 11 16:10:22 2024
+# Make data base, printed on Thu Jan 11 16:59:29 2024
 
 # Variables
 
@@ -28,7 +28,7 @@ MAKE_COMMAND := make
 QT_ACCESSIBILITY = 1
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# makefile (from 'Makefile', line 6)
+# makefile (from 'Makefile', line 7)
 OBJ_DIR = OBJ
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
@@ -66,7 +66,7 @@ CURDIR := /home/dannamer/cont
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
-# makefile (from 'Makefile', line 4)
+# makefile (from 'Makefile', line 5)
 SRCS := tests/main.cpp tests/testList.cpp tests/testQueue.cpp tests/testStack.cpp tests/testVector.cpp
 # environment
 VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2023121309/translations/extensions/vscode.markdown-language-features.i18n.json
@@ -110,7 +110,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 VSCODE_NLS_CONFIG = {"locale":"ru","osLocale":"ru-ru","availableLanguages":{"*":"ru"},"_languagePackId":"5101f9ce064c8fb781c6b04140b7dbc6.ru","_translationsConfigFile":"/home/dannamer/.config/Code/clp/5101f9ce064c8fb781c6b04140b7dbc6.ru/tcf.json","_cacheRoot":"/home/dannamer/.config/Code/clp/5101f9ce064c8fb781c6b04140b7dbc6.ru","_resolvedLanguagePackCoreLocation":"/home/dannamer/.config/Code/clp/5101f9ce064c8fb781c6b04140b7dbc6.ru/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2","_corruptedFile":"/home/dannamer/.config/Code/clp/5101f9ce064c8fb781c6b04140b7dbc6.ru/corrupted.info","_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
-# makefile (from 'Makefile', line 5)
+# makefile (from 'Makefile', line 6)
 OBJS := OBJ/main.o OBJ/testList.o OBJ/testQueue.o OBJ/testStack.o OBJ/testVector.o
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
@@ -229,7 +229,7 @@ GDMSESSION = ubuntu
 # Implicit Rules
 
 OBJ/%.o: tests/%.cpp
-#  recipe to execute (from 'Makefile', line 13):
+#  recipe to execute (from 'Makefile', line 14):
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -239,7 +239,7 @@ OBJ/%.o: tests/%.cpp
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-01-11 16:07:48.178725249
+#  Last modified 2024-01-11 16:24:43.186685729
 #  File has been updated.
 #  Successfully updated.
 
@@ -253,14 +253,14 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 26):
+#  recipe to execute (from 'Makefile', line 27):
 	rm -rf $(OBJ_DIR) *.a test *.gcda *gcno *css *html
 
 valgrind: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 29):
+#  recipe to execute (from 'Makefile', line 30):
 	gcc  --coverage -I. ./tests/main.cpp lib/*.cpp -o test -lgtest -lstdc++ -lm
 	valgrind --leak-check=full ./test
 
@@ -268,7 +268,7 @@ clang:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
+#  recipe to execute (from 'Makefile', line 18):
 	clang-format -i *.cpp *.h
 	clang-format -n *.cpp *.h
 
@@ -276,18 +276,19 @@ push:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 33):
+#  recipe to execute (from 'Makefile', line 34):
+	$(eval MSG := $(shell bash -c 'read -p "Enter commit message: " msg; echo $$msg'))
 	git add .
-	git commit -m "count"
+	git commit -m "$(MSG)"
 	git push
 
- 
 # Not a target:
 OBJ/testVector.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 OBJ/main.o: tests/main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
@@ -312,7 +313,7 @@ OBJ/main.o: tests/main.cpp
 # | := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=2/16=12%
-#  recipe to execute (from 'Makefile', line 13):
+#  recipe to execute (from 'Makefile', line 14):
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -335,7 +336,7 @@ test: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 21):
+#  recipe to execute (from 'Makefile', line 22):
 	gcc  --coverage -Ilib/stack/ -Ilib/queue/ -Ilib/ContainerBase/ tests/*.cpp -o test -lgtest -lstdc++ -lm
 	./test
 	~/.local/bin/gcovr -r . --html --html-details -o test.html
@@ -361,7 +362,7 @@ s21_matrix_oop.a: OBJ/main.o OBJ/testList.o OBJ/testQueue.o OBJ/testStack.o OBJ/
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/6=0%
-#  recipe to execute (from 'Makefile', line 10):
+#  recipe to execute (from 'Makefile', line 11):
 	ar rcs $@ $^
 
 # Not a target:
@@ -384,6 +385,6 @@ OBJ/testList.o:
 # strcache performance: lookups = 60 / hit rate = 31%
 # hash-table stats:
 # Load=41/8192=1%, Rehash=0, Collisions=0/60=0%
-# Finished Make data base on Thu Jan 11 16:10:22 2024
+# Finished Make data base on Thu Jan 11 16:59:29 2024
 
  
