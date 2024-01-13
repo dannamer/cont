@@ -1,8 +1,8 @@
 #include <iostream>
 #include <set>
-
+#include  "BinaryTree.h"
 int main() {
-  std::set<int> mySet;
+  s21::BinaryTree<int> mySet;
 
   // Добавляем элементы в множество
   mySet.insert(4);
@@ -15,11 +15,13 @@ int main() {
 
   // Итерируемся по множеству и выводим каждый элемент
   
-    auto lol = mySet.begin();
-    lol++;
-    lol++;
-    lol++;
-    lol--;
+    iterator<int> lol = mySet.find(6);
+    s21::BinaryTree<int>::iterator lol2 = mySet.begin();
+    s21::BinaryTree<int>::iterator lol3 = mySet.begin(lol);
+    // lol++;
+    // lol++;
+    // lol++;
+    // lol--;
 
   return 0;
 }
