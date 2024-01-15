@@ -5,7 +5,7 @@ struct Node;
 
 template <class Key>
 class BinaryTree;
-
+namespace it {
 template <class T>
 class iterator {
  public:
@@ -14,6 +14,14 @@ class iterator {
   using reference = T &;
   iterator() {}
   iterator(Node<T> *node) : currentNode(node) {}
+  Node<T> &operator*() {
+    if (currentNode != nullptr) {
+      return currentNode->value;
+    } else {
+      throw std::runtime_error("Attempt to dereference a null iterator");
+    }
+  }
+  Node<T> *operator&() { return currentNode; }
   iterator &operator--() {
     if (currentNode->left != nullptr) {
       currentNode = currentNode->left;
@@ -63,8 +71,12 @@ class iterator {
   bool operator!=(const iterator<T> &other) const {
     return currentNode != other.currentNode;
   }
+  Node<T> *getNode() const { return currentNode; }
+
+  void setNode(Node<T> *newNode) { currentNode = newNode; }
 
  private:
   Node<T> *currentNode = nullptr;
 };
+}  // namespace it
 #endif

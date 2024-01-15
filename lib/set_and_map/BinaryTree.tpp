@@ -51,9 +51,10 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::searchRecursive(
 }
 
 template <class Key>
-typename BinaryTree<Key>::iterator BinaryTree<Key>::begin(Node<Key>* node) {
-  while (node->left != nullptr) {
-    node = node->left;
+typename BinaryTree<Key>::iterator BinaryTree<Key>::begin(iterator node) {
+  while (node.getNode() != nullptr &&
+         node.getNode()->left != nullptr) {
+    node.setNode(node.getNode()->left);
   }
   return node;
 }

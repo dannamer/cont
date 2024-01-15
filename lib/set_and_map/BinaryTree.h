@@ -18,7 +18,7 @@ class BinaryTree {
   using value_type = Key;
   using reference = value_type&;
   using const_reference = const value_type&;
-  using iterator = typename iterator<Node<Key>>::pointer;
+  using iterator = it::iterator<Key>; 
   // using iterator = lol::iterator<Node<Key>>;
   using size_type = std::size_t;
 
@@ -28,7 +28,7 @@ class BinaryTree {
   size_type size() const { return size_; }
   bool empty() const { return size_ == 0; }
   iterator find(const_reference key);
-  iterator begin(Node<Key>* node);
+  iterator begin(iterator node);
   iterator begin();
  protected:
   Node<Key>* root = nullptr;
