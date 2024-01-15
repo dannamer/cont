@@ -15,15 +15,23 @@ int main() {
   mySet.insert(7);
 
   // Итерируемся по множеству и выводим каждый элемент
-  
+    
     // iterator<int> lol = mySet.find(6);
     s21::BinaryTree<int>::iterator lol = mySet.find(6);
     s21::BinaryTree<int>::iterator lol2 = mySet.begin();
     s21::BinaryTree<int>::iterator lol3 = mySet.begin(lol);
+    
     auto it = *lol3;
-    iterator<int> a = mySet.find(6);
+    iterator<int> a = mySet.find(4);
     ++a;
+    a++;
+    iterator<int> l;
+    l = a++;
+    --a;
+    --l;
+    l--;
     lol++;
+    s21::BinaryTree<int>::iterator p = mySet.begin(l);
     // lol++;
     // lol--;
 

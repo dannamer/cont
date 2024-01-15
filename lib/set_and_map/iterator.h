@@ -1,12 +1,11 @@
 #ifndef ITERATOR_H__
 #define ITERATOR_H__
-#include "../stack/s21_stack.h"
-
 template <class T>
 struct Node;
 
 template <class Key>
 class BinaryTree;
+
 template <class T>
 class iterator {
  public:
@@ -15,22 +14,27 @@ class iterator {
   using reference = T &;
   iterator() {}
   iterator(Node<T> *node) : currentNode(node) {}
-  reference operator*() const { return currentNode->value; }
-  pointer operator->() const { return &currentNode->value; }
-  // iterator &operator++() {
-  //   if (currentNode != nullptr) {
-  //     if (currentNode->right != nullptr) {
-  //       currentNode = s21::BinaryTree::begin(currentNode->right);
-  //     } else {
-  //       while (currentNode->parent != nullptr &&
-  //              currentNode == currentNode->parent->right) {
-  //         currentNode = currentNode->parent;
-  //       }
-  //       currentNode = currentNode->parent;
-  //     }
-  //   }
-  //   return *this;
-  // }
+  iterator &operator--() {
+    if (currentNode->left != nullptr) {
+      currentNode = currentNode->left;
+      while (currentNode->right != nullptr) {
+        currentNode = currentNode->right;
+      }
+    } else {
+      Node<T> *tempNode = currentNode->parent;
+      while (tempNode != nullptr && currentNode == tempNode->left) {
+        currentNode = tempNode;
+        tempNode = tempNode->parent;
+      }
+      currentNode = tempNode;
+    }
+    return *this;
+  }
+  iterator<T> operator--(int) {
+    iterator<T> temp = *this;
+    --(*this);
+    return temp;
+  }
   iterator &operator++() {
     if (currentNode->right != nullptr) {
       currentNode = currentNode->right;
@@ -48,7 +52,19 @@ class iterator {
     return *this;
   }
 
+  iterator<T> operator++(int) {
+    iterator<T> temp = *this;
+    ++(*this);
+    return temp;
+  }
+  bool operator==(const iterator<T> &other) const {
+    return currentNode == other.currentNode;
+  }
+  bool operator!=(const iterator<T> &other) const {
+    return currentNode != other.currentNode;
+  }
+
  private:
-  Node<T> *currentNode;
+  Node<T> *currentNode = nullptr;
 };
 #endif
