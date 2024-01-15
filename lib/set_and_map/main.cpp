@@ -1,6 +1,7 @@
 #include <iostream>
 #include <set>
-#include  "BinaryTree.h"
+#include "BinaryTree.h"
+
 int main() {
   s21::BinaryTree<int> mySet;
 
@@ -15,11 +16,14 @@ int main() {
 
   // Итерируемся по множеству и выводим каждый элемент
   
-    iterator<int> lol = mySet.find(6);
+    // iterator<int> lol = mySet.find(6);
+    s21::BinaryTree<int>::iterator lol = mySet.find(6);
     s21::BinaryTree<int>::iterator lol2 = mySet.begin();
     s21::BinaryTree<int>::iterator lol3 = mySet.begin(lol);
-    // lol++;
-    // lol++;
+    auto it = *lol3;
+    iterator<int> a = mySet.find(6);
+    ++a;
+    lol++;
     // lol++;
     // lol--;
 

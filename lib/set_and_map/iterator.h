@@ -7,7 +7,6 @@ struct Node;
 
 template <class Key>
 class BinaryTree;
-
 template <class T>
 class iterator {
  public:
@@ -18,17 +17,33 @@ class iterator {
   iterator(Node<T> *node) : currentNode(node) {}
   reference operator*() const { return currentNode->value; }
   pointer operator->() const { return &currentNode->value; }
+  // iterator &operator++() {
+  //   if (currentNode != nullptr) {
+  //     if (currentNode->right != nullptr) {
+  //       currentNode = s21::BinaryTree::begin(currentNode->right);
+  //     } else {
+  //       while (currentNode->parent != nullptr &&
+  //              currentNode == currentNode->parent->right) {
+  //         currentNode = currentNode->parent;
+  //       }
+  //       currentNode = currentNode->parent;
+  //     }
+  //   }
+  //   return *this;
+  // }
   iterator &operator++() {
-    if (currentNode != nullptr) {
-      if (currentNode->right != nullptr) {
-        currentNode = findMin(currentNode->right);
-      } else {
-        while (currentNode->parent != nullptr &&
-               currentNode == currentNode->parent->right) {
-          currentNode = currentNode->parent;
-        }
-        currentNode = currentNode->parent;
+    if (currentNode->right != nullptr) {
+      currentNode = currentNode->right;
+      while (currentNode->left != nullptr) {
+        currentNode = currentNode->left;
       }
+    } else {
+      Node<T> *tempNode = currentNode->parent;
+      while (tempNode != nullptr && currentNode == tempNode->right) {
+        currentNode = tempNode;
+        tempNode = tempNode->parent;
+      }
+      currentNode = tempNode;
     }
     return *this;
   }
@@ -36,5 +51,4 @@ class iterator {
  private:
   Node<T> *currentNode;
 };
-
 #endif

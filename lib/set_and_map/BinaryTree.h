@@ -19,6 +19,7 @@ class BinaryTree {
   using reference = value_type&;
   using const_reference = const value_type&;
   using iterator = typename iterator<Node<Key>>::pointer;
+  // using iterator = lol::iterator<Node<Key>>;
   using size_type = std::size_t;
 
  public:
@@ -36,7 +37,7 @@ class BinaryTree {
                        Node<Key>* parent);
   void inOrderTraversal(Node<Key>* current);
   iterator searchRecursive(Node<Key>* current, const_reference key);
-  Node<Key> *findMin(Node<Key>* node);
+  // Node<Key> *findMin(Node<Key>* node);
 };
 #include "BinaryTree.tpp"
 }  // namespace s21
