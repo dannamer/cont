@@ -31,12 +31,12 @@ class BinaryTree {
   iterator begin(iterator node);
   iterator begin();
  protected:
-  Node<Key>* root = nullptr;
+  Key* root = nullptr;
   size_type size_ = 0;
   Node<Key>* insertRec(Node<Key>* node, const_reference value,
                        Node<Key>* parent);
   void inOrderTraversal(Node<Key>* current);
-  iterator searchRecursive(Node<Key>* current, const_reference key);
+  iterator searchRecursive(iterator current, const_reference key);
   // Node<Key> *findMin(Node<Key>* node);
 };
 #include "BinaryTree.tpp"

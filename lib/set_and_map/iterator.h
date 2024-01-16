@@ -76,7 +76,7 @@ class iterator {
   void setNode(Node<T> *newNode) { currentNode = newNode; }
 
  private:
-  Node<T> *currentNode = nullptr;
+  T *currentNode = nullptr;
 };
 }  // namespace it
 #endif

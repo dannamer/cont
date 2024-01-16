@@ -34,16 +34,16 @@ Node<Key>* BinaryTree<Key>::insertRec(Node<Key>* node, const_reference value,
 
 template <typename Key>
 typename BinaryTree<Key>::iterator BinaryTree<Key>::find(const_reference key) {
-  return searchRecursive(root, key);
+  return searchRecursive(iterator(root), key);
 }
 
 template <class Key>
 typename BinaryTree<Key>::iterator BinaryTree<Key>::searchRecursive(
-    Node<Key>* current, const_reference key) {
-  if (current == nullptr || current->value == key) {
+    iterator current, const_reference key) {
+  if (current == nullptr || (*current) == key) {
     return current;
   }
-  if (key < current->value) {
+  if (key < *current) {
     return searchRecursive(current->left, key);
   } else {
     return searchRecursive(current->right, key);
@@ -52,8 +52,7 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::searchRecursive(
 
 template <class Key>
 typename BinaryTree<Key>::iterator BinaryTree<Key>::begin(iterator node) {
-  while (node.getNode() != nullptr &&
-         node.getNode()->left != nullptr) {
+  while (node.getNode() != nullptr && node.getNode()->left != nullptr) {
     node.setNode(node.getNode()->left);
   }
   return node;
