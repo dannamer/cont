@@ -19,7 +19,7 @@ class BinaryTree {
   using reference = value_type&;
   using const_reference = const value_type&;
   using iterator = it::iterator<Key>; 
-  // using iterator = lol::iterator<Node<Key>>;
+  using const_iterator = it::const_iterator<Key>;
   using size_type = std::size_t;
 
  public:
@@ -30,8 +30,9 @@ class BinaryTree {
   iterator find(const_reference key);
   iterator begin(iterator node);
   iterator begin();
+  iterator end();
  protected:
-  Key* root = nullptr;
+  Node<Key>* root = nullptr;
   size_type size_ = 0;
   Node<Key>* insertRec(Node<Key>* node, const_reference value,
                        Node<Key>* parent);

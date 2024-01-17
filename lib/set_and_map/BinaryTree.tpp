@@ -40,7 +40,8 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::find(const_reference key) {
 template <class Key>
 typename BinaryTree<Key>::iterator BinaryTree<Key>::searchRecursive(
     iterator current, const_reference key) {
-  if (current == nullptr || (*current) == key) {
+  iterator endit = end();
+  if (current == endit || *current == key) {
     return current;
   }
   if (key < *current) {
@@ -65,4 +66,13 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::begin() {
     node = node->left;
   }
   return node;
+}
+
+template <typename Key>
+typename BinaryTree<Key>::iterator BinaryTree<Key>::end() {
+  Node<Key>* current = root;
+  while (current->right != nullptr) {
+    current = current->right;
+  }
+  return iterator(current);
 }
