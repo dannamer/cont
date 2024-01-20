@@ -1,12 +1,54 @@
 #ifndef ITERATOR_H__
 #define ITERATOR_H__
-template <class T>
+template <class Key, class T>
 struct Node;
 
 template <class Key>
 class BinaryTree;
 namespace it {
-template <class T>
+template <class Key, class T>
+class iterator {
+ public:
+  using value_type = std::pair<const Key, T>;
+  using reference = value_type &;
+  using pointer = value_type *;
+
+  iterator(Node<Key, T> *node) : CNode(node) {}
+  reference operator*() const { return CNode->value_; }
+  pointer operator->() const { return &(CNode->value_); }
+
+  iterator operator++() {
+    if (CNode->right != nullptr) {
+      CNode = CNode->right;
+      while (CNode->left != nullptr) {
+        CNode = CNode->left;
+      }
+    } else {
+      Node<Key, T> *tempNode = CNode->parent;
+      while (tempNode != nullptr && CNode == tempNode->right) {
+        CNode = tempNode;
+        tempNode = tempNode->parent;
+      }
+      CNode = tempNode;
+    }
+    return *this;
+  }
+  iterator operator++(int) {
+    iterator temp = *this;
+    ++(*this);
+    return temp;
+  }
+
+ private:
+  Node<Key, T> *CNode = nullptr;
+};
+
+template <class Key, class T>
+class const_iterator {
+ public:
+ private:
+};
+
 class iterator {
  public:
   using value_type = T;

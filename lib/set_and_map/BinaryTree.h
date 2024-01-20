@@ -2,23 +2,40 @@
 #define BINARYTREE_H_
 
 #include "iterator.h"
+// template <class Key, class T>
+// struct MapNode {
+//   Key kye;
+//   T значение;
+//   MapNode()
+// };
 
-template <class T>
+template <class Key, class T>
 struct Node {
-  T value;
+  Key key_;
+  T value_;
   Node *left = nullptr, *right = nullptr, *parent = nullptr;
-  Node(T val) : value(val) {}
-  Node(T val, Node<T>* parent) : value(val), parent(parent) {}
+
+  Node(Key key, T value) : key_(key), value_(value) {}
+
+  Node(Key key, T value, Node<Key, T>* parent)
+      : key_(key), value_(value), parent(parent) {}
 };
+
 namespace s21 {
-template <class Key>
+template <class Key, class T>
+class BinaryTree {
+ public:
+};
+}  // namespace s21
+namespace s21 {
+template <class Key, class T>
 class BinaryTree {
  public:
   using key_type = Key;
   using value_type = Key;
   using reference = value_type&;
   using const_reference = const value_type&;
-  using iterator = it::iterator<Key>; 
+  using iterator = it::iterator<Key>;
   using const_iterator = it::const_iterator<Key>;
   using size_type = std::size_t;
 
@@ -31,8 +48,10 @@ class BinaryTree {
   iterator begin(iterator node);
   iterator begin();
   iterator end();
+
  protected:
-  Node<Key>* root = nullptr;
+  Node<Key, T>* root = nullptr;
+
   size_type size_ = 0;
   Node<Key>* insertRec(Node<Key>* node, const_reference value,
                        Node<Key>* parent);
