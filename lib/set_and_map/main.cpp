@@ -1,22 +1,33 @@
 #include <iostream>
 #include <map>
-// #include <set>
+#include <set>
 
 #include "BinaryTree.h"
-
+namespace s21 {
 template <class Key>
-class set : public s21::BinaryTree<Key, Key> {
- private:
+class set : public BinaryTree<Key, Key> {
  public:
-  using value_type2 = Key;
+  using value_type = Key;
   using iterator = it::iterator<Key, Key>;
-  std::pair<iterator, bool> insert2(const value_type2& value) {
-    const std::pair<const Key, Key> keyValue = std::make_pair(value, value);
-    this->isset = true;
-    this->root = this->insertRec(this->root, keyValue, nullptr);
-    return std::make_pair(iterator(this->root), this->isset);
+  using reference = value_type&;
+  using const_reference = const value_type&;
+
+  std::pair<iterator, bool> insert(const_reference value) {
+    auto keyValue = std::make_pair(value, value);
+    bool isset = true;
+    N tmp = insertRec(root, keyValue, nullptr);
+    if (isset) ++size;
+    return std::make_pair(iterator(tmp), isset);
   }
+
+ private:
+  using BinaryTree<Key, Key>::root;
+  using BinaryTree<Key, Key>::insertRec;
+  using BinaryTree<Key, Key>::size;
+  using N = Node<Key, Key>*;
 };
+}  // namespace s21
+
 int main() {
   s21::BinaryTree<int, int> mySet;
   // Добавляем элементы в множество
@@ -26,8 +37,14 @@ int main() {
   mySet.insert(std::make_pair<int, int>(3, 4));
   mySet.insert(std::make_pair<int, int>(5, 6));
   mySet.insert(std::make_pair<int, int>(7, 8));
-  set<int> Set2;
-  Set2.insert2(2);
+  s21::set<int> Set1;
+  std::set<int> Set2;
+  auto a1 = Set1.insert(2);
+  auto a2 = Set2.insert(2);
+  auto a1w = Set1.insert(5);
+  auto a2w = Set2.insert(5);
+  auto a3w = Set2.insert(5);
+  auto a4w = Set1.insert(5);
   std::map<int, int> mySet1;
   // Добавляем элементы в множество
   auto lol1 = mySet1.insert(std::make_pair<int, int>(1, 2));

@@ -21,14 +21,14 @@ class BinaryTree {
   using reference = value_type&;
   using const_reference = const value_type&;
   using iterator = it::iterator<Key, T>;
-  virtual std::pair<iterator, bool> insert(const value_type& value);
+  using size_type = std::size_t;
+  std::pair<iterator, bool> insert(const_reference value);
 
  protected:
-  Node<Key, T>* insertRec(Node<Key, T>* node, const_reference value,
-                                  Node<Key, T>* parrent);
-
-  Node<Key, T>* root = nullptr;
-  bool isset = true;
+  using N = Node<Key, T>*;
+  N insertRec(N node, const_reference value, N parrent);
+  N root = nullptr;
+  size_type size = 0;
 };
 #include "BinaryTree.tpp"
 }  // namespace s21

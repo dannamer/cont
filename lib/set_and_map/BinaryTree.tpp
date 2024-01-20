@@ -1,26 +1,31 @@
 #include "BinaryTree.h"
 template <class Key, class T>
 std::pair<typename BinaryTree<Key, T>::iterator, bool>
-BinaryTree<Key, T>::insert(const value_type& value) {
-  isset = true;
-  root = insertRec(root, value, nullptr);
-  return std::make_pair(iterator(root), isset);
+BinaryTree<Key, T>::insert(const_reference value) {
+  bool isset = true;
+  N tmp = insertRec(root, value, nullptr);
+  if(isset) ++size;
+  return std::make_pair(iterator(tmp), isset);
 }
 
 template <class Key, class T>
-Node<Key, T>* BinaryTree<Key, T>::insertRec(Node<Key, T>* node,
-                                            const_reference value,
-                                            Node<Key, T>* parrent) {
+typename BinaryTree<Key, T>::N BinaryTree<Key, T>::insertRec(
+    N node, const_reference value, N parent) {
   if (node == nullptr) {
-    node = new Node<Key, T>(value, parrent);
+    node = new Node<Key, T>(value, parent);
+    return node;
   } else if (value.first < node->key_.first) {
-    node->left = insertRec(node->left, value, node);
+    N insertedNode = insertRec(node->left, value, node);
+    node->left = insertedNode;
+    return insertedNode;
   } else if (value.first > node->key_.first) {
-    node->right = insertRec(node->right, value, node);
+    N insertedNode = insertRec(node->right, value, node);
+    node->right = insertedNode;
+    return insertedNode;
   } else {
     isset = false;
+    return node;
   }
-  return node;
 }
 
 /////////////////////////////////////////////
