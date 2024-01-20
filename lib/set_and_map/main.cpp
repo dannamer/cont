@@ -8,11 +8,12 @@ template <class Key>
 class set : public s21::BinaryTree<Key, Key> {
  private:
  public:
-  using value_type = Key;
+  using value_type2 = Key;
   using iterator = it::iterator<Key, Key>;
-  std::pair<iterator, bool> insert(const value_type& value) override {
+  std::pair<iterator, bool> insert2(const value_type2& value) {
+    const std::pair<const Key, Key> keyValue = std::make_pair(value, value);
     this->isset = true;
-    this->root = insertRec(this->root, value, nullptr);
+    this->root = this->insertRec(this->root, keyValue, nullptr);
     return std::make_pair(iterator(this->root), this->isset);
   }
 };
@@ -26,7 +27,7 @@ int main() {
   mySet.insert(std::make_pair<int, int>(5, 6));
   mySet.insert(std::make_pair<int, int>(7, 8));
   set<int> Set2;
-  Set2.insert(2);
+  Set2.insert2(2);
   std::map<int, int> mySet1;
   // Добавляем элементы в множество
   auto lol1 = mySet1.insert(std::make_pair<int, int>(1, 2));

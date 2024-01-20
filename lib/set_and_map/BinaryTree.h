@@ -25,7 +25,7 @@ class BinaryTree {
 
  protected:
   Node<Key, T>* insertRec(Node<Key, T>* node, const_reference value,
-                          Node<Key, T>* parrent);
+                                  Node<Key, T>* parrent);
 
   Node<Key, T>* root = nullptr;
   bool isset = true;
