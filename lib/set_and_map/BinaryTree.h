@@ -23,12 +23,16 @@ class BinaryTree {
   using iterator = it::iterator<Key, T>;
   using size_type = std::size_t;
   std::pair<iterator, bool> insert(const_reference value);
+  size_type size() const {return size_;}
+  iterator begin();
+  iterator end();
 
  protected:
   using N = Node<Key, T>*;
-  N insertRec(N node, const_reference value, N parrent);
+  N insertRec(N node, const_reference value, N parrent, bool &isset);
   N root = nullptr;
-  size_type size = 0;
+  size_type size_ = 0;
+  // bool isset = true;
 };
 #include "BinaryTree.tpp"
 }  // namespace s21

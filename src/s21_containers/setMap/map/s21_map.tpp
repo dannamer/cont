@@ -86,6 +86,7 @@ template <typename T, typename V>
 typename map<T, V>::iterator map<T, V>::end() {
   return iterator(nullptr, tree_.GetRoot());
 }
+
 template <typename T, typename V>
 bool map<T, V>::empty() {
   if (this->tree_.GetRoot() == nullptr) {

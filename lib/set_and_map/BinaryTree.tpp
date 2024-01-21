@@ -3,30 +3,48 @@ template <class Key, class T>
 std::pair<typename BinaryTree<Key, T>::iterator, bool>
 BinaryTree<Key, T>::insert(const_reference value) {
   bool isset = true;
-  N tmp = insertRec(root, value, nullptr);
-  if(isset) ++size;
+  N tmp = insertRec(root, value, nullptr, isset);
+  
+  if(isset) ++size_;
   return std::make_pair(iterator(tmp), isset);
 }
 
 template <class Key, class T>
 typename BinaryTree<Key, T>::N BinaryTree<Key, T>::insertRec(
-    N node, const_reference value, N parent) {
+    N node, const_reference value, N parent, bool &isset) {
   if (node == nullptr) {
     node = new Node<Key, T>(value, parent);
     return node;
   } else if (value.first < node->key_.first) {
-    N insertedNode = insertRec(node->left, value, node);
-    node->left = insertedNode;
+    N insertedNode = insertRec(node->left, value, node, isset);
+    if(node->left == nullptr) node->left = insertedNode;
     return insertedNode;
   } else if (value.first > node->key_.first) {
-    N insertedNode = insertRec(node->right, value, node);
-    node->right = insertedNode;
+    N insertedNode = insertRec(node->right, value, node, isset);
+    if(node->right == nullptr)
+      node->right = insertedNode;
     return insertedNode;
   } else {
     isset = false;
     return node;
   }
 }
+
+template<class Key, class T>
+typename BinaryTree<Key, T>::iterator BinaryTree<Key, T>::begin() {
+  Node<Key, T>* node = root;
+  while (node != nullptr && node->left != nullptr) {
+    node = node->left;
+  }
+  return iterator(node);
+}
+
+
+template<class Key, class T>
+typename BinaryTree<Key, T>::iterator BinaryTree<Key, T>::end() {
+  return begin() + size();
+}
+
 
 /////////////////////////////////////////////
 
@@ -69,9 +87,12 @@ typename BinaryTree<Key, T>::N BinaryTree<Key, T>::insertRec(
 // }
 
 // template <class Key>
-// typename BinaryTree<Key>::iterator BinaryTree<Key>::searchRecursive(
-//     iterator current, const_reference key) {
-//   iterator endit = end();
+// typename BinaryTree<Key>::iterator Bin//   Node<Key>* node = root;
+//   while (node != nullptr && node->left != nullptr) {
+//     node = node->left;
+//   }
+//   return node;
+// }
 //   if (current == endit || *current == key) {
 //     return current;
 //   }
