@@ -17,9 +17,8 @@ class set : public BinaryTree<Key, Key> {
     auto keyValue = std::make_pair(value, value);
     bool isset = true;
     N tmp = insertRec(root, keyValue, nullptr, isset);
-    if(root == nullptr) 
-      root = tmp;
     if (isset) ++size_;
+    this->setNewEnd();
     return std::make_pair(iterator(tmp), isset);
   }
 
@@ -28,17 +27,11 @@ class set : public BinaryTree<Key, Key> {
   using BinaryTree<Key, Key>::insertRec;
   using BinaryTree<Key, Key>::size_;
   using N = Node<Key, Key>*;
-};
-}  // namespace s21
-
-int main() {
-  s21::set<int> st;
-  st.insert(2);
-  st.insert(-1);
-  st.insert(-5);
+};set
   st.insert(3);
   st.insert(9);
-  st.insert(6);
+  st.insert(5);
+  int a = st.size();
   auto it = st.end();
   it++;
   it++;
@@ -100,7 +93,7 @@ int main() {
   // lol++;
   // lol--;
 
-  return 0;
+    return 0;
 }
 
 // template <class T>

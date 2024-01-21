@@ -4,7 +4,7 @@
 template <class Key, class T>
 struct Node;
 
-template <class Key>
+template <class Key, class T>
 class BinaryTree;
 
 namespace it {
@@ -17,31 +17,34 @@ class iterator {
 
   iterator(Node<Key, T> *node) : CNode(node) {}
   reference operator*() const { return CNode->value_; }
+  Node<Key, T> *operator*() { return CNode; }
   pointer operator->() const { return &(CNode->value_); }
   iterator operator+(const std::size_t size) {
     for (std::size_t i = 0; i < size; ++i) {
-      (*this)++;
+      ++(*this);
     }
     return *this;
   }
   iterator operator++() {
-    if (CNode) {
-      if (CNode->right != nullptr) {
-        CNode = CNode->right;
-        while (CNode->left != nullptr) {
-          CNode = CNode->left;
-        }
-      } else {
-        Node<Key, T> *tempNode = CNode->parent;
-        while (tempNode != nullptr && CNode == tempNode->right) {
-          CNode = tempNode;
-          tempNode = tempNode->parent;
-        }
-        CNode = tempNode;
+    // if (CNode) {
+    if (CNode->right != nullptr) {
+      CNode = CNode->right;
+      while (CNode->left != nullptr) {
+        CNode = CNode->left;
       }
     } else {
-      
+      Node<Key, T> *tempNode = CNode->parent;
+      Node<Key, T> *last = CNode->last;
+      while (tempNode != nullptr && CNode == tempNode->right) {
+        CNode = tempNode;
+        tempNode = tempNode->parent;
+      }
+      CNode = tempNode;
+      if (!CNode) {
+        CNode = last;
+      }
     }
+
     return *this;
   }
   iterator operator++(int) {
