@@ -1,4 +1,12 @@
 #include "BinaryTree.h"
+
+template <class Key, class T>
+BinaryTree<Key, T>::~BinaryTree() {
+  clear();
+  clearEnd();
+}
+
+
 template <class Key, class T>
 std::pair<typename BinaryTree<Key, T>::iterator, bool>
 BinaryTree<Key, T>::insert(const_reference value) {
@@ -59,6 +67,7 @@ template <class Key, class T>
 typename BinaryTree<Key, T>::iterator BinaryTree<Key, T>::end() {
   return iterator(rootEnd);
 }
+
 template <class Key, class T>
 void BinaryTree<Key, T>::clearEnd() {
   if (rootEnd) {
@@ -88,12 +97,25 @@ void BinaryTree<Key, T>::erase(iterator pos) {
   root = nullptr;
   auto itBegin = this->begin();
   while (itBegin != this->end()) {
-    if(pos != itBegin)
-      insert(*itBegin);
+    if (pos != itBegin) insert(*itBegin);
     itBegin++;
   }
-  
+}
 
+template <class Key, class T>
+void BinaryTree<Key, T>::clear() {
+  clearRec(root);
+  root = nullptr;
+  size_ = 0;
+}
+
+template <class Key, class T>
+void BinaryTree<Key, T>::clearRec(N node) {
+  if (node != nullptr) {
+    clearRec(node->left);
+    clearRec(node->right);
+    delete node;
+  }
 }
 
 /////////////////////////////////////////////

@@ -13,8 +13,6 @@ class set : public BinaryTree<Key, Key> {
   using reference = value_type&;
   using const_reference = const value_type&;
 
-
-
   std::pair<iterator, bool> insert(const_reference value) {
     auto keyValue = std::make_pair(value, value);
     bool isset = true;
@@ -24,7 +22,7 @@ class set : public BinaryTree<Key, Key> {
     return std::make_pair(iterator(tmp), isset);
   }
 
-    iterator find(const Key& key) {
+  iterator find(const Key& key) {
     N fNode = root;
     this->searchNode(key, fNode);
     return fNode ? iterator(fNode) : this->end();
@@ -49,9 +47,14 @@ int main() {
   st.insert(8);
   st.insert(4);
   st.insert(11);
-  auto fIt1 = st.find(4);
-  st.erase(fIt1);
-  auto fIt2 = st.find(4);
+  std::size_t b = st.max_size();
+  st.clear();
+  std::size_t a = st.max_size();
+  //230584300921369395 оригинал max_size
+  //18446744073709551615 наш max_size
+  // auto fIt1 = st.find(4);
+  // st.erase(fIt1);
+  // auto fIt2 = st.find(4);
 
   // int a = st.size();
   // auto it = st.end();

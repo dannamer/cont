@@ -1,5 +1,6 @@
 #ifndef BINARYTREE_H_
 #define BINARYTREE_H_
+#include <limits>
 
 #include "iterator.h"
 
@@ -22,23 +23,25 @@ class BinaryTree {
   using const_reference = const value_type&;
   using iterator = it::iterator<Key, T>;
   using size_type = std::size_t;
+
+  ~BinaryTree();
   std::pair<iterator, bool> insert(const_reference value);
+  bool empty() const { return !size_; }
   size_type size() const { return size_; }
+  size_type max_size() { return std::numeric_limits<size_type>::max(); }// ?
   iterator begin();
   iterator end();
 
-
-
+  void clear();
   void erase(iterator pos);
-
 
   void searchNode(const Key& key, Node<Key, T>*& node);
   bool contains(const Key& key);
 
-
  protected:
   using N = Node<Key, T>*;
   N insertRec(N node, const_reference value, N parrent, bool& isset);
+  void clearRec(N node);
   void clearEnd();
   void setNewEnd();
   N root = nullptr;
