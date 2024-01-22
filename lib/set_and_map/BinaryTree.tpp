@@ -4,6 +4,7 @@ std::pair<typename BinaryTree<Key, T>::iterator, bool>
 BinaryTree<Key, T>::insert(const_reference value) {
   bool isset = true;
   N tmp = insertRec(root, value, nullptr, isset);
+
   if (isset) ++size_;
   setNewEnd();
   return std::make_pair(iterator(tmp), isset);
@@ -11,9 +12,17 @@ BinaryTree<Key, T>::insert(const_reference value) {
 template <class Key, class T>
 void BinaryTree<Key, T>::setNewEnd() {
   clearEnd();
-  rootEnd = new Node<Key, T>(std::make_pair(size(), 0), *(begin() + (size() - 1)));
+  rootEnd =
+      new Node<Key, T>(std::make_pair(size(), 0), *(begin() + (size() - 1)));
   N last = rootEnd->parent;
-  last->last = rootEnd;
+  if (last->left == nullptr)
+    last->last = rootEnd;
+  else if (last != root && last->left != nullptr &&
+           last->left->right == nullptr && last->left->left == nullptr) {
+    last->last = rootEnd;
+    last->left->last = rootEnd;
+    rootEnd->parent = last->left;
+  }
 }
 
 template <class Key, class T>
@@ -52,12 +61,41 @@ typename BinaryTree<Key, T>::iterator BinaryTree<Key, T>::end() {
 }
 template <class Key, class T>
 void BinaryTree<Key, T>::clearEnd() {
-  if(rootEnd) {
+  if (rootEnd) {
     rootEnd->parent->last = nullptr;
     delete rootEnd;
     rootEnd = nullptr;
   }
 }
+template <class Key, class T>
+void BinaryTree<Key, T>::searchNode(const Key& key, Node<Key, T>*& node) {
+  while (node && node->key_.first != key) {
+    if (node->key_.first < key)
+      node = node->right;
+    else
+      node = node->left;
+  }
+}
+template <class Key, class T>
+bool BinaryTree<Key, T>::contains(const Key& key) {
+  N fNode = root;
+  searchNode(key, fNode);
+  return fNode ? true : false;
+}
+template <class Key, class T>
+void BinaryTree<Key, T>::erase(iterator pos) {
+  Node<Key, T> tmpRoot = root;
+  root = nullptr;
+  auto itBegin = this->begin();
+  while (itBegin != this->end()) {
+    if(pos != itBegin)
+      insert(*itBegin);
+    itBegin++;
+  }
+  
+
+}
+
 /////////////////////////////////////////////
 
 // template <class Key>

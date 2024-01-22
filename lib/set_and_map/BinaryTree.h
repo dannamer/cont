@@ -23,13 +23,22 @@ class BinaryTree {
   using iterator = it::iterator<Key, T>;
   using size_type = std::size_t;
   std::pair<iterator, bool> insert(const_reference value);
-  size_type size() const {return size_;}
+  size_type size() const { return size_; }
   iterator begin();
   iterator end();
 
+
+
+  void erase(iterator pos);
+
+
+  void searchNode(const Key& key, Node<Key, T>*& node);
+  bool contains(const Key& key);
+
+
  protected:
   using N = Node<Key, T>*;
-  N insertRec(N node, const_reference value, N parrent, bool &isset);
+  N insertRec(N node, const_reference value, N parrent, bool& isset);
   void clearEnd();
   void setNewEnd();
   N root = nullptr;
