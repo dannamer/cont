@@ -1,22 +1,81 @@
-#include "BinaryTree.h"
+// #include "BinaryTree.h"
 
 template <class Key, class T>
 BinaryTree<Key, T>::~BinaryTree() {
   clear();
-  clearEnd();
 }
 
+template <class Key, class T>
+BinaryTree<Key, T>::BinaryTree(std::initializer_list<value_type> const& items) {
+  for (auto it = items.begin(); it != items.end(); ++it) {
+    insert(*it);
+  }
+}
+
+template <class Key, class T>
+BinaryTree<Key, T>::BinaryTree(const BinaryTree& m) {
+  size_ = m.size_;
+  root = copyBinaryTree(m.root);
+  setNewEnd();
+}
+
+template <class Key, class T>
+BinaryTree<Key, T>::BinaryTree(BinaryTree&& m) {
+  *this = std::move(m);
+}
+
+template <class Key, class T>
+void BinaryTree<Key, T>::merge(BinaryTree& other) {
+  for (auto it = other.begin(); it != other.end; ++it) {
+    insert(*it);
+  }
+  other.clear();
+}
+
+template <class Key, class T>
+BinaryTree<Key, T>& BinaryTree<Key, T>::operator=(BinaryTree&& m) {
+  if (this != &m) {
+    delete root;
+    delete rootEnd;
+    size_ = m.size_;
+    root = m.root;
+    rootEnd = m.rootEnd;
+    m.size_ = 0;
+    m.root = nullptr;
+    m.rootEnd = nullptr;
+  }
+  return *this;
+}
+
+template <class Key, class T>
+void BinaryTree<Key, T>::swap(BinaryTree& other) {
+  BinaryTree<Key, T> tmp = std::move(other);
+  other = std::move(*this);
+  *this = std::move(tmp);
+}
+
+// копирование
+template <class Key, class T>
+typename BinaryTree<Key, T>::N BinaryTree<Key, T>::copyBinaryTree(N CRoot) {
+  if (CRoot == nullptr) {
+    return nullptr;
+  }
+  N newNode = new Node<Key, T>(CRoot->key_.first, CRoot->key_.second);
+  newNode->left = copyBinaryTree(root->left);
+  newNode->right = copyBinaryTree(root->right);
+  return newNode;
+}
 
 template <class Key, class T>
 std::pair<typename BinaryTree<Key, T>::iterator, bool>
 BinaryTree<Key, T>::insert(const_reference value) {
   bool isset = true;
   N tmp = insertRec(root, value, nullptr, isset);
-
   if (isset) ++size_;
   setNewEnd();
   return std::make_pair(iterator(tmp), isset);
 }
+
 template <class Key, class T>
 void BinaryTree<Key, T>::setNewEnd() {
   clearEnd();
@@ -76,20 +135,34 @@ void BinaryTree<Key, T>::clearEnd() {
     rootEnd = nullptr;
   }
 }
+
 template <class Key, class T>
-void BinaryTree<Key, T>::searchNode(const Key& key, Node<Key, T>*& node) {
-  while (node && node->key_.first != key) {
-    if (node->key_.first < key)
-      node = node->right;
-    else
-      node = node->left;
+typename BinaryTree<Key, T>::iterator BinaryTree<Key, T>::find(const Key& key) {
+  N current = root;
+  while (current != nullptr) {
+    if (key < current->key_.first) {
+      current = current->left;
+    } else if (key > current->key_.first) {
+      current = current->right;
+    } else {
+      return iterator(current);
+    }
   }
+  return end();
 }
+
+// template <class Key, class T>
+// void BinaryTree<Key, T>::searchNode(const Key& key, Node<Key, T>*& node) {
+//   while (node && node->key_.first != key) {
+//     if (node->key_.first < key)
+//       node = node->right;
+//     else
+//       node = node->left;
+//   }
+// }
 template <class Key, class T>
 bool BinaryTree<Key, T>::contains(const Key& key) {
-  N fNode = root;
-  searchNode(key, fNode);
-  return fNode ? true : false;
+  return find(key) != end() ? true : false;
 }
 template <class Key, class T>
 void BinaryTree<Key, T>::erase(iterator pos) {
@@ -105,6 +178,7 @@ void BinaryTree<Key, T>::erase(iterator pos) {
 template <class Key, class T>
 void BinaryTree<Key, T>::clear() {
   clearRec(root);
+  clearEnd();
   root = nullptr;
   size_ = 0;
 }

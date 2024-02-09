@@ -12,13 +12,13 @@ template <class Key, class T>
 class iterator {
  public:
   using value_type = std::pair<const Key, T>;
-  using reference = value_type &;
-  using pointer = value_type *;
+  using reference = value_type&;
+  using pointer = value_type*;
 
-  iterator(Node<Key, T> *node) : CNode(node) {}
-  reference operator*() const { return CNode->value_; }
-  Node<Key, T> *operator*() { return CNode; }
-  pointer operator->() const { return &(CNode->value_); }
+  iterator(Node<Key, T>* node) : CNode(node) {}
+  reference operator*() const { return CNode->key_; }
+  Node<Key, T>* operator*() { return CNode; }
+  pointer operator->() const { return &(CNode->key_); }
   iterator operator+(const std::size_t size) {
     for (std::size_t i = 0; i < size; ++i) {
       ++(*this);
@@ -26,15 +26,14 @@ class iterator {
     return *this;
   }
   iterator operator++() {
-    // if (CNode) {
     if (CNode->right != nullptr) {
       CNode = CNode->right;
       while (CNode->left != nullptr) {
         CNode = CNode->left;
       }
     } else {
-      Node<Key, T> *tempNode = CNode->parent;
-      Node<Key, T> *last = CNode->last;
+      Node<Key, T>* tempNode = CNode->parent;
+      Node<Key, T>* last = CNode->last;
       while (tempNode != nullptr && CNode == tempNode->right) {
         CNode = tempNode;
         tempNode = tempNode->parent;
@@ -44,7 +43,6 @@ class iterator {
         CNode = last;
       }
     }
-
     return *this;
   }
   iterator operator++(int) {
@@ -52,167 +50,59 @@ class iterator {
     ++(*this);
     return temp;
   }
+  bool operator==(const iterator& other) const { return CNode == other.CNode; }
+
+  bool operator!=(const iterator& other) const { return !(*this == other); }
 
  private:
-  Node<Key, T> *CNode = nullptr;
+  Node<Key, T>* CNode = nullptr;
 };
 
 template <class Key, class T>
 class const_iterator {
  public:
+  using value_type = std::pair<const Key, T>;
+  using reference = const value_type&;
+  using pointer = const value_type*;
+
+  const_iterator(const Node<Key, T>* node) : CNode(node) {}
+  reference operator*() const { return CNode->value_; }
+  // const Node<Key, T>* operator*() const { return CNode; }
+  pointer operator->() const { return &(CNode->value_); }
+  const_iterator& operator+(const std::size_t size) {
+    for (std::size_t i = 0; i < size; ++i) {
+      ++(*this);
+    }
+    return *this;
+  }
+  const_iterator& operator++() {
+    if (CNode->right != nullptr) {
+      CNode = CNode->right;
+      while (CNode->left != nullptr) {
+        CNode = CNode->left;
+      }
+    } else {
+      const Node<Key, T>* tempNode = CNode->parent;
+      const Node<Key, T>* last = CNode;
+      while (tempNode != nullptr && CNode == tempNode->right) {
+        CNode = tempNode;
+        tempNode = tempNode->parent;
+      }
+      CNode = tempNode;
+      if (!CNode) {
+        CNode = last;
+      }
+    }
+    return *this;
+  }
+  const_iterator operator++(int) {
+    const_iterator temp = *this;
+    ++(*this);
+    return temp;
+  }
+
  private:
+  const Node<Key, T>* CNode = nullptr;
 };
 }  // namespace it
 #endif
-// class iterator {
-//  public:
-//   using value_type = T;
-//   using pointer = T *;
-//   using reference = T &;
-//   iterator() {}
-//   iterator(Node<T> *node) : currentNode(node) {}
-//   reference operator*() {
-//     if (currentNode != nullptr) {
-//       return currentNode->value;
-//     } else {
-//       throw std::runtime_error("Attempt to dereference a null iterator");
-//     }
-//   }
-//   Node<T> *operator&() { return currentNode; }
-//   iterator &operator--() {
-//     if (currentNode->left != nullptr) {
-//       currentNode = currentNode->left;
-//       while (currentNode->right != nullptr) {
-//         currentNode = currentNode->right;
-//       }
-//     } else {
-//       Node<T> *tempNode = currentNode->parent;
-//       while (tempNode != nullptr && currentNode == tempNode->left) {
-//         currentNode = tempNode;
-//         tempNode = tempNode->parent;
-//       }
-//       currentNode = tempNode;
-//     }
-//     return *this;
-//   }
-//   iterator<T> operator--(int) {
-//     iterator<T> temp = *this;
-//     --(*this);
-//     return temp;
-//   }
-//   iterator &operator++() {
-//     if (currentNode->right != nullptr) {
-//       currentNode = currentNode->right;
-//       while (currentNode->left != nullptr) {
-//         currentNode = currentNode->left;
-//       }
-//     } else {
-//       Node<T> *tempNode = currentNode->parent;
-//       while (tempNode != nullptr && currentNode == tempNode->right) {
-//         currentNode = tempNode;
-//         tempNode = tempNode->parent;
-//       }
-//       currentNode = tempNode;
-//     }
-//     return *this;
-//   }
-
-//   iterator<T> operator++(int) {
-//     iterator<T> temp = *this;
-//     ++(*this);
-//     return temp;
-//   }
-//   bool operator==(iterator<T> &other) {
-//     return currentNode == other.currentNode;
-//   }
-//   bool operator!=(iterator<T> &other) {
-//     return currentNode != other.currentNode;
-//   }
-//   Node<T> *operator->() { return currentNode; }
-//   Node<T> *getNode() const { return currentNode; }
-
-//   void setNode(Node<T> *newNode) { currentNode = newNode; }
-
-//  private:
-//   Node<T> *currentNode = nullptr;
-// };
-
-// template <class T>
-// class const_iterator {
-//  public:
-//   using value_type = T;
-//   using const_pointer = const T *;
-//   using const_reference = const T &;
-
-//   const_iterator() : currentNode(nullptr) {}
-//   const_iterator(const Node<T> *node) : currentNode(node) {}
-
-//   const_reference operator*() const {
-//     if (currentNode != nullptr) {
-//       return currentNode->value;
-//     } else {
-//       throw std::runtime_error("Attempt to dereference a null
-//       const_iterator");
-//     }
-//   }
-
-//   const Node<T> *operator&() const { return currentNode; }
-
-//   const_iterator &operator--() {
-//     if (currentNode->left != nullptr) {
-//       currentNode = currentNode->left;
-//       while (currentNode->right != nullptr) {
-//         currentNode = currentNode->right;
-//       }
-//     } else {
-//       const Node<T> *tempNode = currentNode->parent;
-//       while (tempNode != nullptr && currentNode == tempNode->left) {
-//         currentNode = tempNode;
-//         tempNode = tempNode->parent;
-//       }
-//       currentNode = tempNode;
-//     }
-//     return *this;
-//   }
-
-//   const_iterator operator--(int) {
-//     const_iterator temp = *this;
-//     --(*this);
-//     return temp;
-//   }
-
-//   const_iterator &operator++() {
-//     if (currentNode->right != nullptr) {
-//       currentNode = currentNode->right;
-//       while (currentNode->left != nullptr) {
-//         currentNode = currentNode->left;
-//       }
-//     } else {
-//       const Node<T> *tempNode = currentNode->parent;
-//       while (tempNode != nullptr && currentNode == tempNode->right) {
-//         currentNode = tempNode;
-//         tempNode = tempNode->parent;
-//       }
-//       currentNode = tempNode;
-//     }
-//     return *this;
-//   }
-
-//   const_iterator operator++(int) {
-//     const_iterator temp = *this;
-//     ++(*this);
-//     return temp;
-//   }
-//   bool operator==(const const_iterator &other) const {
-//     return currentNode == other.currentNode;
-//   }
-//   bool operator!=(const const_iterator &other) const {
-//     return currentNode != other.currentNode;
-//   }
-//   const Node<T> *operator->() const { return currentNode; }
-//   const Node<T> *getNode() const { return currentNode; }
-
-//  private:
-//   const Node<T> *currentNode;
-// };
-// }  // namespace it

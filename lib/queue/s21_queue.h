@@ -17,11 +17,11 @@ class queue : public ContainerBase<T> {
       : ContainerBase<T>(items) {}
   queue(const queue &q) : ContainerBase<T>(q) {}
   queue(queue &&q) : ContainerBase<T>(std::move(q)) {}
-  queue<T>& operator=(queue &&q) {
+  queue<T> &operator=(queue &&q) {
     ContainerBase<T>::operator=(std::move(q));
     return *this;
   }
-  queue<T>& operator=(queue const &q) {
+  queue<T> &operator=(queue const &q) {
     ContainerBase<T>::operator=(q);
     return *this;
   }

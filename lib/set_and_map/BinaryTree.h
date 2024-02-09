@@ -22,21 +22,27 @@ class BinaryTree {
   using reference = value_type&;
   using const_reference = const value_type&;
   using iterator = it::iterator<Key, T>;
+  using const_iterator = it::const_iterator<Key, T>;
   using size_type = std::size_t;
-
+  BinaryTree() {}
   ~BinaryTree();
+  BinaryTree(std::initializer_list<value_type> const& items);
+  BinaryTree(const BinaryTree& m);
+  BinaryTree(BinaryTree&& m);
+  BinaryTree<Key, T>& operator=(BinaryTree&& m);
+
   std::pair<iterator, bool> insert(const_reference value);
   bool empty() const { return !size_; }
   size_type size() const { return size_; }
-  size_type max_size() { return std::numeric_limits<size_type>::max(); }// ?
+  size_type max_size() { return std::numeric_limits<size_type>::max(); }  // ?
   iterator begin();
   iterator end();
-
+  iterator find(const Key& key);
   void clear();
   void erase(iterator pos);
-
-  void searchNode(const Key& key, Node<Key, T>*& node);
   bool contains(const Key& key);
+  void swap(BinaryTree& other);
+  void merge(BinaryTree& other);
 
  protected:
   using N = Node<Key, T>*;
@@ -44,45 +50,11 @@ class BinaryTree {
   void clearRec(N node);
   void clearEnd();
   void setNewEnd();
+  N copyBinaryTree(N CRoot);
   N root = nullptr;
   N rootEnd = nullptr;
   size_type size_ = 0;
-  // bool isset = true;
 };
 #include "BinaryTree.tpp"
 }  // namespace s21
 #endif
-// namespace s21 {
-// template <class Key, class T>
-// class BinaryTree {
-//  public:
-//   using key_type = Key;
-//   using mapped_type = T;
-//   using value_type = std::pair<const key_type, mapped_type>;
-//   using reference = value_type&;
-//   using const_reference = const value_type&;
-//   using iterator = it::iterator<Key, T>;
-//   using const_iterator = it::const_iterator<Keym T>;
-//   using size_type = std::size_t;
-
-//  public:
-//   BinaryTree() {}
-//   void insert(const_reference value);
-//   size_type size() const { return size_; }
-//   bool empty() const { return size_ == 0; }
-//   iterator find(const_reference key);
-//   iterator begin(iterator node);
-//   iterator begin();
-//   iterator end();
-//   value_type lol.fert protected : Node<value_type>* root = nullptr;
-//   Node<Key>* root
-
-//       size_type size_ = 0;
-//   Node<Key>* insertRec(Node<Key>* node, const_reference value,
-//                        Node<Key>* parent);
-//   void inOrderTraversal(Node<Key>* current);
-//   iterator searchRecursive(iterator current, const_reference key);
-//   // Node<Key> *findMin(Node<Key>* node);
-// };
-// #include "BinaryTree.tpp"
-// }  // namespace s21
