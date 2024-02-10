@@ -3,25 +3,24 @@
 #include "BinaryTree.h"
 namespace s21 {
 template <class Key, class T>
-class map : public BinaryTree<Key, T> {
+class map : public BinaryTree<std::pair<const Key, T>> {
  public:
-  using typename BinaryTree<Key, T>::key_type;
-  using typename BinaryTree<Key, T>::mapped_type;
-  using typename BinaryTree<Key, T>::value_type;
-  using typename BinaryTree<Key, T>::reference;
-  using typename BinaryTree<Key, T>::const_reference;
-  using typename BinaryTree<Key, T>::iterator;
-  using typename BinaryTree<Key, T>::const_iterator;
-  using typename BinaryTree<Key, T>::size_type;
+  using value_type = std::pair<const Key, T>;
+  using typename BinaryTree<value_type>::key_type;
+  using typename BinaryTree<value_type>::reference;
+  using typename BinaryTree<value_type>::const_reference;
+  using typename BinaryTree<value_type>::iterator;
+  using typename BinaryTree<value_type>::const_iterator;
+  using typename BinaryTree<value_type>::size_type;
 
-  using typename BinaryTree<Key, T>::insert;
+  using typename BinaryTree<value_type>::insert;
 
   map() {}
   ~map() {}
   map(std::initializer_list<value_type> const &items)
-      : BinaryTree<Key, T>(items) {}
-  map(const map &m) : BinaryTree<Key, T>(m) {}
-  map(map &&m) : BinaryTree<Key, T>(std::move(m)) {}
+      : BinaryTree<value_type>(items) {}
+  map(const map &m) : BinaryTree<value_type>(m) {}
+  map(map &&m) : BinaryTree<value_type>(std::move(m)) {}
   T &at(const Key &key) {
     auto it = find(key);
     if (it != this->end()) {
@@ -51,7 +50,7 @@ class map : public BinaryTree<Key, T> {
   }
 
  private:
-  using typename BinaryTree<Key, T>::find;
+  using typename BinaryTree<value_type>::find;
 };
 }  // namespace s21
 #endif

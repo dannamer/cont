@@ -1,24 +1,15 @@
 #include <iostream>
 #include <map>
-template<typename T>
-void print(T t) {
-    std::cout << t << std::endl;
-}
-
-template<typename T, typename... Args>
-void print(T t, Args... args) {
-    std::cout << t << ", ";
-    print(args...); // Рекурсивный вызов с оставшимися аргументами
-}
-
+#include "s21_map.h"
+#include "s21_set.h"
 int main() {
-    
-      std::map<int, int> a;
+  s21::map<int, int> a;
+  s21::set<int> lol = {1, 3, 4, 5, 6};
   a.insert(std::make_pair(-1, 3));
   a.insert(-5, 3);
   a.insert(3, 3);
   a.insert(9, 3);
   a.insert(6, 3);
   auto itm = a.end();
-    return 0;
+  return 0;
 }

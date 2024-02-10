@@ -4,32 +4,31 @@
 
 #include "iterator.h"
 
-template <class Key, class T>
+template <class Key>
 struct Node {
-  using value_type = std::pair<const Key, T>;
-  value_type key_;
+  Key key_;
   Node *left = nullptr, *right = nullptr, *parent = nullptr, *last = nullptr;
-  Node(value_type key) : key_(key) {}
-  Node(value_type key, Node* parent) : key_(key), parent(parent) {}
+  Node(Key key) : key_(key) {}
+  Node(Key key, Node* parent) : key_(key), parent(parent) {}
 };
+
 namespace s21 {
-template <class Key, class T>
+template <class Key>
 class BinaryTree {
  public:
   using key_type = Key;
-  using mapped_type = T;
-  using value_type = std::pair<const key_type, mapped_type>;
+  using value_type = Key;
   using reference = value_type&;
   using const_reference = const value_type&;
-  using iterator = it::iterator<Key, T>;
-  using const_iterator = it::const_iterator<Key, T>;
+  using iterator = it::iterator<Key>;
+  using const_iterator = it::const_iterator<Key>;
   using size_type = std::size_t;
   BinaryTree() {}
   ~BinaryTree();
   BinaryTree(std::initializer_list<value_type> const& items);
   BinaryTree(const BinaryTree& m);
   BinaryTree(BinaryTree&& m);
-  BinaryTree<Key, T>& operator=(BinaryTree&& m);
+  BinaryTree<Key>& operator=(BinaryTree&& m);
 
   std::pair<iterator, bool> insert(const_reference value);
   bool empty() const { return !size_; }
@@ -45,7 +44,7 @@ class BinaryTree {
   void merge(BinaryTree& other);
 
  protected:
-  using N = Node<Key, T>*;
+  using N = Node<value_type>*;
   N insertRec(N node, const_reference value, N parrent, bool& isset);
   void clearRec(N node);
   void clearEnd();

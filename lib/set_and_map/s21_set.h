@@ -4,21 +4,21 @@
 #include "BinaryTree.h"
 namespace s21 {
 template <class Key>
-class set : public s21::BinaryTree<Key, Key> {
+class set : public s21::BinaryTree<Key> {
  public:
-  using typename BinaryTree<Key, Key>::key_type;
-  using typename BinaryTree<Key, Key>::value_type;
-  using typename BinaryTree<Key, Key>::reference;
-  using typename BinaryTree<Key, Key>::const_reference;
-  using typename BinaryTree<Key, Key>::iterator;
-  using typename BinaryTree<Key, Key>::const_iterator;
-  using typename BinaryTree<Key, Key>::size_type;
+  using typename BinaryTree<Key>::key_type;
+  using typename BinaryTree<Key>::reference;
+  using typename BinaryTree<Key>::const_reference;
+  using typename BinaryTree<Key>::iterator;
+  using typename BinaryTree<Key>::const_iterator;
+  using typename BinaryTree<Key>::size_type;
+  using value_type = Key;
   set() {}
   ~set() {}
   set(std::initializer_list<value_type> const &items)
-      : BinaryTree<Key, Key>(items) {}
-  set(const set &s) : BinaryTree<Key, Key>(s) {}
-  set(set &&s) : BinaryTree<Key, Key>(std::move(s)) {}
+      : BinaryTree<Key>(items) {}
+  set(const set &s) : BinaryTree<Key>(s) {}
+  set(set &&s) : BinaryTree<Key>(std::move(s)) {}
 
 
  private:
