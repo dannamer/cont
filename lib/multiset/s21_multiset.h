@@ -25,7 +25,7 @@ namespace s21 {
 //  private:
 //   Node<Key>* node;
 // };
-
+// s21::multiset<int>::iterator
 template <class Key>
 class multiset {
  public:
@@ -88,15 +88,12 @@ class multiset {
   template <typename... Args>
   std::vector<std::pair<iterator, bool>> emplace(Args&&... args) {
     std::vector<std::pair<iterator, bool>> results;
-    // Обрабатываем каждый аргумент как отдельный элемент для вставки
     (
         [&] {
           auto res = insert(std::forward<Args>(args));
           results.push_back(std::make_pair(res, true));
         }(),
         ...);
-    // (..., (results.push_back(std::make_pair(insert(std::forward<Args>(args)),
-    // true))));  // Используем fold expression
     return results;
   }
 
