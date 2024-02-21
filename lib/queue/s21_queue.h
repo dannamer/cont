@@ -37,6 +37,10 @@ class queue : public ContainerBase<T> {
     }
     this->size_--;
   };
+  template <typename... Args>
+  void emplace_back(Args &&...args) {
+    ([&] { push(std::forward<Args>(args)); }(), ...);
+  }
 
  private:
 };

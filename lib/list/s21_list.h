@@ -40,18 +40,19 @@ class list {
   void push_front(const_reference value);
   void swap(list& other);
   void splice(const_iterator pos, list& other);
-  // template<typename T>
+  template <typename... Args>
+  void emplace_front(Args&&... args) {
+    ([&] { push_front(std::forward<Args>(args)); }(), ...);
+  }
   template <typename... Args>
   void emplace_back(Args&&... args) {
-    Node<T>* newNode = new Node(std::forward<Args>(args)...);
-    if (head_ == nullptr) {
-      head_ = tail_ = newNode;
-    } else {
-      tail_->next = newNode;
-      newNode->prev = tail_;
-      tail_ = newNode;
-    }
-    ++size_;
+    ([&] { push_back(std::forward<Args>(args)); }(), ...);
+  }
+  template <typename... Args>
+  iterator emplace(const_iterator pos, Args&&... args) {
+    iterator res;
+    ([&] { res = insert(pos, std::forward<Args>(args)); }(), ...);
+    return res;
   }
 
  private:
@@ -64,7 +65,6 @@ class list {
     }
   }
   void split(list<T>& source, list<T>& left, list<T>& right);
-
 };
 #include "list.tpp"
 }  // namespace s21

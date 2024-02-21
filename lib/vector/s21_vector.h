@@ -21,7 +21,7 @@ class vector : public ContainerBase<T> {
   vector() {}
   ~vector() {}
   vector(size_type n) {
-    this->size_ = n;  
+    this->size_ = n;
     this->capacity_ = n;
     this->data_ = new T[n]();
   }
@@ -82,6 +82,16 @@ class vector : public ContainerBase<T> {
     this->data_[index] = value;
     this->size_++;
     return this->data_ + index;
+  }
+  template <typename... Args>
+  void emplace_back(Args &&...args) {
+    ([&] { push_back(std::forward<Args>(args)); }(), ...);
+  }
+  template <typename... Args>
+  iterator emplace(const_iterator pos, Args &&...args) {
+    iterator res;
+    ([&] { res = insert(pos, std::forward<Args>(args)); }(), ...);
+    return res;
   }
 
  private:

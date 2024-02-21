@@ -1,3 +1,4 @@
+using namespace s21;
 template <typename T>
 list<T>::list(size_type n) {
   for (size_type i = 0; i < n; ++i) {
@@ -245,3 +246,8 @@ void list<T>::split(list<T>& source, list<T>& left, list<T>& right) {
     if (right.head_) right.head_->prev = nullptr;
   }
 }
+
+// template <typename T, typename... Args>
+// void list<T>::emplace_front(Args&&... args) {
+
+// }

@@ -1,6 +1,7 @@
 #ifndef S21_STACK_H_
 #define S21_STACK_H_
 #include <stdexcept>
+
 #include "../ContainerBase/ContainerBase.h"
 // #include "ContainerBase.h"
 namespace s21 {
@@ -29,6 +30,9 @@ class stack : public ContainerBase<T> {
   void pop() {
     this->VoidCheck();
     this->size_--;
+  }
+  void emplace_front(Args&&... args) {
+    ([&] { push(std::forward<Args>(args)); }(), ...);
   }
 };
 }  // namespace s21
