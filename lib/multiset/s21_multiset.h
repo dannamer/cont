@@ -1,6 +1,6 @@
 #ifndef MULTISET_
 #define MULTISET_
-
+#include <vector>
 namespace s21 {
 // template <typename T>
 // struct Node {
@@ -50,7 +50,7 @@ class multiset {
    public:
     iterator(Node* node_) : node(node_) {}
     reference operator*() const { return node->value; }
-    // Node& operator->() const { return *node->value; }
+    Node*& operator->() const { return *node; }
     Node* operator&() { return node; }
     iterator operator++();
     iterator operator++(int);
@@ -85,6 +85,20 @@ class multiset {
   std::pair<iterator, iterator> equal_range(const Key& key);
   iterator lower_bound(const_reference key);
   iterator upper_bound(const_reference key);
+  template <typename... Args>
+  std::vector<std::pair<iterator, bool>> emplace(Args&&... args) {
+    std::vector<std::pair<iterator, bool>> results;
+    // Обрабатываем каждый аргумент как отдельный элемент для вставки
+    (
+        [&] {
+          auto res = insert(std::forward<Args>(args));
+          results.push_back(std::make_pair(res, true));
+        }(),
+        ...);
+    // (..., (results.push_back(std::make_pair(insert(std::forward<Args>(args)),
+    // true))));  // Используем fold expression
+    return results;
+  }
 
  private:
   Node* root = nullptr;
