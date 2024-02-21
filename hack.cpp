@@ -1,31 +1,16 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <sstream>
-#include <cstdlib>
+#include <stdio.h>
+#include <string.h>
 
-using namespace std;
 
-// Функция для попытки подключения к Wi-Fi через nmcli в Linux
-bool try_connect(const string& ssid, const string& password) {
-    string command = "nmcli dev wifi connect '" + ssid + "' password '" + password + "'";
-    int result = system(command.c_str());
-    return result == 0;
-}
 
-int main() {
-    string ssid = "AP";
+int main(){
+    
 
-    for (int i = 0; i < 100000000; ++i) {
-        stringstream ss;
-        ss << setw(8) << setfill('0') << i;
-        string password = ss.str();
+    char str5[15] = "Hello, world!";
+    char str6[15] = "H[llo, world!";
+    int result2 = memcmp(str5, str6, 5);
+    printf("memcmp result:  %d\n", result2);
 
-        if (try_connect(ssid, password)) {
-            cout << "Успешное подключение с паролем: " << password << endl;
-            break;
-        }
-    }
 
     return 0;
 }

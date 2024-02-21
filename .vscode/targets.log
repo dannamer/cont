@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Feb 17 04:30:40 2024
+# Make data base, printed on Wed Feb 21 07:38:32 2024
 
 # Variables
 
@@ -51,7 +51,7 @@ VSCODE_CODE_CACHE_PATH = /home/dannamer/.config/Code/CachedData/0ee08df0cf4527e4
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.KXF5I2
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.X8Q9I2
 # default
 .LOADED := 
 # default
@@ -66,8 +66,6 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 LESSOPEN = | /usr/bin/lesspipe %s
 # makefile (from 'Makefile', line 5)
 SRCS := tests/main.cpp tests/testList.cpp tests/testQueue.cpp tests/testStack.cpp tests/testVector.cpp
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2024021409/translations/extensions/vscode.html-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -89,13 +87,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 19424
+VSCODE_PID = 17521
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/1910,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/1910
+SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/1785,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/1785
 # automatic
 *F = $(notdir $*)
 # environment
@@ -137,7 +135,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = e99dc8d84eaa431aac20c890740e6d81
+INVOCATION_ID = 4593d12ad30741e5ac244bac26c5c8c2
 # environment
 USERNAME = dannamer
 # environment
@@ -163,7 +161,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1928
+SYSTEMD_EXEC_PID = 1814
 # environment
 DISPLAY = :0
 # environment
@@ -173,9 +171,9 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1710
+MANAGERPID = 1584
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 19424
+GIO_LAUNCHED_DESKTOP_FILE_PID = 17521
 # environment
 _ = /usr/share/code/code
 # environment
@@ -183,7 +181,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # makefile (from 'Makefile', line 2)
 CFLAGS = -std=c++17 -Wall -Werror -Wextra -Ilib/stack/ -Ilib/queue/ -Ilib/ContainerBase/
 # environment
-JOURNAL_STREAM = 8:29420
+JOURNAL_STREAM = 8:31389
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -213,7 +211,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=101/1024=10%, Rehash=0, Collisions=7/140=5%
+# Load=100/1024=10%, Rehash=0, Collisions=6/139=4%
 
 # Pattern-specific Variable Values
 
@@ -279,6 +277,7 @@ push:
 #  recipe to execute (from 'Makefile', line 34):
 	$(eval MSG := $(shell bash -c 'read -p "Enter commit message: " msg; echo $$msg'))
 	git add .
+ 
 	git commit -m "$(MSG)"
 	git push
 
@@ -288,7 +287,6 @@ OBJ/testVector.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 OBJ/main.o: tests/main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
@@ -385,6 +383,6 @@ OBJ/testList.o:
 # strcache performance: lookups = 67 / hit rate = 31%
 # hash-table stats:
 # Load=46/8192=1%, Rehash=0, Collisions=0/67=0%
-# Finished Make data base on Sat Feb 17 04:30:40 2024
+# Finished Make data base on Wed Feb 21 07:38:32 2024
 
  

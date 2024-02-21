@@ -40,6 +40,20 @@ class list {
   void push_front(const_reference value);
   void swap(list& other);
   void splice(const_iterator pos, list& other);
+  // template<typename T>
+  template <typename... Args>
+  void emplace_back(Args&&... args) {
+    Node<T>* newNode = new Node(std::forward<Args>(args)...);
+    if (head_ == nullptr) {
+      head_ = tail_ = newNode;
+    } else {
+      tail_->next = newNode;
+      newNode->prev = tail_;
+      tail_ = newNode;
+    }
+    ++size_;
+  }
+
  private:
   Node<T>* head_ = nullptr;
   Node<T>* tail_ = nullptr;
@@ -50,7 +64,7 @@ class list {
     }
   }
   void split(list<T>& source, list<T>& left, list<T>& right);
-  lololol;
+
 };
 #include "list.tpp"
 }  // namespace s21
