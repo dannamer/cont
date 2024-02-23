@@ -1,4 +1,4 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/dannamer/cont'
 mkdir -p OBJ
 gcc -std=c++17 -Wall -Werror -Wextra -Ilib/stack/ -Ilib/queue/ -Ilib/ContainerBase/ -c tests/main.cpp -o OBJ/main.o

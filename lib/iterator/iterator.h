@@ -7,8 +7,8 @@ struct Node {
   T value;
   Node* prev;
   Node* next;
-  template<typename... Args>
-  Node(Args&&... args) : value(std::forward<Args>(args)...), next(nullptr), prev(nullptr) {}
+  // template<typename... Args>
+  // Node(Args&&... args) : value(std::forward<Args>(args)...), next(nullptr), prev(nullptr) {}
   Node(T val) : value(val), prev(nullptr), next(nullptr) {}
 };
 

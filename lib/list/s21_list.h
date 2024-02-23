@@ -1,12 +1,22 @@
 #ifndef S21_LIST_H_
 #define S21_LIST_H_
+#include <initializer_list>
 #include <limits>
 
 #include "../ContainerBase/ContainerBase.h"
 #include "../iterator/iterator.h"
 // #include "ContainerBase.h"
 namespace s21 {
-
+/**
+ * @class list
+ * @brief Класс-контейнер, который реализует двусвязный список.
+ *
+ * @tparam T Тип элементов списка.
+ *
+ * Класс поддерживает операции добавления, удаления, доступа к элементам,
+ * а также операции, специфичные для двусвязного списка, такие как splice,
+ * emplace и другие.
+ */
 template <typename T>
 class list {
  public:
@@ -59,14 +69,14 @@ class list {
   Node<T>* head_ = nullptr;
   Node<T>* tail_ = nullptr;
   size_type size_ = 0;
-  void checkSize() {
+  void checkSize() const {
     if (!size_) {
       throw std::runtime_error("Список пуст");
     }
   }
   void split(list<T>& source, list<T>& left, list<T>& right);
 };
-#include "list.tpp"
 }  // namespace s21
+#include "list.tpp"
 
 #endif

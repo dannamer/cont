@@ -3,3 +3,6 @@ test: clean
 	./test
 	~/.local/bin/gcovr -r . --html --html-details -o test.html
 	xdg-open test.html
+
+
+#  gсс --coverage list_test.cpp -lgtest -lstdc++
