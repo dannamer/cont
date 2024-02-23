@@ -71,13 +71,40 @@ TEST(ListEmplace, EmplaceBack) {
   EXPECT_EQ(myList.back(), 23);
 }
 
-// TEST(ListEmplace, Emplace) {
-//   s21::list<int> myList;
-//   auto it = myList.emplace(myList.end(), 50);
-//   EXPECT_EQ((*it).value, 50);
-//   it = myList.emplace(myList.begin(), 60);
-//   EXPECT_EQ((*it).value, 60);
-// }
+TEST(ListEmplace, Emplace) {
+  s21::list<int> myList = {1, 2, 3, 4};
+  auto it = myList.emplace(myList.end(), 50, 60);
+  EXPECT_EQ(*it, 60);
+  it = myList.emplace(myList.begin(), 60);
+  EXPECT_EQ(*it, 60);
+}
+
+TEST(ListTest, СopyСonstructor) {
+  s21::list<int> myList = {1, 2, 3, 4};
+  s21::list<int> copyList(myList);
+  EXPECT_EQ(myList.back(), copyList.back());
+  EXPECT_EQ(myList.front(), copyList.front());
+}
+
+TEST(ListTest, MoveConstructor) {
+  s21::list<int> myList = {1, 2, 3, 4};
+  s21::list<int> moveList(std::move(myList));
+  moveList = std::move(moveList);
+  EXPECT_EQ(myList.size(), 0);
+  EXPECT_THROW(myList.back(), std::runtime_error);
+  EXPECT_EQ(1, moveList.front());
+  moveList.swap(myList);
+  EXPECT_EQ(myList.size(), 4);
+  EXPECT_EQ(moveList.size(), 0);
+}
+
+TEST(ListTest, ParameterizedConstructor) {
+  s21::list<int> myList(3);
+  EXPECT_EQ(myList.size(), 3);
+  EXPECT_EQ(*myList.begin(), 0);
+}
+
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

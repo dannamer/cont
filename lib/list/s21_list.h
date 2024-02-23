@@ -7,16 +7,6 @@
 #include "../iterator/iterator.h"
 // #include "ContainerBase.h"
 namespace s21 {
-/**
- * @class list
- * @brief Класс-контейнер, который реализует двусвязный список.
- *
- * @tparam T Тип элементов списка.
- *
- * Класс поддерживает операции добавления, удаления, доступа к элементам,
- * а также операции, специфичные для двусвязного списка, такие как splice,
- * emplace и другие.
- */
 template <typename T>
 class list {
  public:
@@ -33,9 +23,9 @@ class list {
   list(const list& l);
   list(list&& l);
   list<T>& operator=(list&& l);
-  list<T>& operator=(list& l);
+  list<T>& operator=(const list& l);
   iterator begin() { return iterator(head_); }
-  iterator end() { return iterator(tail_->next); }
+  iterator end() { return iterator(nullptr); }
   const_reference front() const;
   const_reference back() const;
   bool empty() const { return !size_; }
@@ -51,24 +41,17 @@ class list {
   void swap(list& other);
   void splice(const_iterator pos, list& other);
   template <typename... Args>
-  void emplace_front(Args&&... args) {
-    ([&] { push_front(std::forward<Args>(args)); }(), ...);
-  }
+  void emplace_front(Args&&... args);
   template <typename... Args>
-  void emplace_back(Args&&... args) {
-    ([&] { push_back(std::forward<Args>(args)); }(), ...);
-  }
+  void emplace_back(Args&&... args);
   template <typename... Args>
-  iterator emplace(const_iterator pos, Args&&... args) {
-    iterator res;
-    ([&] { res = insert(pos, std::forward<Args>(args)); }(), ...);
-    return res;
-  }
+  iterator emplace(iterator pos, Args&&... args);
 
  private:
   Node<T>* head_ = nullptr;
   Node<T>* tail_ = nullptr;
   size_type size_ = 0;
+  Node<T>* findNode(iterator pos);
   void checkSize() const {
     if (!size_) {
       throw std::runtime_error("Список пуст");

@@ -7,14 +7,13 @@ struct Node {
   T value;
   Node* prev;
   Node* next;
-  // template<typename... Args>
-  // Node(Args&&... args) : value(std::forward<Args>(args)...), next(nullptr), prev(nullptr) {}
   Node(T val) : value(val), prev(nullptr), next(nullptr) {}
 };
 
 template <typename T>
 class iterator {
  public:
+  iterator() {}
   iterator(Node<T>* node) : node_(node) {}
   T& operator*() const { return node_->value; }
   iterator& operator++() {
@@ -42,8 +41,8 @@ class iterator {
   bool operator!=(const iterator& other) const { return node_ != other.node_; }
 
  private:
-  Node<T>* node_;
-};
+  Node<T>* node_ = nullptr;
+}; 
 
 template <typename T>
 class const_iterator {
