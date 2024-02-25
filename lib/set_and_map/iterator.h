@@ -17,7 +17,7 @@ class iterator {
 
   iterator(Node<Key>* node) : CNode(node) {}
   reference operator*() const { return CNode->key_; }
-  Node<Key>* operator*() { return CNode; }
+  Node* operator*() { return CNode; }
   pointer operator->() const { return &(CNode->key_); }
   iterator operator+(const std::size_t size) {
     for (std::size_t i = 0; i < size; ++i) {
