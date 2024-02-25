@@ -20,7 +20,8 @@ class BinaryTree {
   class iterator {
    public:
     iterator(Node* node) : itNode(node) {}
-    const Key& operator*() { return itNode->key_; }
+    Key& operator*() { return itNode->key_; }
+    Key* operator->() { return &(itNode->key_); }
     iterator operator+(const std::size_t size) {
       for (std::size_t i = 0; i < size; ++i) {
         ++(*this);

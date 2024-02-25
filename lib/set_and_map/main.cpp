@@ -7,6 +7,8 @@
 #include "BinaryTree.h"
 
 int main() {
-  s21::BinaryTree<int> a = {3, 4, 5, 6, 7, 8, 9, 8};
-  return 0;
+  // s21::BinaryTree<int> a = {3, 4, 5, 6, 7, 8, 9, 8};
+  // return 0;
+  std::map<int, int> a = {{1, 2}, {2, 3}};
+  int l = a[1];
 }
