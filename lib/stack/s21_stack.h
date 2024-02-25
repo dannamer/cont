@@ -31,6 +31,7 @@ class stack : public ContainerBase<T> {
     this->VoidCheck();
     this->size_--;
   }
+  template <typename... Args>
   void emplace_front(Args&&... args) {
     ([&] { push(std::forward<Args>(args)); }(), ...);
   }

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Feb 23 22:02:51 2024
+# Make data base, printed on Sun Feb 25 17:05:07 2024
 
 # Variables
 
@@ -51,7 +51,7 @@ VSCODE_CODE_CACHE_PATH = /home/dannamer/.config/Code/CachedData/903b1e9d8990623e
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.3KLGJ2
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.U9QJJ2
 # default
 .LOADED := 
 # default
@@ -67,7 +67,7 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # makefile (from 'Makefile', line 5)
 SRCS := tests/main.cpp tests/testList.cpp tests/testQueue.cpp tests/testStack.cpp tests/testVector.cpp
 # environment
-VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2024021409/translations/extensions/vscode.json-language-features.i18n.json
+VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2024021409/translations/extensions/vscode.markdown-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -89,13 +89,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 90608
+VSCODE_PID = 42139
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/1853,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/1853
+SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/1805,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/1805
 # automatic
 *F = $(notdir $*)
 # environment
@@ -137,7 +137,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 149ad9c4c93c4c07bfa2992aa02140e9
+INVOCATION_ID = 8b9abc4a91cc4cc0a766d6c2904c252c
 # environment
 USERNAME = dannamer
 # environment
@@ -163,7 +163,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1878
+SYSTEMD_EXEC_PID = 1833
 # environment
 DISPLAY = :0
 # environment
@@ -173,9 +173,9 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1617
+MANAGERPID = 1608
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 90608
+GIO_LAUNCHED_DESKTOP_FILE_PID = 42139
 # environment
 _ = /usr/share/code/code
 # environment
@@ -183,7 +183,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # makefile (from 'Makefile', line 2)
 CFLAGS = -std=c++17 -Wall -Werror -Wextra -Ilib/stack/ -Ilib/queue/ -Ilib/ContainerBase/
 # environment
-JOURNAL_STREAM = 8:33821
+JOURNAL_STREAM = 8:29554
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -296,6 +296,7 @@ OBJ/main.o: tests/main.cpp
 #  Needs to be updated (-q is set).
 # automatic
 # @ := OBJ/main.o
+ 
 # automatic
 # * := main
 # automatic
@@ -311,7 +312,6 @@ OBJ/main.o: tests/main.cpp
 # automatic
 # | := 
 # variable set hash-table stats:
- 
 # Load=8/32=25%, Rehash=0, Collisions=2/16=12%
 #  recipe to execute (from 'Makefile', line 14):
 	mkdir -p $(OBJ_DIR)
@@ -385,6 +385,6 @@ OBJ/testList.o:
 # strcache performance: lookups = 67 / hit rate = 31%
 # hash-table stats:
 # Load=46/8192=1%, Rehash=0, Collisions=0/67=0%
-# Finished Make data base on Fri Feb 23 22:02:51 2024
+# Finished Make data base on Sun Feb 25 17:05:07 2024
 
  

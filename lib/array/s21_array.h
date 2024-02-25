@@ -7,8 +7,8 @@ class array {
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
-  using iterator = T *;
-  using const_iterator = const T *;
+  // using iterator = T *;
+  // using const_iterator = const T *;
   using size_type = std::size_t;
 
   array() {}
@@ -56,12 +56,12 @@ class array {
   };
   bool empty() { return !N; }
   size_type size() { return N; }
-  size_type max_size() {}
+  size_type max_size() { return 0; }
   void swap(array &other);
   void fill(const_reference value);
   iterator begin() { return iterator(data); }
   iterator end() { return iterator(data + N); }
-  
+
  private:
   T data[N];
 };
