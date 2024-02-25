@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Feb 25 17:05:07 2024
+# Make data base, printed on Sun Feb 25 19:18:02 2024
 
 # Variables
 
@@ -67,7 +67,7 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # makefile (from 'Makefile', line 5)
 SRCS := tests/main.cpp tests/testList.cpp tests/testQueue.cpp tests/testStack.cpp tests/testVector.cpp
 # environment
-VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2024021409/translations/extensions/vscode.markdown-language-features.i18n.json
+VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.85.2024021409/translations/extensions/vscode.json-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -89,7 +89,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 42139
+VSCODE_PID = 52719
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
@@ -175,7 +175,7 @@ MAKE_VERSION := 4.3
 # environment
 MANAGERPID = 1608
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 42139
+GIO_LAUNCHED_DESKTOP_FILE_PID = 52719
 # environment
 _ = /usr/share/code/code
 # environment
@@ -282,6 +282,7 @@ push:
 	git commit -m "$(MSG)"
 	git push
 
+ 
 # Not a target:
 OBJ/testVector.o:
 #  Implicit rule search has not been done.
@@ -296,7 +297,6 @@ OBJ/main.o: tests/main.cpp
 #  Needs to be updated (-q is set).
 # automatic
 # @ := OBJ/main.o
- 
 # automatic
 # * := main
 # automatic
@@ -385,6 +385,6 @@ OBJ/testList.o:
 # strcache performance: lookups = 67 / hit rate = 31%
 # hash-table stats:
 # Load=46/8192=1%, Rehash=0, Collisions=0/67=0%
-# Finished Make data base on Sun Feb 25 17:05:07 2024
+# Finished Make data base on Sun Feb 25 19:18:02 2024
 
  
