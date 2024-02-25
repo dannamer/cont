@@ -138,9 +138,9 @@ template <class Key>
 typename BinaryTree<Key>::iterator BinaryTree<Key>::find(const Key& key) {
   N current = root;
   while (current != nullptr) {
-    if (key < current->key_.first) {
+    if (key < current->key_) {
       current = current->left;
-    } else if (key > current->key_.first) {
+    } else if (key > current->key_) {
       current = current->right;
     } else {
       return iterator(current);

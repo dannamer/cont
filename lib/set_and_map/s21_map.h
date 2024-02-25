@@ -30,13 +30,14 @@ class map : public BinaryTree<std::pair<const Key, T>> {
     }
   }
   T &operator[](const Key &key) {
-    auto it = find(key);
+    auto it = this->find(key);
     if (it != this->end()) {
-      return it->second;
+      return *it;
     } else {
       auto pair = insert(std::make_pair(key, T()));
-      return pair.first->second;
+      return (*(pair.first)).second;
     }
+    return *it.second
   }
   std::pair<iterator, bool> insert(const Key &key, const T &obj) {
     return insert(std::make_pair(key, obj));
@@ -50,7 +51,7 @@ class map : public BinaryTree<std::pair<const Key, T>> {
   }
 
  private:
-  using typename BinaryTree<value_type>::find;
+  // using typename BinaryTree<value_type>::find;
 };
 }  // namespace s21
 #endif
