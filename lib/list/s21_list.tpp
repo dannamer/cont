@@ -1,5 +1,6 @@
 
 namespace s21 {
+
 // ITERATOR
 template <typename T>
 typename list<T>::Iterator& list<T>::Iterator::operator++() {
@@ -29,36 +30,68 @@ typename list<T>::Iterator list<T>::Iterator::operator--(int) {
 // ITERATOR
 
 // LIST
-template <typename T>
-void list<T>::checkSize() const {
-  if (!size_) {
-    throw std::runtime_error("Список пуст");
+template <typename value_type>
+list<value_type>::list(size_type n) {
+  for (size_type i = 0; i < n; ++i) {
+    push_back(value_type());
   }
 }
 
-template <typename T>
-typename list<T>::const_reference list<T>::front() const {
+template <typename value_type>
+list<value_type>::list(std::initializer_list<value_type> const& items) {
+  for (const auto& item : items) {
+    push_back(item);
+  }
+}
+
+template <typename value_type>
+list<value_type>::list(const list& l) {
+  *this = l;
+}
+
+template <typename value_type>
+list<value_type>::list(list&& l) {
+  *this = std::move(l);
+}
+
+template <typename value_type>
+list<value_type>& list<value_type>::operator=(const list& l) {
+  clear();
+  Node* current = l.head_;
+  while (current != nullptr) {
+    push_back(current->value);
+    current = current->next;
+  }
+  return *this;
+}
+
+template <typename value_type>
+list<value_type>& list<value_type>::operator=(list&& l) {
+  if (this != &l) {
+    clear();
+    head_ = l.head_;
+    tail_ = l.tail_;
+    size_ = l.size_;
+    l.head_ = l.tail_ = nullptr;
+    l.size_ = 0;
+  }
+  return *this;
+}
+
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::front() const {
   checkSize();
   return head_->value;
 }
 
-template <typename T>
-typename list<T>::const_reference list<T>::back() const {
+template <typename value_type>
+typename list<value_type>::const_reference list<value_type>::back() const {
   checkSize();
   return tail_->value;
 }
 
-template <typename T>
-typename list<T>::Node* list<T>::findNode(iterator pos) {
-  Node* current = head_;
-  while (current != nullptr && iterator(current) != pos) {
-    current = current->next;
-  }
-  return current;
-}
-
-template <typename T>
-void list<T>::clear() {
+template <typename value_type>
+void list<value_type>::clear() {
   Node* current = head_;
   while (current != nullptr) {
     Node* next = current->next;
@@ -69,9 +102,9 @@ void list<T>::clear() {
   size_ = 0;
 }
 
-template <typename T>
-typename list<T>::iterator list<T>::insert(iterator pos,
-                                           const_reference value) {
+template <typename value_type>
+typename list<value_type>::iterator list<value_type>::insert(
+    iterator pos, const_reference value) {
   Node* newNode = new Node(value);
   if (head_ == nullptr) {
     head_ = tail_ = newNode;
@@ -94,8 +127,8 @@ typename list<T>::iterator list<T>::insert(iterator pos,
   return iterator(newNode);
 }
 
-template <typename T>
-void list<T>::erase(iterator pos) {
+template <typename value_type>
+void list<value_type>::erase(iterator pos) {
   checkSize();
   Node* nodeToDelete = findNode(pos);
   if (nodeToDelete == nullptr) {
@@ -115,36 +148,38 @@ void list<T>::erase(iterator pos) {
   }
   delete nodeToDelete;
   --size_;
-  if(size_ == 0) tail_ = head_ = nullptr;
+  if (size_ == 0) tail_ = head_ = nullptr;
 }
 
-template <typename T>
-void list<T>::pop_back() {
+template <typename value_type>
+void list<value_type>::push_back(const_reference value) {
+  insert(end(), value);
+}
+
+template <typename value_type>
+void list<value_type>::pop_back() {
   erase(iterator(tail_));
 }
 
-template <typename T>
-void list<T>::pop_front() {
-  erase(iterator(head_));
-}
-
-template <typename T>
-void list<T>::push_back(const_reference value) {
-  insert(end(), value);
-}
-template <typename T>
-void list<T>::push_front(const_reference value) {
+template <typename value_type>
+void list<value_type>::push_front(const_reference value) {
   insert(begin(), value);
 }
 
-template <typename T>
-void list<T>::swap(list& other) {
-  list<T> tmp = std::move(other);
+template <typename value_type>
+void list<value_type>::pop_front() {
+  erase(iterator(head_));
+}
+
+template <typename value_type>
+void list<value_type>::swap(list& other) {
+  list<value_type> tmp = std::move(other);
   other = std::move(*this);
   *this = std::move(tmp);
 }
-template <typename T>
-void list<T>::merge(list<T>& other) {
+
+template <typename value_type>
+void list<value_type>::merge(list<value_type>& other) {
   while (!other.empty()) {
     this->push_back(other.front());
     other.pop_front();
@@ -152,8 +187,8 @@ void list<T>::merge(list<T>& other) {
   this->sort();
 }
 
-template <typename T>
-void list<T>::splice(const_iterator pos, list& other) {
+template <typename value_type>
+void list<value_type>::splice(const_iterator pos, list& other) {
   if (!other.size()) return;
   Node* splicePos = pos.get_node();
   if (splicePos == nullptr) {
@@ -172,26 +207,70 @@ void list<T>::splice(const_iterator pos, list& other) {
   other.head_ = other.tail_ = nullptr;
 }
 
-template <typename T>
+template <typename value_type>
+void list<value_type>::reverse() {
+  if (!empty()) {
+    list<value_type> new_list;
+    while (!empty()) {
+      new_list.push_front(this->front());
+      this->pop_front();
+    }
+    clear();
+    *this = std::move(new_list);
+  }
+}
+
+template <typename value_type>
+void list<value_type>::unique() {
+  if (!empty()) {
+    auto it = this->begin();
+    while ((it != this->end()) && ((it.get_node())->next)) {
+      if(*it == (it.get_node())->next->value) {
+        auto tmp = it++;
+        erase(tmp);
+      } else {
+        it++;
+      }
+    }
+  }
+}
+
+template <typename value_type>
+void list<value_type>::sort() {
+  Node* temp = head_;
+  while (temp->next) {
+    if (temp->value > temp->next->value) {
+      std::swap(temp->value, temp->next->value);
+      temp = temp->next;
+      sort();
+    } else
+      temp = temp->next;
+  }
+}
+
+template <typename value_type>
 template <typename... Args>
-typename list<T>::iterator list<T>::emplace(iterator pos, Args&&... args) {
+typename list<value_type>::iterator list<value_type>::emplace(iterator pos,
+                                                              Args&&... args) {
   return ([&] { return insert(pos, std::forward<Args>(args)); }(), ...);
 }
 
-template <typename T>
+template <typename value_type>
 template <typename... Args>
-void list<T>::emplace_back(Args&&... args) {
+void list<value_type>::emplace_back(Args&&... args) {
   ([&] { push_back(std::forward<Args>(args)); }(), ...);
 }
 
-template <typename T>
+template <typename value_type>
 template <typename... Args>
-void list<T>::emplace_front(Args&&... args) {
+void list<value_type>::emplace_front(Args&&... args) {
   ([&] { push_front(std::forward<Args>(args)); }(), ...);
 }
 
-template <typename T>
-void list<T>::split(list<T>& source, list<T>& left, list<T>& right) {
+// HELPERS
+template <typename value_type>
+void list<value_type>::split(list<value_type>& source, list<value_type>& left,
+                             list<value_type>& right) {
   left.clear();
   right.clear();
   if (source.size_ == 1) {
@@ -215,66 +294,20 @@ void list<T>::split(list<T>& source, list<T>& left, list<T>& right) {
   }
 }
 
-template <typename T>
-list<T>::list(size_type n) {
-  for (size_type i = 0; i < n; ++i) {
-    push_back(T());
+template <typename value_type>
+void list<value_type>::checkSize() const {
+  if (!size_) {
+    throw std::runtime_error("Список пуст");
   }
 }
 
-template <typename T>
-list<T>::list(std::initializer_list<value_type> const& items) {
-  for (const auto& item : items) {
-    push_back(item);
-  }
-}
-
-template <typename T>
-list<T>::list(const list& l) {
-  *this = l;
-}
-
-template <typename T>
-list<T>::list(list&& l) {
-  *this = std::move(l);
-}
-
-template <typename T>
-list<T>& list<T>::operator=(const list& l) {
-  clear();
-  Node* current = l.head_;
-  while (current != nullptr) {
-    push_back(current->value);
+template <typename value_type>
+typename list<value_type>::Node* list<value_type>::findNode(iterator pos) {
+  Node* current = head_;
+  while (current != nullptr && iterator(current) != pos) {
     current = current->next;
   }
-  return *this;
+  return current;
 }
-
-template <typename T>
-list<T>& list<T>::operator=(list&& l) {
-  if (this != &l) {
-    clear();
-    head_ = l.head_;
-    tail_ = l.tail_;
-    size_ = l.size_;
-    l.head_ = l.tail_ = nullptr;
-    l.size_ = 0;
-  }
-  return *this;
-}
-
-template <typename T>
-void list<T>::sort() {
-  Node* temp = head_;
-  while (temp->next) {
-    if (temp->value > temp->next->value) {
-      std::swap(temp->value, temp->next->value);
-      temp = temp->next;
-      sort();
-    } else
-      temp = temp->next;
-  }
-}
-// LIST
 
 }  // namespace s21

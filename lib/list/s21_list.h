@@ -62,7 +62,6 @@ class list {
   Node *findNode(iterator pos);
   void checkSize() const;
   void split(list<T> &source, list<T> &left, list<T> &right);
-  void sort();
 
  public:
   list() {}
@@ -75,28 +74,32 @@ class list {
   list<T> &operator=(list &&l);
   list<T> &operator=(const list &l);
 
-  iterator begin() { return iterator(head_); }
-  iterator end() { return iterator(nullptr); }
-
   const_reference front() const;
   const_reference back() const;
+
+  iterator begin() { return iterator(head_); }
+  iterator end() { return iterator(nullptr); }
 
   bool empty() const { return !size_; }
   size_type size() const { return size_; }
   size_type max_size() const { return std::numeric_limits<size_type>::max(); }
 
+  void clear();
   iterator insert(iterator pos, const_reference value);
   void erase(iterator pos);
-  void clear();
 
-  void pop_back();
-  void pop_front();
   void push_back(const_reference value);
+  void pop_back();
   void push_front(const_reference value);
+  void pop_front();
+  void sort();
 
   void swap(list &other);
   void merge(list& other);
   void splice(const_iterator pos, list &other);
+  void reverse();
+  void unique();
+
   template <typename... Args>
   void emplace_front(Args &&...args);
   template <typename... Args>
