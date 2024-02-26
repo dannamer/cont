@@ -225,7 +225,7 @@ void list<value_type>::unique() {
   if (!empty()) {
     auto it = this->begin();
     while ((it != this->end()) && ((it.get_node())->next)) {
-      if(*it == (it.get_node())->next->value) {
+      if (*it == (it.get_node())->next->value) {
         auto tmp = it++;
         erase(tmp);
       } else {
@@ -237,14 +237,16 @@ void list<value_type>::unique() {
 
 template <typename value_type>
 void list<value_type>::sort() {
-  Node* temp = head_;
-  while (temp->next) {
-    if (temp->value > temp->next->value) {
-      std::swap(temp->value, temp->next->value);
-      temp = temp->next;
-      sort();
-    } else
-      temp = temp->next;
+  if (!empty()) {
+    Node* temp = head_;
+    while (temp->next) {
+      if (temp->value > temp->next->value) {
+        std::swap(temp->value, temp->next->value);
+        temp = temp->next;
+        sort();
+      } else
+        temp = temp->next;
+    }
   }
 }
 

@@ -4,7 +4,6 @@
 #include <list>
 
 #include "../../list/s21_list.h"
-
 template <typename T>
 bool eq_list(s21::list<T> &s21_l, std::list<T> &std_l) {
   if (s21_l.size() != std_l.size()) return false;

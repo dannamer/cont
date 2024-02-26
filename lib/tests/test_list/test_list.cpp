@@ -1,6 +1,7 @@
 #include "test_list.h"
 
 #include <iostream>
+#include <string>
 
 TEST_F(TEST_LIST, test_constructor_1) {
   s21::list<int> a;
@@ -255,37 +256,6 @@ TEST_F(TEST_LIST, test_iterator_begin_2) {
   EXPECT_EQ(*(a.begin()), *(b.begin()));
 }
 
-// TEST_F(TEST_LIST, test_iterator_end_1) {
-//   std::list<int> b{1,2,3,123,1};
-//   s21::list<int> a{1,2,3,123,1};
-//   auto it = a.begin();
-//   (it++);
-//   (it++);
-//   (it++);
-//   (it++);
-//   (it++);
-//   std::cout << *(b.end()) << std::endl;
-//   std::cout << *(it) << std::endl;
-//   std::cout << *(a.end()) << std::endl;
-//   EXPECT_EQ(*(a.end()), *(b.end()));
-//   a.pop_back();
-//   b.pop_back();
-//   EXPECT_EQ(*(a.end()), *(b.end()));
-//   a.pop_back();
-//   b.pop_back();
-//   a.pop_back();
-//   b.pop_back();
-//   a.pop_back();
-//   b.pop_back();
-//   EXPECT_EQ(*(a.end()), *(b.end()));
-// }
-
-// TEST_F(TEST_LIST, test_iterator_end_2) {
-//   s21::list<int> a{1};
-//   std::list<int> b{1};
-//   EXPECT_EQ(*(a.end()), *(b.end()));
-// }
-
 TEST_F(TEST_LIST, test_insert_1) {
   s21::list<double> our_list;
   std::list<double> std_list;
@@ -374,25 +344,146 @@ TEST_F(TEST_LIST, test_swap) {
   EXPECT_TRUE(eq_list(s21_list2, std_list2));
 }
 
+TEST_F(TEST_LIST, test_merge_1) {
+  s21::list<std::string> s21_list1 = {"Hello, "};
+  s21::list<std::string> s21_list2 = {"Wordl!"};
+  std::list<std::string> std_list1 = {"Hello, "};
+  std::list<std::string> std_list2 = {"Wordl!"};
+  s21_list1.merge(s21_list2);
+  std_list1.merge(std_list2);
+  EXPECT_TRUE(eq_list(s21_list1, std_list1));
+}
+TEST_F(TEST_LIST, test_merge_2) {
+  s21::list<std::string> s21_list1 = {"Hello, "};
+  s21::list<std::string> s21_list2 = {"Hello!"};
+  std::list<std::string> std_list1 = {"Hello, "};
+  std::list<std::string> std_list2 = {"Wordl!"};
+  s21_list1.merge(s21_list2);
+  std_list1.merge(std_list2);
+  EXPECT_FALSE(eq_list(s21_list1, std_list1));
+}
+TEST_F(TEST_LIST, test_merge_3) {
+  s21::list<int> s21_list1 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  s21::list<int> s21_list2 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  std::list<int> std_list1 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  std::list<int> std_list2 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  s21_list1.merge(s21_list2);
+  std_list1.merge(std_list2);
+  EXPECT_FALSE(eq_list(s21_list1, std_list1));
+}
 
-// TEST_F(TEST_LIST, test_merge) {
-//   s21::list<char *> s21_list1 = {"Hello, "};
-//   s21::list<char *> s21_list2 = {"Wordl!"};
-//   std::list<char *> std_list1 = {"Hello, "};
-//   std::list<char *> std_list2 = {"Wordl!"};
-    
+TEST_F(TEST_LIST, test_merge_4) {
+  s21::list<double> s21_list1 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  s21::list<double> s21_list2 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  std::list<double> std_list1 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  std::list<double> std_list2 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  s21_list1.merge(s21_list2);
+  std_list1.merge(std_list2);
+  EXPECT_FALSE(eq_list(s21_list1, std_list1));
+}
+TEST_F(TEST_LIST, test_merge_5) {
+  s21::list<double> s21_list1 = {};
+  s21::list<double> s21_list2 = {};
+  std::list<double> std_list1 = {};
+  std::list<double> std_list2 = {};
+  s21_list1.merge(s21_list2);
+  std_list1.merge(std_list2);
+  EXPECT_TRUE(eq_list(s21_list1, std_list1));
+}
+TEST_F(TEST_LIST, test_splice_1) {
+  s21::list<int> our_list_first = {1};
+  s21::list<int> our_list_second = {2, 3, 4, 5};
+  std::list<int> std_list_first = {1};
+  std::list<int> std_list_second = {2, 3, 4, 5};
+  s21::list<int>::iterator our_it = our_list_first.begin();
+  std::list<int>::iterator std_it = std_list_first.begin();
+  our_list_first.splice(our_it, our_list_second);
+  std_list_first.splice(std_it, std_list_second);
+  EXPECT_EQ(our_list_first.front(), std_list_first.front());
+  EXPECT_EQ(our_list_first.back(), std_list_first.back());
+}
 
-// }
+TEST_F(TEST_LIST, test_reverce_1) {
+  s21::list<int> s21_l1 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  std::list<int> std_l1 = {1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  s21_l1.reverse();
+  std_l1.reverse();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
 
-// TEST_F(TEST_LIST, test_splice) {
-//   s21::list<int> our_list_first = {1};
-//   s21::list<int> our_list_second = {2, 3, 4, 5};
-//   std::list<int> std_list_first = {1};
-//   std::list<int> std_list_second = {2, 3, 4, 5};
-//   s21::list<int>::iterator our_it = our_list_first.begin();
-//   std::list<int>::iterator std_it = std_list_first.begin();
-//   our_list_first.splice(our_it, our_list_second);
-//   std_list_first.splice(std_it, std_list_second);
-//   EXPECT_EQ(our_list_first.front(), std_list_first.front());
-//   EXPECT_EQ(our_list_first.back(), std_list_first.back());
-// }
+TEST_F(TEST_LIST, test_reverce_2) {
+  s21::list<char> s21_l1 = {'1', '2', '3', '4', '5', '6',
+                            '7', '7', '8', '9', '9', '0'};
+  std::list<char> std_l1 = {'1', '2', '3', '4', '5', '6',
+                            '7', '7', '8', '9', '9', '0'};
+  s21_l1.reverse();
+  std_l1.reverse();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
+TEST_F(TEST_LIST, test_reverce_3) {
+  s21::list<int> s21_l1 = {};
+  std::list<int> std_l1 = {};
+  s21_l1.reverse();
+  std_l1.reverse();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
+TEST_F(TEST_LIST, test_unique_1) {
+  s21::list<int> s21_l1 = {1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  std::list<int> std_l1 = {1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 7, 7, 8, 9, 9, 90, 0};
+  s21_l1.unique();
+  std_l1.unique();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
+
+TEST_F(TEST_LIST, test_unique_2) {
+  s21::list<char> s21_l1 = {'1', '2', '2', '2', '2', '2', '2', '3', '4', '4',
+                            '4', '4', '5', '6', '7', '7', '8', '9', '9', '0'};
+  std::list<char> std_l1 = {'1', '2', '2', '2', '2', '2', '2', '3', '4', '4',
+                            '4', '4', '5', '6', '7', '7', '8', '9', '9', '0'};
+  s21_l1.unique();
+  std_l1.unique();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
+
+TEST_F(TEST_LIST, test_unique_3) {
+  s21::list<int> s21_l1 = {9, 23, 23, 231212, 3, 123, 12, 3123, 1, 2, 3,  3, 3,
+                           3, 3,  4,  5,      6, 7,   7,  8,    9, 9, 90, 0};
+  std::list<int> std_l1 = {9, 23, 23, 231212, 3, 123, 12, 3123, 1, 2, 3,  3, 3,
+                           3, 3,  4,  5,      6, 7,   7,  8,    9, 9, 90, 0};
+  s21_l1.unique();
+  std_l1.unique();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
+TEST_F(TEST_LIST, test_unique_4) {
+  s21::list<int> s21_l1 = {};
+  std::list<int> std_l1 = {};
+  s21_l1.unique();
+  std_l1.unique();
+  EXPECT_TRUE(eq_list(s21_l1, std_l1));
+}
+TEST_F(TEST_LIST, test_sort_1) {
+  s21::list<int> a{1, 2, 431, 2, 321, 321312, 123, 21, 3, 12, 312, 3, 12};
+  std::list<int> b{1, 2, 431, 2, 321, 321312, 123, 21, 3, 12, 312, 3, 12};
+  a.sort();
+  b.sort();
+
+  EXPECT_TRUE(eq_list(a, b));
+}
+
+TEST_F(TEST_LIST, test_sort_2) {
+  s21::list<int> a{};
+  std::list<int> b{};
+  a.sort();
+  b.sort();
+
+  EXPECT_TRUE(eq_list(a, b));
+}
+
+TEST_F(TEST_LIST, test_sort_3) {
+  s21::list<int> a{87321,321,123,2,5,4356,345,6,132,12,3,123,213,12,3,43645,6,45,6,54,6};
+  std::list<int> b{87321,321,123,2,5,4356,345,6,132,12,3,123,213,12,3,43645,6,45,6,54,6};
+  a.sort();
+  b.sort();
+
+  EXPECT_TRUE(eq_list(a, b));
+}
