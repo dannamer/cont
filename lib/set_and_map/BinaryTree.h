@@ -4,13 +4,14 @@
 namespace s21 {
 template <class Key>
 class BinaryTree {
- private:
+ protected:
   struct Node {
     Key key_;
     Node *left = nullptr, *right = nullptr, *parent = nullptr;
     Node(Key key) : key_(key) {}
     Node(Key key, Node* parent) : key_(key), parent(parent) {}
   };
+  Node* root = nullptr;
 
  public:
   using key_type = Key;
@@ -19,7 +20,8 @@ class BinaryTree {
   using size_type = std::size_t;
   class iterator {
    public:
-    iterator(Node* node) : itNode(node) {}
+    iterator(Node* node, BinaryTree<Key>* tree_ = nullptr)
+        : itNode(node), tree(tree_) {}
     Key& operator*() { return itNode->key_; }
     Key* operator->() { return &(itNode->key_); }
     iterator operator+(const std::size_t size) {
@@ -36,15 +38,11 @@ class BinaryTree {
         }
       } else {
         Node* tempNode = itNode->parent;
-        Node* last = itNode->last;
         while (tempNode != nullptr && itNode == tempNode->right) {
           itNode = tempNode;
           tempNode = tempNode->parent;
         }
         itNode = tempNode;
-        if (!itNode) {
-          itNode = last;
-        }
       }
       return *this;
     }
@@ -53,13 +51,20 @@ class BinaryTree {
       ++(*this);
       return temp;
     }
+    iterator operator--();
+    iterator operator--(int) {
+      iterator temp = *this;
+      --(*this);
+      return temp;
+    }
     bool operator==(const iterator& other) const {
       return this->itNode == other.itNode;
     }
     bool operator!=(const iterator& other) const { return !(*this == other); }
 
-   private:
+   protected:
     Node* itNode;
+    BinaryTree<Key>* tree;
   };
   class const_iterator {};
   BinaryTree() {}
@@ -88,9 +93,11 @@ class BinaryTree {
   // void clearEnd();
   // void setNewEnd();
   N copyBinaryTree(N CRoot);
-  N root = nullptr;
+  Node* findMax(Node* node);
   // N rootEnd = nullptr;
   size_type size_ = 0;
+  Node* deleteNode(Node* node, Key key);
+  
 };
 #include "BinaryTree.tpp"
 }  // namespace s21

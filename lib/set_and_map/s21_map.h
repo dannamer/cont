@@ -12,7 +12,7 @@ class map : public BinaryTree<std::pair<const Key, T>> {
   using typename BinaryTree<value_type>::iterator;
   using typename BinaryTree<value_type>::const_iterator;
   using typename BinaryTree<value_type>::size_type;
-
+  using typename BinaryTree<value_type>::Node;
   using typename BinaryTree<value_type>::insert;
 
   map() {}
@@ -22,7 +22,7 @@ class map : public BinaryTree<std::pair<const Key, T>> {
   map(const map &m) : BinaryTree<value_type>(m) {}
   map(map &&m) : BinaryTree<value_type>(std::move(m)) {}
   T &at(const Key &key) {
-    auto it = find(key);
+    auto it = search(key);
     if (it != this->end()) {
       return it->second;
     } else {
@@ -30,7 +30,7 @@ class map : public BinaryTree<std::pair<const Key, T>> {
     }
   }
   T &operator[](const Key &key) {
-    auto it = this->find({key, T()});
+    auto it = search(key);
     if (it != this->end()) {
       return it->second;
     } else {
@@ -49,8 +49,28 @@ class map : public BinaryTree<std::pair<const Key, T>> {
     return it;
   }
 
+  bool contains(const Key &key) {
+    return search(key) != this->end() ? true : false;
+  }
+
  private:
-  // using typename BinaryTree<value_type>::find;
+  iterator search(const Key &key) {
+    return iterator(searchRec(this->root, key), this);
+  }
+  Node *searchRec(Node *node, const Key &key) {
+    if (node == nullptr || node->key_.first == key) {
+      return node;
+    }
+    if (key < node->key_.first) {
+      return searchRec(node->left, key);
+    } else {
+      return searchRec(node->right, key);
+    }
+  }
+  // bool operator<(const std::pair<Key, T> &lhs,
+  //                const std::pair<Key, T> &rhs) const {
+  //   return lhs.first < rhs.first;
+  // }
 };
 }  // namespace s21
 #endif

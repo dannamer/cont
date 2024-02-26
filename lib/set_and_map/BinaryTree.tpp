@@ -24,7 +24,7 @@ BinaryTree<Key>::BinaryTree(BinaryTree&& m) {
 
 template <class Key>
 void BinaryTree<Key>::merge(BinaryTree& other) {
-  for (auto it = other.begin(); it != other.end; ++it) {
+  for (auto it = other.begin(); it != other.end(); ++it) {
     insert(*it);
   }
   other.clear();
@@ -40,7 +40,7 @@ BinaryTree<Key>& BinaryTree<Key>::operator=(BinaryTree&& m) {
     // rootEnd = m.rootEnd;
     m.size_ = 0;
     m.root = nullptr;
-    m.rootEnd = nullptr;
+    // m.rootEnd = nullptr;
   }
   return *this;
 }
@@ -58,9 +58,9 @@ typename BinaryTree<Key>::N BinaryTree<Key>::copyBinaryTree(N CRoot) {
   if (CRoot == nullptr) {
     return nullptr;
   }
-  N newNode = new Node(CRoot->key_.first, CRoot->key_.second);
-  newNode->left = copyBinaryTree(root->left);
-  newNode->right = copyBinaryTree(root->right);
+  N newNode = new Node(CRoot->key_);
+  newNode->left = copyBinaryTree(CRoot->left);
+  newNode->right = copyBinaryTree(CRoot->right);
   return newNode;
 }
 
@@ -71,15 +71,14 @@ std::pair<typename BinaryTree<Key>::iterator, bool> BinaryTree<Key>::insert(
   N tmp = insertRec(root, value, nullptr, isset);
   if (isset) ++size_;
   // setNewEnd();
-  return std::make_pair(iterator(tmp), isset);
+  return std::make_pair(iterator(tmp, this), isset);
 }
 
 // template <class Key>
 // void BinaryTree<Key>::setNewEnd() {
 //   clearEnd();
-//   rootEnd = new Node(std::make_pair(size(), 0), (begin() + (size() - 1)).getNode());
-//   N last = rootEnd->parent;
-//   if (last->left == nullptr)
+//   rootEnd = new Node(std::make_pair(size(), 0), (begin() + (size() -
+//   1)).getNode()); N last = rootEnd->parent; if (last->left == nullptr)
 //     last->last = rootEnd;
 //   else if (last != root && last->left != nullptr &&
 //            last->left->right == nullptr && last->left->left == nullptr) {
@@ -117,12 +116,12 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::begin() {
   while (node != nullptr && node->left != nullptr) {
     node = node->left;
   }
-  return iterator(node);
+  return iterator(node, this);
 }
 
 template <class Key>
 typename BinaryTree<Key>::iterator BinaryTree<Key>::end() {
-  return iterator(nullptr);
+  return iterator(nullptr, this);
 }
 
 // template <class Key>
@@ -143,7 +142,7 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::find(const Key& key) {
     } else if (key > current->key_) {
       current = current->right;
     } else {
-      return iterator(current);
+      return iterator(current, this);
     }
   }
   return end();
@@ -158,21 +157,40 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::find(const Key& key) {
 //       node = node->left;
 //   }
 // }
-template <class Key>
-bool BinaryTree<Key>::contains(const Key& key) {
-  return find(key) != end() ? true : false;
-}
+// template <class Key>
+// bool BinaryTree<Key>::contains(const Key& key) {
+//   return find(key) != end() ? true : false;
+// }
 template <class Key>
 void BinaryTree<Key>::erase(iterator pos) {
-  Node tmpRoot = root;
-  root = nullptr;
-  auto itBegin = this->begin();
-  while (itBegin != this->end()) {
-    if (pos != itBegin) insert(*itBegin);
-    itBegin++;
-  }
+  deleteNode(root, *pos);
 }
 
+template <class Key>
+typename BinaryTree<Key>::Node* BinaryTree<Key>::deleteNode(Node* node,
+                                                            Key key) {
+  if (node == nullptr) {
+    return nullptr;
+  } else if (key < node->key_) {
+    node->left = deleteNode(node->left, key);
+  } else if (key > node->key_) {
+    node->right = deleteNode(node->right, key);
+  } else {
+    if (node->left == nullptr || node->right == nullptr) {
+      Node* temp = (node->left == nullptr) ? node->right : node->left;
+      if (temp != nullptr) {
+        temp->parent = node->parent;
+      }
+      delete node;
+      node = temp;
+    } else {
+      Node* maxLeft = findMax(node->left);
+      node->key_ = maxLeft->key_;
+      node->right = deleteNode(node->right, maxLeft->key_);
+    }
+  }
+  return node;
+}
 template <class Key>
 void BinaryTree<Key>::clear() {
   clearRec(root);
@@ -188,4 +206,32 @@ void BinaryTree<Key>::clearRec(N node) {
     clearRec(node->right);
     delete node;
   }
+}
+
+template <class Key>
+typename BinaryTree<Key>::iterator BinaryTree<Key>::iterator::operator--() {
+  if (itNode == nullptr) {
+    itNode = tree->findMax(tree->root);
+  } else if (itNode->left != nullptr) {
+    itNode = tree->findMax(itNode->left);
+  } else {
+    Node* temp = itNode->parent;
+    while (temp != nullptr && itNode == temp->left) {
+      itNode = temp;
+      temp = temp->parent;
+    }
+    itNode = temp;
+  }
+  return *this;
+}
+
+template <class Key>
+typename BinaryTree<Key>::Node* BinaryTree<Key>::findMax(Node* node) {
+  if (node) {
+    while (node->right != nullptr) {
+      node = node->right;
+    }
+    return node;
+  }
+  return nullptr;
 }

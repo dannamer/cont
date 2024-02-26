@@ -1,15 +1,37 @@
 #include <iostream>
-#include <map>
-#include "s21_map.h"
-#include "s21_set.h"
+
+class Outer {
+ public:
+  Outer(int value) : privateValue(value) {}
+
+  void showInner() {
+    Inner inner(this);
+    inner.display();
+  }
+  void lol() {
+    std::cout << "получилось" << std::endl;
+  }
+ private:
+  int privateValue;
+
+  // Вложенный класс Inner
+  class Inner {
+   public:
+    Inner(Outer* outer) : outerPtr(outer) {}
+  
+    void display() {
+      // Вложенный класс может доступиться к private членам внешнего класса
+      std::cout << "Value from Outer: " << outerPtr->privateValue << std::endl;
+    }
+
+   private:
+    Outer* outerPtr;  // Указатель на экземпляр внешнего класса
+  };
+};
+
 int main() {
-  s21::map<int, int> a = {std::make_pair(3, 6), std::make_pair(2, 7)};
-  s21::set<int> lol = {1, 3, 4, 5, 6};
-  a.insert(std::make_pair(-1, 3));
-  a.insert(-5, 3);
-  a.insert(3, 3);
-  a.insert(9, 3);
-  a.insert(6, 3);
-  auto itm = a.end();
+  Outer outer(100);
+  outer.showInner();
+
   return 0;
 }
