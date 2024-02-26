@@ -1,5 +1,6 @@
 #ifndef CONTAINER_BASE_H_
 #define CONTAINER_BASE_H_
+#include <stdexcept>
 
 namespace s21 {
 template <typename T>
