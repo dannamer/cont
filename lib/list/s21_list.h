@@ -95,7 +95,7 @@ class list {
   void sort();
 
   void swap(list &other);
-  void merge(list& other);
+  void merge(list &other);
   void splice(const_iterator pos, list &other);
   void reverse();
   void unique();
@@ -106,8 +106,6 @@ class list {
   void emplace_back(Args &&...args);
   template <typename... Args>
   iterator emplace(iterator pos, Args &&...args);
-
-
 };
 }  // namespace s21
 #include "s21_list.tpp"
