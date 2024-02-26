@@ -6,8 +6,8 @@ SRC = ./
 DIR_LIST = $(SRC)test_list/
 DIR_QUEUE = $(SRC)test_queue/
 DIR_STACK = $(SRC)test_stack/
-
-SOURCE = $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp *.cpp
+DIR_VECTOR = $(SRC)test_vector/
+SOURCE = $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp $(DIR_VECTOR)*.cpp *.cpp
 OBJ-FILE = *.o
 
 test: obj-file
