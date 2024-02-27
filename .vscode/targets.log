@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Feb 26 23:48:02 2024
+# Make data base, printed on Tue Feb 27 04:37:18 2024
 
 # Variables
 
@@ -219,10 +219,10 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 66311, inode 7477527): 47 files, no impossibilities.
+# . (device 66311, inode 7477527): 32 files, no impossibilities.
 # tests (device 66311, inode 7477665): 7 files, no impossibilities.
 
-# 54 files, no impossibilities in 2 directories.
+# 39 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -286,6 +286,7 @@ OBJ/testVector.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 OBJ/main.o: tests/main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
@@ -309,7 +310,6 @@ OBJ/main.o: tests/main.cpp
 # automatic
 # | := 
 # variable set hash-table stats:
- 
 # Load=8/32=25%, Rehash=0, Collisions=2/16=12%
 #  recipe to execute (from 'Makefile', line 14):
 	mkdir -p $(OBJ_DIR)
@@ -377,12 +377,12 @@ OBJ/testList.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 69 / storage = 1317 B / avg = 19 B
-# current buf: size = 8162 B / used = 1317 B / count = 69 / avg = 19 B
+# strcache buffers: 1 (0) / strings = 54 / storage = 601 B / avg = 11 B
+# current buf: size = 8162 B / used = 601 B / count = 54 / avg = 11 B
 
-# strcache performance: lookups = 91 / hit rate = 24%
+# strcache performance: lookups = 76 / hit rate = 28%
 # hash-table stats:
-# Load=69/8192=1%, Rehash=0, Collisions=0/91=0%
-# Finished Make data base on Mon Feb 26 23:48:02 2024
+# Load=54/8192=1%, Rehash=0, Collisions=0/76=0%
+# Finished Make data base on Tue Feb 27 04:37:18 2024
 
  

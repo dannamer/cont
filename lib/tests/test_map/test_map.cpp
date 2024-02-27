@@ -1,13 +1,12 @@
-#include <gtest/gtest.h>
+#include "test_map.h"
 
 #include <string>
 
-#include "s21_map.h"
-TEST(MapTest, DefaultConstructor) {
+TEST(TEST_MAP, DefaultConstructor) {
   s21::map<int, int> m;
   EXPECT_EQ(m.size(), 0);
 }
-TEST(MapTest, InitializerListConstructor) {
+TEST(TEST_MAP, InitializerListConstructor) {
   s21::map<int, int> m{{1, 2}, {3, 4}, {5, 6}};
   EXPECT_EQ(m.size(), 3);
   EXPECT_EQ(m[1], 2);
@@ -15,7 +14,7 @@ TEST(MapTest, InitializerListConstructor) {
   EXPECT_EQ(m[5], 6);
 }
 
-TEST(MapTest, CopyConstructor) {
+TEST(TEST_MAP, CopyConstructor) {
   s21::map<int, int> originalMap;
   originalMap.insert(std::make_pair(1, 100));
   originalMap.insert(std::make_pair(2, 200));
@@ -27,7 +26,7 @@ TEST(MapTest, CopyConstructor) {
   EXPECT_EQ(copiedMap[2], 200);
 }
 
-TEST(MapTest, MoveConstructor) {
+TEST(TEST_MAP, MoveConstructor) {
   s21::map<int, int> originalMap;
   originalMap.insert(std::make_pair(1, 100));
   originalMap.insert(std::make_pair(2, 200));
@@ -40,7 +39,7 @@ TEST(MapTest, MoveConstructor) {
   EXPECT_TRUE(originalMap.empty());
 }
 
-TEST(MapTest, MoveAssignmentOperator) {
+TEST(TEST_MAP, MoveAssignmentOperator) {
   s21::map<int, int> originalMap;
   originalMap.insert(std::make_pair(1, 100));
   originalMap.insert(std::make_pair(2, 200));
@@ -54,7 +53,7 @@ TEST(MapTest, MoveAssignmentOperator) {
   EXPECT_TRUE(originalMap.empty());
 }
 
-TEST(MapTest, AtMethod) {
+TEST(TEST_MAP, AtMethod) {
   s21::map<int, int> myMap;
   myMap.insert(std::make_pair(1, 100));
   myMap.insert(std::make_pair(2, 200));
@@ -68,7 +67,7 @@ TEST(MapTest, AtMethod) {
 }
 
 // Тест для оператора []
-TEST(MapTest, SubscriptOperator) {
+TEST(TEST_MAP, SubscriptOperator) {
   s21::map<int, int> myMap;
 
   // Доступ или вставка элемента
@@ -88,7 +87,7 @@ TEST(MapTest, SubscriptOperator) {
 }
 
 // Тест для метода begin
-TEST(MapTest, BeginMethod) {
+TEST(TEST_MAP, BeginMethod) {
   s21::map<int, int> myMap;
   myMap.insert(std::make_pair(1, 100));
   myMap.insert(std::make_pair(2, 200));
@@ -100,7 +99,7 @@ TEST(MapTest, BeginMethod) {
 }
 
 // Тест для метода end
-TEST(MapTest, EndMethod) {
+TEST(TEST_MAP, EndMethod) {
   s21::map<int, int> myMap;
   myMap.insert(std::make_pair(1, 100));
   myMap.insert(std::make_pair(2, 200));
@@ -115,7 +114,7 @@ TEST(MapTest, EndMethod) {
   EXPECT_EQ(it->second, 200);
 }
 
-TEST(MapTest, EmptyMapBeginEnd) {
+TEST(TEST_MAP, EmptyMapBeginEnd) {
   s21::map<int, int> myMap;
 
   // Проверяем, что begin и end возвращают одно и то же для пустого map, т.е.,
@@ -123,7 +122,7 @@ TEST(MapTest, EmptyMapBeginEnd) {
   EXPECT_EQ(myMap.begin(), myMap.end());
 }
 
-TEST(MapTest, Empty) {
+TEST(TEST_MAP, Empty) {
   s21::map<int, int> myMap;
 
   // Проверяем, что карта пустая при создании
@@ -137,7 +136,7 @@ TEST(MapTest, Empty) {
 }
 
 // Пример тестов для функции size()
-TEST(MapTest, Size) {
+TEST(TEST_MAP, Size) {
   s21::map<int, int> myMap;
 
   // Проверяем, что размер карты равен 0 при создании
@@ -152,19 +151,19 @@ TEST(MapTest, Size) {
 }
 
 // // Пример тестов для функции max_size()
-// TEST(MapTest, MaxSize) {
+// TEST(TEST_MAP, MaxSize) {
 //   s21::map<int, int> myMap;
 
 //   // Проверяем, что размер карты не превышает максимально возможный размер
 //   EXPECT_LE(myMap.size(), myMap.max_size());
 // }
-TEST(mapConstructorTest, DefaultConstructor) {
+TEST(TEST_MAP, DefaultConstruct) {
   s21::map<int, std::string> m;
   EXPECT_EQ(m.size(), 0);
   EXPECT_TRUE(m.empty());
 }
 
-TEST(mapConstructorTest, InitializerListConstructor) {
+TEST(TEST_MAP, InitializerListConstruc) {
   s21::map<int, std::string> m{{1, "one"}, {2, "two"}, {3, "three"}};
   EXPECT_EQ(m.size(), 3);
   EXPECT_FALSE(m.empty());
@@ -173,7 +172,7 @@ TEST(mapConstructorTest, InitializerListConstructor) {
   EXPECT_EQ(m.at(3), "three");
 }
 
-TEST(mapConstructorTest, CopyConstructor) {
+TEST(TEST_MAP, CopyConstruct) {
   s21::map<int, std::string> m{{1, "one"}, {2, "two"}, {3, "three"}};
   s21::map<int, std::string> copy_m(m);
   EXPECT_EQ(copy_m.size(), 3);
@@ -181,7 +180,7 @@ TEST(mapConstructorTest, CopyConstructor) {
   EXPECT_EQ(copy_m.at(1), "one");
 }
 // Test the insert(key, value) function
-TEST(mapTest, InsertKeyValue) {
+TEST(TEST_MAP, InsertKeyValue) {
   s21::map<int, std::string> map;
   // Insert a single key-value pair
   map.insert(1, "one");
@@ -201,7 +200,7 @@ TEST(mapTest, InsertKeyValue) {
   EXPECT_EQ(map[2], "two");
 }
 // Test the insert(pair) function
-TEST(mapTest, InsertPair) {
+TEST(TEST_MAP, InsertPair) {
   s21::map<int, std::string> map;
   // Insert a single key-value pair using a pair object
   map.insert(std::make_pair(1, "one"));
@@ -220,7 +219,7 @@ TEST(mapTest, InsertPair) {
   EXPECT_EQ(map.contains(2), true);
   EXPECT_EQ(map[2], "two");
 }
-TEST(mapTest, InsertOrAssign) {
+TEST(TEST_MAP, InsertOrAssign) {
   s21::map<int, std::string> map;
   // Insert a new element with a key that does not exist.
   auto [it1, inserted1] = map.insert_or_assign(1, "one");
@@ -244,7 +243,7 @@ TEST(mapTest, InsertOrAssign) {
   EXPECT_EQ(map[4], "four");
   EXPECT_EQ(map[5], "five");
 }
-TEST(mapTest, AtAndOperatorBrackets) {
+TEST(TEST_MAP, AtAndOperatorBrackets) {
   s21::map<int, std::string> map = {{1, "one"}, {2, "two"}, {3, "three"}};
 
   EXPECT_EQ(map.at(1), "one");
@@ -256,7 +255,7 @@ TEST(mapTest, AtAndOperatorBrackets) {
   EXPECT_EQ(map[2], "TWO");
 }
 
-TEST(mapTest, EmptyAndSize) {
+TEST(TEST_MAP, EmptyAndSize) {
   s21::map<int, std::string> empty_map;
   s21::map<int, std::string> map = {{1, "one"}, {2, "two"}, {3, "three"}};
 
@@ -267,14 +266,14 @@ TEST(mapTest, EmptyAndSize) {
   EXPECT_EQ(map.size(), 3);
 }
 
-TEST(mapTest, MaxSize) {
+TEST(TEST_MAP, MaxSize) {
   s21::map<int, std::string> map;
   std::map<int, std::string> map1;
 
   // Max size is implementation-dependent, but it should be greater than 0
   EXPECT_GT(map.max_size(), map1.max_size());
 }
-// TEST(mapTest, Erase) {
+// TEST(TEST_MAP, Erase) {
 //   s21::map<int, std::string> map;
 
 //   map.insert({1, "one"});
@@ -289,7 +288,7 @@ TEST(mapTest, MaxSize) {
 //   EXPECT_FALSE(map.contains(1));
 // }
 
-TEST(mapTest, Swap) {
+TEST(TEST_MAP, Swap) {
   s21::map<int, std::string> map1;
   map1.insert({1, "one"});
   map1.insert({2, "two"});
@@ -309,7 +308,7 @@ TEST(mapTest, Swap) {
   EXPECT_TRUE(map2.contains(2));
 }
 
-TEST(mapTest, Merge) {
+TEST(TEST_MAP, Merge) {
   s21::map<int, std::string> map1;
   map1.insert({1, "one"});
   map1.insert({2, "two"});
@@ -327,16 +326,11 @@ TEST(mapTest, Merge) {
   EXPECT_TRUE(map1.contains(4));
 }
 
-TEST(mapTest, Contains) {
+TEST(TEST_MAP, Contains) {
   s21::map<int, std::string> map;
 
   map.insert({1, "one"});
   map.insert({2, "two"});
   EXPECT_TRUE(map.contains(2));
   EXPECT_FALSE(map.contains(3));
-}
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }

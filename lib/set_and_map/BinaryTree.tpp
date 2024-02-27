@@ -157,10 +157,10 @@ typename BinaryTree<Key>::iterator BinaryTree<Key>::find(const Key& key) {
 //       node = node->left;
 //   }
 // }
-// template <class Key>
-// bool BinaryTree<Key>::contains(const Key& key) {
-//   return find(key) != end() ? true : false;
-// }
+template <class Key>
+bool BinaryTree<Key>::contains(const Key& key) {
+  return find(key) != end() ? true : false;
+}
 template <class Key>
 void BinaryTree<Key>::erase(iterator pos) {
   deleteNode(root, *pos);
@@ -183,11 +183,13 @@ typename BinaryTree<Key>::Node* BinaryTree<Key>::deleteNode(Node* node,
       }
       delete node;
       node = temp;
+      size_--;
     } else {
       Node* maxLeft = findMax(node->left);
       node->key_ = maxLeft->key_;
       node->right = deleteNode(node->right, maxLeft->key_);
     }
+    
   }
   return node;
 }

@@ -20,7 +20,6 @@ class set : public s21::BinaryTree<Key> {
   set(const set &s) : BinaryTree<Key>(s) {}
   set(set &&s) : BinaryTree<Key>(std::move(s)) {}
 
-
  private:
 };
 }  // namespace s21
