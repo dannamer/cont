@@ -191,3 +191,210 @@ TEST_F(TEST_VECTOR, size_not_eq_5) {
   std::vector<char> vstd = {'1'};
   EXPECT_NE(vstd.size(), v21.size());
 }
+
+TEST_F(TEST_VECTOR, max_size_eq_1) {
+  s21::vector<double> v21;
+  std::vector<double> vstd;
+  EXPECT_EQ(vstd.max_size(), v21.max_size());
+}
+
+TEST_F(TEST_VECTOR, max_size_eq_2) {
+  s21::vector<char> v21 = {'1', '2', '3', '4', '5'};
+  std::vector<char> vstd = {'1', '2', '3', '4', '5'};
+  EXPECT_EQ(vstd.max_size(), v21.max_size());
+}
+
+TEST_F(TEST_VECTOR, max_size_eq_3) {
+  s21::vector<char> v21 = {};
+  std::vector<char> vstd = {};
+  EXPECT_EQ(vstd.max_size(), v21.max_size());
+}
+
+
+TEST_F(TEST_VECTOR, reserve_test_0) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  v21.reserve(10);
+  vstd.reserve(10);
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, reserve_test_1) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  v21.reserve(0);
+  vstd.reserve(0);
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, reserve_test_2) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  v21.reserve(239478);
+  vstd.reserve(239478);
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, reserve_test_3) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  EXPECT_THROW(v21.reserve(__INT64_MAX__), std::bad_alloc);
+  EXPECT_THROW(vstd.reserve(__INT64_MAX__), std::bad_alloc);
+}
+
+TEST_F(TEST_VECTOR, capacity_test_0) {
+  s21::vector<char> v21{'1', '2', '3', '1', '2', '3',
+                        '1', '2', '3', '1', '2', '3'};
+  std::vector<char> vstd{'1', '2', '3', '1', '2', '3',
+                         '1', '2', '3', '1', '2', '3'};
+  EXPECT_EQ(vstd.capacity(), v21.capacity());
+}
+
+TEST_F(TEST_VECTOR, capacity_test_1) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  EXPECT_EQ(vstd.capacity(), v21.capacity());
+}
+
+TEST_F(TEST_VECTOR, capacity_test_2) {
+  s21::vector<int> v21{123,    12,   3,  123, 1321, 123,
+                       210321, -213, -3, 3,   123,  12};
+  std::vector<int> vstd{123,    12,   3,  123, 1321, 123,
+                        210321, -213, -3, 3,   123,  12};
+  EXPECT_EQ(vstd.capacity(), v21.capacity());
+}
+
+TEST_F(TEST_VECTOR, capacity_test_3) {
+  s21::vector<double> v21{12.32, 321.312, 213.231, 123.12};
+  std::vector<double> vstd{12.32, 321.312, 213.231, 123.12};
+  EXPECT_EQ(vstd.capacity(), v21.capacity());
+}
+
+TEST_F(TEST_VECTOR, Capacity_shrink_to_fit_1) {
+  s21::vector<int> s21_v;
+  std::vector<int> std_v;
+  s21_v.reserve(10);
+  std_v.reserve(10);
+  s21_v.shrink_to_fit();
+  std_v.shrink_to_fit();
+  EXPECT_EQ(s21_v.capacity(), std_v.capacity());
+}
+
+TEST_F(TEST_VECTOR, Capacity_shrink_to_fit_2) {
+  s21::vector<int> s21_v{1, 2, 3};
+  std::vector<int> std_v{1, 2, 3};
+  s21_v.reserve(10);
+  std_v.reserve(10);
+  s21_v.shrink_to_fit();
+  std_v.shrink_to_fit();
+  EXPECT_EQ(s21_v.capacity(), std_v.capacity());
+}
+
+TEST_F(TEST_VECTOR, clear_test_1) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  v21.reserve(239478);
+  vstd.reserve(239478);
+  v21.clear();
+  vstd.clear();
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, clear_test_2) {
+  s21::vector<char> v21;
+  std::vector<char> vstd;
+  v21.clear();
+  vstd.clear();
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, clear_test_3) {
+  s21::vector<char> v21{'1', '2', '3', '1', '2', '3',
+                        '1', '2', '3', '1', '2', '3'};
+  std::vector<char> vstd{'1', '2', '3', '1', '2', '3',
+                         '1', '2', '3', '1', '2', '3'};
+  v21.clear();
+  vstd.clear();
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, erase_test_1) {
+  s21::vector<char> v21{'1', '2', '3', '1', '2', '3',
+                        '1', '2', '3', '1', '2', '3'};
+  std::vector<char> vstd{'1', '2', '3', '1', '2', '3',
+                         '1', '2', '3', '1', '2', '3'};
+  auto it = v21.begin();
+  v21.erase(it);
+  auto it2 = vstd.begin();
+  vstd.erase(it2);
+  EXPECT_EQ(vstd.size(), v21.size());
+  v21.erase(it);
+  vstd.erase(it2);
+  EXPECT_EQ(vstd.size(), v21.size());
+  it = v21.end();
+  it2 = vstd.end();
+  EXPECT_EQ(vstd.size(), v21.size());
+  it = v21.end();
+  it2 = vstd.end();
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, push_pop_1) {
+  s21::vector<int> v21{};
+  std::vector<int> vstd{1, 2, 4, 7, -1, 5, -64, -1, -334};
+
+  v21.push_back(1);
+  v21.push_back(2);
+  v21.push_back(4);
+  v21.push_back(7);
+  v21.push_back(-1);
+  v21.push_back(5);
+  v21.push_back(-64);
+  v21.push_back(-1);
+  v21.push_back(-334);
+
+  EXPECT_EQ(vstd[0], v21[0]);
+  EXPECT_EQ(vstd[3], v21[3]);
+  EXPECT_EQ(vstd[7], v21[7]);
+
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, push_pop_2) {
+  s21::vector<int> v21{32, 3, 23, 2, 3};
+  std::vector<int> vstd{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
+
+  v21.push_back(1);
+  v21.push_back(2);
+  v21.push_back(4);
+  v21.push_back(7);
+  v21.push_back(-1);
+  v21.push_back(5);
+  v21.push_back(-64);
+  v21.push_back(-1);
+  v21.push_back(-334);
+
+  EXPECT_EQ(vstd[0], v21[0]);
+  EXPECT_EQ(vstd[3], v21[3]);
+  EXPECT_EQ(vstd[9], v21[9]);
+
+  EXPECT_EQ(vstd.size(), v21.size());
+}
+
+TEST_F(TEST_VECTOR, swap_test_1) {
+  // s21::vector<int> v21_1{32, 3, 23, 2, 3};
+  // std::vector<int> v21_2{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
+  // s21::vector<int> vstd_1{32, 3, 23, 2, 3};
+  // std::vector<int> vstd_2{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
+
+  // std::pair<int,int> a = std::make_pair(1,4); 
+  // std::pair<int,int> b = std::make_pair(1,2); 
+
+
+  // std::cout << (a < b) << std::endl;
+
+
+
+
+  // EXPECT_EQ(vstd.size(), v21.size());
+}

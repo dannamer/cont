@@ -9,9 +9,11 @@ DIR_STACK = $(SRC)test_stack/
 DIR_VECTOR = $(SRC)test_vector/
 DIR_SET = $(SRC)test_set/
 DIR_MAP = $(SRC)test_map/
-SOURCE = $(DIR_MAP)*.cpp $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp $(DIR_VECTOR)*.cpp $(DIR_SET)*.cpp *.cpp
+SOURCE = *.cpp
+# SOURCE = $(DIR_MAP)*.cpp $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp $(DIR_VECTOR)*.cpp $(DIR_SET)*.cpp *.cpp
 OBJ-FILE = *.o
 
+test: SOURCE += $(DIR_VECTOR)*.cpp 
 test: obj-file
 	$(CC) $(OBJ-FILE) $(CFLAG) $(TESTFLAG) -o test_exe
 

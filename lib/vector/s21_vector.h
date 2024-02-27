@@ -51,7 +51,7 @@ class vector : public ContainerBase<T> {
   const_reference back() const { return this->ContainerBack(); }
   T *data() { return this->data_; }
   size_type max_size() const {
-    return std::numeric_limits<size_type>::max() / sizeof(T);
+    return std::numeric_limits<long>::max() / sizeof(T);
   }
   void reserve(size_type size) { this->allocateMemory(size); }
   size_type capacity() { return this->capacity_; }
