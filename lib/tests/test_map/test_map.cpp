@@ -219,30 +219,30 @@ TEST(TEST_MAP, InsertPair) {
   EXPECT_EQ(map.contains(2), true);
   EXPECT_EQ(map[2], "two");
 }
-// TEST(TEST_MAP, InsertOrAssign) {
-//   s21::map<int, std::string> map;
-//   // Insert a new element with a key that does not exist.
-//   auto [it1, inserted1] = map.insert_or_assign(1, "one");
-//   EXPECT_TRUE(inserted1);
-//   EXPECT_EQ(it1->first, 1);
-//   EXPECT_EQ(it1->second, "one");
-//   // Insert a new element with a key that already exists.
-//   auto [it2, inserted2] = map.insert_or_assign(1, "ONE");
-//   EXPECT_FALSE(inserted2);
-//   EXPECT_EQ(it2->first, 1);
-//   EXPECT_EQ(it2->second, "ONE");
-//   // Insert multiple elements.
-//   map.insert_or_assign(2, "two");
-//   map.insert_or_assign(3, "three");
-//   map.insert_or_assign(4, "four");
-//   map.insert_or_assign(5, "five");
-//   EXPECT_EQ(map.size(), 5);
-//   EXPECT_EQ(map[1], "ONE");
-//   EXPECT_EQ(map[2], "two");
-//   EXPECT_EQ(map[3], "three");
-//   EXPECT_EQ(map[4], "four");
-//   EXPECT_EQ(map[5], "five");
-// }
+TEST(TEST_MAP, InsertOrAssign) {
+  s21::map<int, std::string> map;
+  // Insert a new element with a key that does not exist.
+  auto [it1, inserted1] = map.insert_or_assign(1, "one");
+  EXPECT_TRUE(inserted1);
+  EXPECT_EQ(it1->first, 1);
+  EXPECT_EQ(it1->second, "one");
+  // Insert a new element with a key that already exists.
+  auto [it2, inserted2] = map.insert_or_assign(1, "ONE");
+  EXPECT_FALSE(inserted2);
+  EXPECT_EQ(it2->first, 1);
+  EXPECT_EQ(it2->second, "ONE");
+  // Insert multiple elements.
+  map.insert_or_assign(2, "two");
+  map.insert_or_assign(3, "three");
+  map.insert_or_assign(4, "four");
+  map.insert_or_assign(5, "five");
+  EXPECT_EQ(map.size(), 5);
+  EXPECT_EQ(map[1], "ONE");
+  EXPECT_EQ(map[2], "two");
+  EXPECT_EQ(map[3], "three");
+  EXPECT_EQ(map[4], "four");
+  EXPECT_EQ(map[5], "five");
+}
 TEST(TEST_MAP, AtAndOperatorBrackets) {
   s21::map<int, std::string> map = {{1, "one"}, {2, "two"}, {3, "three"}};
 
@@ -273,20 +273,20 @@ TEST(TEST_MAP, MaxSize) {
   // Max size is implementation-dependent, but it should be greater than 0
   EXPECT_GT(map.max_size(), map1.max_size());
 }
-// TEST(TEST_MAP, Erase) {
-//   s21::map<int, std::string> map;
+TEST(TEST_MAP, Erase) {
+  s21::map<int, std::string> map;
 
-//   map.insert({1, "one"});
-//   map.insert({2, "two"});
-//   map.insert({3, "three"});
-//   map.insert({5, "five"});
+  map.insert({1, "one"});
+  map.insert({2, "two"});
+  map.insert({3, "three"});
+  map.insert({5, "five"});
 
-//   // Erase an existing element.
-//   auto it1 = map.begin()++;
-//   map.erase(it1);
-//   EXPECT_EQ(map.size(), 3);
-//   EXPECT_FALSE(map.contains(1));
-// }
+  // Erase an existing element.
+  auto it1 = map.begin()++;
+  map.erase(it1);
+  EXPECT_EQ(map.size(), 3);
+  EXPECT_FALSE(map.contains(1));
+}
 
 TEST(TEST_MAP, Swap) {
   s21::map<int, std::string> map1;

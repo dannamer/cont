@@ -1,11 +1,14 @@
 #ifndef S21_MAP_H_
 #define S21_MAP_H_
+// #include <utility>
+#include <stdexcept>
+
 #include "BinaryTree.h"
 namespace s21 {
 template <class Key, class T>
-class map : public BinaryTree<std::pair<const Key, T>> {
+class map : public BinaryTree<std::pair<Key, T>> {
  public:
-  using value_type = std::pair<const Key, T>;
+  using value_type = std::pair<Key, T>;
   using typename BinaryTree<value_type>::key_type;
   using typename BinaryTree<value_type>::reference;
   using typename BinaryTree<value_type>::const_reference;
@@ -13,7 +16,6 @@ class map : public BinaryTree<std::pair<const Key, T>> {
   using typename BinaryTree<value_type>::const_iterator;
   using typename BinaryTree<value_type>::size_type;
   using typename BinaryTree<value_type>::Node;
-  using typename BinaryTree<value_type>::insert;
 
   map() {}
   ~map() {}
@@ -38,6 +40,18 @@ class map : public BinaryTree<std::pair<const Key, T>> {
       return pair.first->second;
     }
   }
+
+  std::pair<iterator, bool> insert(const value_type &value) {
+    iterator findNode = search(value.first);
+    std::pair<iterator, bool> result = std::make_pair(findNode, bool());
+    if (!findNode.getNode()) {
+      result = this->Insert(value);
+    } else {
+      result.first = findNode;
+      result.second = false;
+    }
+    return result;
+  }
   std::pair<iterator, bool> insert(const Key &key, const T &obj) {
     return insert(std::make_pair(key, obj));
   }
@@ -48,7 +62,7 @@ class map : public BinaryTree<std::pair<const Key, T>> {
     }
     return it;
   }
-
+  void erase(iterator pos) { this->root = this->deleteNode(this->root, std::make_pair(pos->first, pos->second)); }
   bool contains(const Key &key) {
     return search(key) != this->end() ? true : false;
   }
@@ -67,10 +81,16 @@ class map : public BinaryTree<std::pair<const Key, T>> {
       return searchRec(node->right, key);
     }
   }
-  // bool operator<(const std::pair<Key, T> &lhs,
-  //                const std::pair<Key, T> &rhs) const {
-  //   return lhs.first < rhs.first;
-  // }
+
+  Node *findMax(Node *node) {
+    if (node) {
+      while (node->right != nullptr) {
+        node = node->right;
+      }
+      return node;
+    }
+    return nullptr;
+  }
 };
 }  // namespace s21
 #endif

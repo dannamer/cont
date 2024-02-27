@@ -19,6 +19,9 @@ class set : public s21::BinaryTree<Key> {
       : BinaryTree<Key>(items) {}
   set(const set &s) : BinaryTree<Key>(s) {}
   set(set &&s) : BinaryTree<Key>(std::move(s)) {}
+  std::pair<iterator, bool> insert(const value_type &value) {
+    return this->Insert(value);
+  }
 
  private:
 };

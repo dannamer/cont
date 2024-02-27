@@ -6,7 +6,7 @@ BinaryTree<Key>::~BinaryTree() {
 template <class Key>
 BinaryTree<Key>::BinaryTree(std::initializer_list<Key> const& items) {
   for (auto it = items.begin(); it != items.end(); ++it) {
-    insert(*it);
+    Insert(*it);
   }
 }
 
@@ -25,7 +25,7 @@ BinaryTree<Key>::BinaryTree(BinaryTree&& m) {
 template <class Key>
 void BinaryTree<Key>::merge(BinaryTree& other) {
   for (auto it = other.begin(); it != other.end(); ++it) {
-    insert(*it);
+    Insert(*it);
   }
   other.clear();
 }
@@ -65,7 +65,7 @@ typename BinaryTree<Key>::N BinaryTree<Key>::copyBinaryTree(N CRoot) {
 }
 
 template <class Key>
-std::pair<typename BinaryTree<Key>::iterator, bool> BinaryTree<Key>::insert(
+std::pair<typename BinaryTree<Key>::iterator, bool> BinaryTree<Key>::Insert(
     const_reference value) {
   bool isset = true;
   N tmp = insertRec(root, value, nullptr, isset);
@@ -169,6 +169,7 @@ void BinaryTree<Key>::erase(iterator pos) {
 template <class Key>
 typename BinaryTree<Key>::Node* BinaryTree<Key>::deleteNode(Node* node,
                                                             Key key) {
+
   if (node == nullptr) {
     return nullptr;
   } else if (key < node->key_) {
@@ -189,10 +190,10 @@ typename BinaryTree<Key>::Node* BinaryTree<Key>::deleteNode(Node* node,
       node->key_ = maxLeft->key_;
       node->right = deleteNode(node->right, maxLeft->key_);
     }
-    
   }
   return node;
 }
+
 template <class Key>
 void BinaryTree<Key>::clear() {
   clearRec(root);

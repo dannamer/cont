@@ -61,7 +61,9 @@ class BinaryTree {
       return this->itNode == other.itNode;
     }
     bool operator!=(const iterator& other) const { return !(*this == other); }
-
+    Node* getNode() {
+      return itNode;
+    }
    protected:
     Node* itNode;
     BinaryTree<Key>* tree;
@@ -73,7 +75,7 @@ class BinaryTree {
   BinaryTree(const BinaryTree& m);
   BinaryTree(BinaryTree&& m);
   BinaryTree<Key>& operator=(BinaryTree&& m);
-  std::pair<iterator, bool> insert(const_reference value);
+  std::pair<iterator, bool> Insert(const_reference value);
   bool empty() const { return !size_; }
   size_type size() const { return size_; }
   size_type max_size() { return std::numeric_limits<size_type>::max(); }  // ?
