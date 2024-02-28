@@ -9,6 +9,7 @@ namespace s21 {
 template <typename T>
 class list {
  private:
+
   struct Node {
     T value;
     Node *prev;
@@ -16,23 +17,23 @@ class list {
     Node(T val) : value(val), prev(nullptr), next(nullptr) {}
   };
 
-  class Iterator {
+  class ListIterator {
    public:
-    Iterator() {}
-    Iterator(Node *node) : node_(node) {}
+    ListIterator() {}
+    ListIterator(Node *node) : node_(node) {}
     T &operator*() const { return node_->value; }
 
-    Iterator &operator++();
-    Iterator operator++(int);
+    ListIterator &operator++();
+    ListIterator operator++(int);
 
-    Iterator &operator--();
-    Iterator operator--(int);
+    ListIterator &operator--();
+    ListIterator operator--(int);
 
     Node *get_node() { return node_; }
-    bool operator==(const Iterator &other) const {
+    bool operator==(const ListIterator &other) const {
       return node_ == other.node_;
     }
-    bool operator!=(const Iterator &other) const {
+    bool operator!=(const ListIterator &other) const {
       return node_ != other.node_;
     }
 
@@ -40,19 +41,19 @@ class list {
     Node *node_ = nullptr;
   };
 
-  class const_Iterator : public Iterator {
+  class ListConstIterator : public ListIterator {
    public:
-    const_Iterator(){};
-    const_Iterator(const Iterator &node_) : Iterator(node_){};
-    T &operator*() const { return Iterator::operator*(); };
+    ListConstIterator(){};
+    ListConstIterator(const ListIterator &node_) : ListIterator(node_){};
+    T &operator*() const { return ListIterator::operator*(); };
   };
 
  public:
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
-  using iterator = Iterator;
-  using const_iterator = const_Iterator;
+  using iterator = ListIterator;
+  using const_iterator = ListConstIterator;
   using size_type = std::size_t;
 
  private:

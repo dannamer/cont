@@ -18,7 +18,7 @@ OPEN_CMD = xdg-open
 GCOVR = ~/.local/bin/gcovr
 
 # you need to specify the source files
-test: SOURCE += $(DIR_SET)*.cpp 
+test: SOURCE += $(DIR_LIST)*.cpp 
 test: obj-file
 	$(CC) $(OBJ-FILE) $(CFLAG) $(TESTFLAG) -o test_exe
 

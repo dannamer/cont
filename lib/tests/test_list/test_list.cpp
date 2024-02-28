@@ -480,10 +480,19 @@ TEST_F(TEST_LIST, test_sort_2) {
 }
 
 TEST_F(TEST_LIST, test_sort_3) {
-  s21::list<int> a{87321,321,123,2,5,4356,345,6,132,12,3,123,213,12,3,43645,6,45,6,54,6};
-  std::list<int> b{87321,321,123,2,5,4356,345,6,132,12,3,123,213,12,3,43645,6,45,6,54,6};
+  s21::list<int> a{87321, 321, 123, 2, 5,     4356, 345, 6, 132, 12, 3,
+                   123,   213, 12,  3, 43645, 6,    45,  6, 54,  6};
+  std::list<int> b{87321, 321, 123, 2, 5,     4356, 345, 6, 132, 12, 3,
+                   123,   213, 12,  3, 43645, 6,    45,  6, 54,  6};
   a.sort();
   b.sort();
 
   EXPECT_TRUE(eq_list(a, b));
+}
+
+TEST_F(TEST_LIST, test_max_size) {
+  s21::list<char> a;
+  std::list<char> b;
+  std::cout << a.max_size() << "|" << b.max_size() << std::endl;
+  EXPECT_EQ(a.max_size(), b.max_size());
 }

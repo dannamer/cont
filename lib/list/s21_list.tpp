@@ -3,26 +3,26 @@ namespace s21 {
 
 // ITERATOR
 template <typename T>
-typename list<T>::Iterator& list<T>::Iterator::operator++() {
+typename list<T>::ListIterator& list<T>::ListIterator::operator++() {
   node_ = node_->next;
   return *this;
 }
 
 template <typename T>
-typename list<T>::Iterator list<T>::Iterator::operator++(int) {
+typename list<T>::ListIterator list<T>::ListIterator::operator++(int) {
   iterator temp = *this;
   ++(*this);
   return temp;
 }
 
 template <typename T>
-typename list<T>::Iterator& list<T>::Iterator::operator--() {
+typename list<T>::ListIterator& list<T>::ListIterator::operator--() {
   if (node_ != nullptr) node_ = node_->prev;
   return *this;
 }
 
 template <typename T>
-typename list<T>::Iterator list<T>::Iterator::operator--(int) {
+typename list<T>::ListIterator list<T>::ListIterator::operator--(int) {
   iterator temp = *this;
   --(*this);
   return temp;
