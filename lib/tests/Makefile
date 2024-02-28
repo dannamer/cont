@@ -1,5 +1,6 @@
 CC = gcc
 CFLAG = -Wall -Wextra -Werror
+CFLAGS_COVERAGE = -fprofile-arcs -ftest-coverage
 TESTFLAG = -lgtest -lstdc++ -lm -lgtest_main -pthread
 
 SRC = ./
@@ -13,7 +14,7 @@ SOURCE = *.cpp
 # SOURCE = $(DIR_MAP)*.cpp $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp $(DIR_VECTOR)*.cpp $(DIR_SET)*.cpp *.cpp
 OBJ-FILE = *.o
 
-test: SOURCE += $(DIR_VECTOR)*.cpp 
+test: SOURCE += $(DIR_SET)*.cpp 
 test: obj-file
 	$(CC) $(OBJ-FILE) $(CFLAG) $(TESTFLAG) -o test_exe
 

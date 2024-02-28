@@ -2,16 +2,53 @@
 
 #include <string>
 
+TEST(TEST_MAP, DefaultConstruct) {
+  s21::map<int, std::string> m;
+  EXPECT_EQ(m.size(), 0);
+  EXPECT_TRUE(m.empty());
+}
+
 TEST(TEST_MAP, DefaultConstructor) {
   s21::map<int, int> m;
   EXPECT_EQ(m.size(), 0);
 }
+
+TEST(TEST_MAP, ConstructorDefaultMap) {
+  s21::map<int, char> my_empty_map;
+  std::map<int, char> orig_empty_map;
+  EXPECT_EQ(my_empty_map.empty(), orig_empty_map.empty());
+}
+
 TEST(TEST_MAP, InitializerListConstructor) {
   s21::map<int, int> m{{1, 2}, {3, 4}, {5, 6}};
   EXPECT_EQ(m.size(), 3);
   EXPECT_EQ(m[1], 2);
   EXPECT_EQ(m[3], 4);
   EXPECT_EQ(m[5], 6);
+}
+
+TEST(TEST_MAP, ConstructorInitializerMap) {
+  s21::map<int, char> my_map = {{1, 'x'}, {2, 'b'}, {3, 'z'}, {4, 'y'}};
+  std::map<int, char> orig_map = {{1, 'x'}, {2, 'b'}, {3, 'z'}, {4, 'y'}};
+  EXPECT_EQ(my_map.size(), orig_map.size());
+  auto my_it = my_map.begin();
+  auto orig_it = orig_map.begin();
+  for (; my_it != my_map.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
+}
+
+TEST(TEST_MAP, ConstructorInitializer2Map) {
+  s21::map<int, char> my_map = {};
+  std::map<int, char> orig_map = {};
+  EXPECT_EQ(my_map.size(), orig_map.size());
+  auto my_it = my_map.begin();
+  auto orig_it = orig_map.begin();
+  for (; my_it != my_map.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
 }
 
 TEST(TEST_MAP, CopyConstructor) {
@@ -26,6 +63,20 @@ TEST(TEST_MAP, CopyConstructor) {
   EXPECT_EQ(copiedMap[2], 200);
 }
 
+TEST(TEST_MAP, ConstructorCopyMap) {
+  s21::map<int, int> my_map = {{1, 2}, {3, 4}, {5, 6}};
+  std::map<int, int> orig_map = {{1, 2}, {3, 4}, {5, 6}};
+  s21::map<int, int> my_map_copy = my_map;
+  std::map<int, int> orig_map_copy = orig_map;
+  EXPECT_EQ(my_map_copy.size(), orig_map_copy.size());
+  auto my_it = my_map_copy.begin();
+  auto orig_it = orig_map_copy.begin();
+  for (; my_it != my_map_copy.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
+}
+
 TEST(TEST_MAP, MoveConstructor) {
   s21::map<int, int> originalMap;
   originalMap.insert(std::make_pair(1, 100));
@@ -37,6 +88,21 @@ TEST(TEST_MAP, MoveConstructor) {
   EXPECT_EQ(movedMap[1], 100);
   EXPECT_EQ(movedMap[2], 200);
   EXPECT_TRUE(originalMap.empty());
+}
+
+TEST(TEST_MAP, ConstructorMoveMap) {
+  s21::map<int, int> my_map = {{1, 2}, {3, 4}, {5, 6}};
+  std::map<int, int> orig_map = {{1, 2}, {3, 4}, {5, 6}};
+  s21::map<int, int> my_map_copy = std::move(my_map);
+  std::map<int, int> orig_map_copy = std::move(orig_map);
+  EXPECT_EQ(my_map.size(), orig_map.size());
+  EXPECT_EQ(my_map_copy.size(), orig_map_copy.size());
+  auto my_it = my_map_copy.begin();
+  auto orig_it = orig_map_copy.begin();
+  for (; my_it != my_map_copy.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
 }
 
 TEST(TEST_MAP, MoveAssignmentOperator) {
@@ -53,63 +119,82 @@ TEST(TEST_MAP, MoveAssignmentOperator) {
   EXPECT_TRUE(originalMap.empty());
 }
 
+TEST(TEST_MAP, MapOperator) {
+  s21::map<char, std::string> my_map = {
+      {'a', "Alina"}, {'b', "Boris"}, {'c', "Chuck"}};
+  std::map<char, std::string> orig_map = {
+      {'a', "Alina"}, {'b', "Boris"}, {'c', "Chuck"}};
+  my_map['a'] = "Alisa";
+  orig_map['a'] = "Alisa";
+  orig_map['b'] = "Ben";
+  EXPECT_TRUE(my_map['a'] == orig_map['a']);
+  EXPECT_FALSE(my_map['b'] == orig_map['b']);
+  EXPECT_TRUE(my_map['c'] == orig_map['c']);
+}
+
 TEST(TEST_MAP, AtMethod) {
   s21::map<int, int> myMap;
   myMap.insert(std::make_pair(1, 100));
   myMap.insert(std::make_pair(2, 200));
 
-  // Проверяем успешный доступ
   EXPECT_EQ(myMap.at(1), 100);
   EXPECT_EQ(myMap.at(2), 200);
 
-  // Проверяем генерацию исключения при доступе к несуществующему ключу
   EXPECT_THROW(myMap.at(3), std::out_of_range);
 }
 
-// Тест для оператора []
 TEST(TEST_MAP, SubscriptOperator) {
   s21::map<int, int> myMap;
 
-  // Доступ или вставка элемента
   myMap[1] = 100;
   myMap[2] = 200;
 
-  // Проверяем, что элементы были успешно вставлены
   EXPECT_EQ(myMap[1], 100);
   EXPECT_EQ(myMap[2], 200);
 
-  // Вставка нового элемента через оператор []
   myMap[3] = 300;
   EXPECT_EQ(myMap[3], 300);
 
-  // Проверяем размер map после вставки
   EXPECT_EQ(myMap.size(), 3);
 }
 
-// Тест для метода begin
+TEST(TEST_MAP, MapAtOperatorException) {
+  s21::map<char, std::string> my_map = {
+      {'a', "Alina"}, {'b', "Boris"}, {'c', "Chuck"}};
+  EXPECT_THROW(my_map.at('g') = "Alisa", std::out_of_range);
+}
+
+TEST(TEST_MAP, MapAtOperator) {
+  s21::map<char, std::string> my_map = {
+      {'a', "Alina"}, {'b', "Boris"}, {'c', "Chuck"}};
+  std::map<char, std::string> orig_map = {
+      {'a', "Alina"}, {'b', "Boris"}, {'c', "Chuck"}};
+  my_map.at('a') = "Alisa";
+  orig_map.at('a') = "Alisa";
+  orig_map.at('b') = "Ben";
+  EXPECT_TRUE(my_map['a'] == orig_map['a']);
+  EXPECT_FALSE(my_map['b'] == orig_map['b']);
+  EXPECT_TRUE(my_map['c'] == orig_map['c']);
+}
+
 TEST(TEST_MAP, BeginMethod) {
   s21::map<int, int> myMap;
   myMap.insert(std::make_pair(1, 100));
   myMap.insert(std::make_pair(2, 200));
 
-  // Проверяем, что begin возвращает итератор на первый элемент
   auto it = myMap.begin();
   EXPECT_EQ(it->first, 1);
   EXPECT_EQ(it->second, 100);
 }
 
-// Тест для метода end
 TEST(TEST_MAP, EndMethod) {
   s21::map<int, int> myMap;
   myMap.insert(std::make_pair(1, 100));
   myMap.insert(std::make_pair(2, 200));
 
-  // Проверяем, что end возвращает итератор за последний элемент
   auto it = myMap.end();
-  // Поскольку end возвращает итератор за последний элемент, мы не можем
-  // напрямую проверить его значение. Вместо этого проверяем, что предыдущий
-  // элемент от end() это действительно последний элемент в контейнере.
-  --it;  // Перемещаемся к последнему элементу
+
+  --it;
   EXPECT_EQ(it->first, 2);
   EXPECT_EQ(it->second, 200);
 }
@@ -117,50 +202,37 @@ TEST(TEST_MAP, EndMethod) {
 TEST(TEST_MAP, EmptyMapBeginEnd) {
   s21::map<int, int> myMap;
 
-  // Проверяем, что begin и end возвращают одно и то же для пустого map, т.е.,
-  // оба указывают на "конец"
   EXPECT_EQ(myMap.begin(), myMap.end());
 }
 
 TEST(TEST_MAP, Empty) {
   s21::map<int, int> myMap;
 
-  // Проверяем, что карта пустая при создании
   EXPECT_TRUE(myMap.empty());
 
-  // Добавляем элемент
   myMap.insert({1, 42});
 
-  // Проверяем, что карта не пустая после добавления элемента
   EXPECT_FALSE(myMap.empty());
 }
 
-// Пример тестов для функции size()
 TEST(TEST_MAP, Size) {
   s21::map<int, int> myMap;
 
-  // Проверяем, что размер карты равен 0 при создании
   EXPECT_EQ(myMap.size(), 0);
 
-  // Добавляем элементы
   myMap.insert({1, 10});
   myMap.insert({2, 20});
 
-  // Проверяем, что размер карты соответствует количеству добавленных элементов
   EXPECT_EQ(myMap.size(), 2);
 }
 
-// // Пример тестов для функции max_size()
-// TEST(TEST_MAP, MaxSize) {
-//   s21::map<int, int> myMap;
-
-//   // Проверяем, что размер карты не превышает максимально возможный размер
-//   EXPECT_LE(myMap.size(), myMap.max_size());
-// }
-TEST(TEST_MAP, DefaultConstruct) {
-  s21::map<int, std::string> m;
-  EXPECT_EQ(m.size(), 0);
-  EXPECT_TRUE(m.empty());
+TEST(TEST_MAP, MapCapacity) {
+  s21::map<char, std::string> my_map;
+  std::map<char, std::string> orig_map;
+  EXPECT_TRUE(my_map.empty() == orig_map.empty());
+  my_map.insert('z', "wow");
+  EXPECT_FALSE(my_map.empty() == orig_map.empty());
+  EXPECT_EQ(my_map.size(), 1);
 }
 
 TEST(TEST_MAP, InitializerListConstruc) {
@@ -179,41 +251,41 @@ TEST(TEST_MAP, CopyConstruct) {
   EXPECT_FALSE(copy_m.empty());
   EXPECT_EQ(copy_m.at(1), "one");
 }
-// Test the insert(key, value) function
+
 TEST(TEST_MAP, InsertKeyValue) {
   s21::map<int, std::string> map;
-  // Insert a single key-value pair
+
   map.insert(1, "one");
-  // Check that the size is correct
+
   EXPECT_EQ(map.size(), 1);
-  // Check that the inserted key-value pair is in the map
+
   EXPECT_EQ(map.contains(1), true);
   EXPECT_EQ(map[1], "one");
-  // Insert another key-value pair
+
   map.insert(2, "two");
-  // Check that the size is correct
+
   EXPECT_EQ(map.size(), 2);
-  // Check that both inserted key-value pairs are in the map
+
   EXPECT_EQ(map.contains(1), true);
   EXPECT_EQ(map[1], "one");
   EXPECT_EQ(map.contains(2), true);
   EXPECT_EQ(map[2], "two");
 }
-// Test the insert(pair) function
+
 TEST(TEST_MAP, InsertPair) {
   s21::map<int, std::string> map;
-  // Insert a single key-value pair using a pair object
+
   map.insert(std::make_pair(1, "one"));
-  // Check that the size is correct
+
   EXPECT_EQ(map.size(), 1);
-  // Check that the inserted key-value pair is in the map
+
   EXPECT_EQ(map.contains(1), true);
   EXPECT_EQ(map[1], "one");
-  // Insert another key-value pair using a pair object
+
   map.insert(std::make_pair(2, "two"));
-  // Check that the size is correct
+
   EXPECT_EQ(map.size(), 2);
-  // Check that both inserted key-value pairs are in the map
+
   EXPECT_EQ(map.contains(1), true);
   EXPECT_EQ(map[1], "one");
   EXPECT_EQ(map.contains(2), true);
@@ -221,17 +293,17 @@ TEST(TEST_MAP, InsertPair) {
 }
 TEST(TEST_MAP, InsertOrAssign) {
   s21::map<int, std::string> map;
-  // Insert a new element with a key that does not exist.
+
   auto [it1, inserted1] = map.insert_or_assign(1, "one");
   EXPECT_TRUE(inserted1);
   EXPECT_EQ(it1->first, 1);
   EXPECT_EQ(it1->second, "one");
-  // Insert a new element with a key that already exists.
+
   auto [it2, inserted2] = map.insert_or_assign(1, "ONE");
   EXPECT_FALSE(inserted2);
   EXPECT_EQ(it2->first, 1);
   EXPECT_EQ(it2->second, "ONE");
-  // Insert multiple elements.
+
   map.insert_or_assign(2, "two");
   map.insert_or_assign(3, "three");
   map.insert_or_assign(4, "four");
@@ -270,10 +342,9 @@ TEST(TEST_MAP, MaxSize) {
   s21::map<int, std::string> map;
   std::map<int, std::string> map1;
 
-  // Max size is implementation-dependent, but it should be greater than 0
   EXPECT_GT(map.max_size(), map1.max_size());
 }
-TEST(TEST_MAP, Erase) {
+TEST(TEST_MAP, Erase_1) {
   s21::map<int, std::string> map;
 
   map.insert({1, "one"});
@@ -281,11 +352,52 @@ TEST(TEST_MAP, Erase) {
   map.insert({3, "three"});
   map.insert({5, "five"});
 
-  // Erase an existing element.
   auto it1 = map.begin()++;
   map.erase(it1);
   EXPECT_EQ(map.size(), 3);
   EXPECT_FALSE(map.contains(1));
+}
+
+TEST(TEST_MAP, Erase_2) {
+  s21::map<int, std::string> map = {{3, "k"}, {1, "f"}, {5, "f"}, {8, "i"}};
+
+  auto it1 = map.begin();
+  map.erase(it1++);
+  EXPECT_EQ(map.size(), 3);
+  EXPECT_FALSE(map.contains(1));
+  map.erase(it1++);
+  map.erase(it1++);
+  map.erase(it1);
+  EXPECT_TRUE(map.empty());
+}
+TEST(TEST_MAP, Erase_3) {
+  s21::map<int, std::string> map = {{3, "k"}, {1, "f"}, {5, "f"}, {8, "i"}};
+  auto it1 = map.begin();
+  map.erase(it1++);
+  EXPECT_EQ(map.size(), 3);
+  EXPECT_FALSE(map.contains(1));
+  map.erase(it1++);
+  map.insert({12, "one"});
+  map.erase(it1++);
+  map.insert({1, "one"});
+  map.erase(it1);
+  map.insert({145, "one"});
+  EXPECT_TRUE(!map.empty());
+}
+
+TEST(TEST_MAP, MapErase) {
+  s21::map<int, char> my_map = {{1, 'x'}, {2, 'b'}, {3, 'z'}, {4, 'y'}};
+  std::map<int, char> orig_map = {{1, 'x'}, {2, 'b'}, {3, 'z'}, {4, 'y'}};
+  EXPECT_EQ(my_map.size(), orig_map.size());
+  my_map.erase(my_map.begin());
+  orig_map.erase(orig_map.begin());
+  EXPECT_EQ(my_map.size(), orig_map.size());
+  auto my_it = my_map.begin();
+  auto orig_it = orig_map.begin();
+  for (; my_it != my_map.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
 }
 
 TEST(TEST_MAP, Swap) {
@@ -306,6 +418,19 @@ TEST(TEST_MAP, Swap) {
   EXPECT_EQ(map2.size(), 2);
   EXPECT_TRUE(map2.contains(1));
   EXPECT_TRUE(map2.contains(2));
+}
+
+TEST(TEST_MAP, SwapMap) {
+  s21::map<int, int> my_map = {{1, 1}};
+  s21::map<int, int> my_swap_map = {{3, 3}, {4, 4}};
+
+  my_map.swap(my_swap_map);
+  EXPECT_EQ(my_map.size(), 2);
+  EXPECT_EQ(my_swap_map.size(), 1);
+  auto x = (*(my_map.begin())).first;
+  auto y = (*(my_swap_map.begin())).first;
+  EXPECT_EQ(x, 3);
+  EXPECT_EQ(y, 1);
 }
 
 TEST(TEST_MAP, Merge) {
@@ -333,4 +458,93 @@ TEST(TEST_MAP, Contains) {
   map.insert({2, "two"});
   EXPECT_TRUE(map.contains(2));
   EXPECT_FALSE(map.contains(3));
+}
+
+TEST(TEST_MAP, clear_test) {
+  s21::map<int, int> my_map{{1, 2}, {3, 4}, {5, 6}};
+  my_map.clear();
+  EXPECT_TRUE(my_map.empty());
+  my_map.clear();
+  EXPECT_TRUE(my_map.empty());
+}
+
+TEST(TEST_MAP, MapClear) {
+  s21::map<int, int> my_map;
+  std::map<int, int> orig_map;
+  my_map.clear();
+  orig_map.clear();
+  EXPECT_EQ(my_map.empty(), orig_map.empty());
+  my_map.insert(std::make_pair(1, 1));
+  orig_map.insert(std::make_pair(1, 1));
+  EXPECT_EQ(my_map.empty(), orig_map.empty());
+  my_map.clear();
+  orig_map.clear();
+  EXPECT_EQ(my_map.empty(), orig_map.empty());
+}
+
+TEST(TEST_MAP, MapInsert1) {
+  s21::map<int, char> my_map;
+  std::map<int, char> orig_map;
+  my_map.insert(std::make_pair(1, 'a'));
+  my_map.insert(std::make_pair(2, 'a'));
+  my_map.insert(std::make_pair(3, 'a'));
+  orig_map.insert(std::make_pair(1, 'a'));
+  orig_map.insert(std::make_pair(2, 'a'));
+  orig_map.insert(std::make_pair(3, 'a'));
+
+  auto my_it = my_map.begin();
+  auto orig_it = orig_map.begin();
+  for (; my_it != my_map.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
+
+  auto pr1 = my_map.insert(std::make_pair(1, 'a'));
+  auto pr2 = orig_map.insert(std::make_pair(1, 'a'));
+  EXPECT_TRUE(pr1.second == pr2.second);
+}
+
+TEST(TEST_MAP, MapInsert2) {
+  s21::map<int, char> my_map;
+  std::map<int, char> orig_map;
+  my_map.insert(1, 'a');
+  my_map.insert(2, 'a');
+  my_map.insert(3, 'a');
+  orig_map.insert(std::make_pair(1, 'a'));
+  orig_map.insert(std::make_pair(2, 'a'));
+  orig_map.insert(std::make_pair(3, 'a'));
+
+  auto my_it = my_map.begin();
+  auto orig_it = orig_map.begin();
+  for (; my_it != my_map.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
+
+  auto pr1 = my_map.insert(1, 'a');
+  auto pr2 = orig_map.insert(std::make_pair(1, 'a'));
+  EXPECT_TRUE(pr1.second == pr2.second);
+}
+
+TEST(TEST_MAP, MapInsert3) {
+  s21::map<int, char> my_map;
+  std::map<int, char> orig_map;
+  my_map.insert(1, 'a');
+  my_map.insert(2, 'a');
+  my_map.insert(3, 'a');
+  orig_map.insert(std::make_pair(1, 'a'));
+  orig_map.insert(std::make_pair(2, 'a'));
+  orig_map.insert(std::make_pair(3, 'a'));
+
+  auto my_it = my_map.begin();
+  auto orig_it = orig_map.begin();
+  for (; my_it != my_map.end(); ++my_it, ++orig_it) {
+    EXPECT_TRUE((*my_it).first == (*orig_it).first);
+    EXPECT_TRUE((*my_it).second == (*orig_it).second);
+  }
+
+  auto pr1 = my_map.insert_or_assign(1, 'b');
+  auto i = orig_map.begin();
+  EXPECT_TRUE((*pr1.first).first == (*i).first);
+  EXPECT_FALSE((*pr1.first).second == (*i).second);
 }

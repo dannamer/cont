@@ -64,19 +64,17 @@ TEST_F(TEST_VECTOR, MoveConstructor_NonEmptyVector) {
   s21::vector<int> v1 = {1, 2, 3};
   s21::vector<int> v2(std::move(v1));
   EXPECT_EQ(v2.size(), 3);
-  EXPECT_TRUE(v1.empty());  // Source vector should be empty after move
+  EXPECT_TRUE(v1.empty());  
 }
 
 TEST_F(TEST_VECTOR, Destructor_EmptyVector) {
   s21::vector<int>* v = new s21::vector<int>();
-  delete v;  // Destructor should be called here
-  // No specific assertions, but this ensures the destructor is working
+  delete v;
 }
 
 TEST_F(TEST_VECTOR, Destructor_NonEmptyVector) {
   s21::vector<int>* v = new s21::vector<int>{1, 2, 3};
-  delete v;  // Destructor should be called here
-  // No specific assertions, but this ensures the destructor is working
+  delete v;
 }
 
 TEST_F(TEST_VECTOR, MoveAssignmentOperator_EmptyToEmpty) {
@@ -92,7 +90,7 @@ TEST_F(TEST_VECTOR, MoveAssignmentOperator_NonEmptyToEmpty) {
   s21::vector<int> v2;
   v2 = std::move(v1);
   EXPECT_EQ(v2.size(), 3);
-  EXPECT_TRUE(v1.empty());  // Source vector should be empty after move
+  EXPECT_TRUE(v1.empty());  
 }
 
 TEST_F(TEST_VECTOR, MoveAssignmentOperator_EmptyToNonEmpty) {
@@ -108,14 +106,13 @@ TEST_F(TEST_VECTOR, MoveAssignmentOperator_NonEmptyToNonEmpty) {
   s21::vector<int> v2 = {4, 5, 6};
   v2 = std::move(v1);
   EXPECT_EQ(v2.size(), 3);
-  EXPECT_TRUE(v1.empty());  // Source vector should be empty after move
+  EXPECT_TRUE(v1.empty());  
 }
 
 TEST_F(TEST_VECTOR, At_ValidIndex) {
-  s21::vector<int> v = {1, 2, 3, 4, 5};
-  EXPECT_EQ(v.at(0), 1);
-  EXPECT_EQ(v.at(2), 3);
-  EXPECT_EQ(v.at(4), 5);
+  s21::vector<int> mv = {1, 2, 3, 4, 5};
+  std::vector<int> sv = {1, 2, 3, 4, 5};
+  EXPECT_TRUE(eq_vector(mv, sv));
 }
 
 TEST_F(TEST_VECTOR, At_InvalidIndex) {
@@ -248,6 +245,7 @@ TEST_F(TEST_VECTOR, capacity_test_0) {
   std::vector<char> vstd{'1', '2', '3', '1', '2', '3',
                          '1', '2', '3', '1', '2', '3'};
   EXPECT_EQ(vstd.capacity(), v21.capacity());
+  EXPECT_TRUE(eq_vector(v21, vstd));
 }
 
 TEST_F(TEST_VECTOR, capacity_test_1) {
@@ -262,12 +260,14 @@ TEST_F(TEST_VECTOR, capacity_test_2) {
   std::vector<int> vstd{123,    12,   3,  123, 1321, 123,
                         210321, -213, -3, 3,   123,  12};
   EXPECT_EQ(vstd.capacity(), v21.capacity());
+  EXPECT_TRUE(eq_vector(v21, vstd));
 }
 
 TEST_F(TEST_VECTOR, capacity_test_3) {
   s21::vector<double> v21{12.32, 321.312, 213.231, 123.12};
   std::vector<double> vstd{12.32, 321.312, 213.231, 123.12};
   EXPECT_EQ(vstd.capacity(), v21.capacity());
+  EXPECT_TRUE(eq_vector(v21, vstd));
 }
 
 TEST_F(TEST_VECTOR, Capacity_shrink_to_fit_1) {
@@ -278,6 +278,7 @@ TEST_F(TEST_VECTOR, Capacity_shrink_to_fit_1) {
   s21_v.shrink_to_fit();
   std_v.shrink_to_fit();
   EXPECT_EQ(s21_v.capacity(), std_v.capacity());
+  EXPECT_TRUE(eq_vector(s21_v, std_v));
 }
 
 TEST_F(TEST_VECTOR, Capacity_shrink_to_fit_2) {
@@ -288,6 +289,7 @@ TEST_F(TEST_VECTOR, Capacity_shrink_to_fit_2) {
   s21_v.shrink_to_fit();
   std_v.shrink_to_fit();
   EXPECT_EQ(s21_v.capacity(), std_v.capacity());
+  EXPECT_TRUE(eq_vector(s21_v, std_v));
 }
 
 TEST_F(TEST_VECTOR, clear_test_1) {
@@ -298,6 +300,7 @@ TEST_F(TEST_VECTOR, clear_test_1) {
   v21.clear();
   vstd.clear();
   EXPECT_EQ(vstd.size(), v21.size());
+  EXPECT_TRUE(eq_vector(v21, vstd));
 }
 
 TEST_F(TEST_VECTOR, clear_test_2) {
