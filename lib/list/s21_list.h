@@ -83,7 +83,7 @@ class list {
 
   bool empty() const { return !size_; }
   size_type size() const { return size_; }
-  size_type max_size() const { return std::numeric_limits<size_type>::max(); }
+  size_type max_size() const { return std::numeric_limits<size_type>::max() / sizeof(Node) / 2; }
 
   void clear();
   iterator insert(iterator pos, const_reference value);
@@ -93,13 +93,13 @@ class list {
   void pop_back();
   void push_front(const_reference value);
   void pop_front();
-  void sort();
 
   void swap(list &other);
   void merge(list &other);
   void splice(const_iterator pos, list &other);
   void reverse();
   void unique();
+  void sort();
 
   template <typename... Args>
   void emplace_front(Args &&...args);

@@ -490,9 +490,138 @@ TEST_F(TEST_LIST, test_sort_3) {
   EXPECT_TRUE(eq_list(a, b));
 }
 
-TEST_F(TEST_LIST, test_max_size) {
+TEST_F(TEST_LIST, test_max_size_1) {
   s21::list<char> a;
   std::list<char> b;
-  std::cout << a.max_size() << "|" << b.max_size() << std::endl;
   EXPECT_EQ(a.max_size(), b.max_size());
 }
+
+
+TEST_F(TEST_LIST, test_max_size_2) {
+  s21::list<int> a;
+  std::list<int> b;
+  EXPECT_EQ(a.max_size(), b.max_size());
+}
+
+
+TEST_F(TEST_LIST, test_max_size_3) {
+  s21::list<double> a;
+  std::list<double> b;
+  EXPECT_EQ(a.max_size(), b.max_size());
+}
+
+
+TEST(List, Insert) {
+  s21::list<int> our_list;
+  std::list<int> std_list;
+  s21::list<int>::iterator our_it;
+  our_it = our_list.begin();
+  std::list<int>::iterator std_it;
+  std_it = std_list.begin();
+  our_list.insert(our_it, 5);
+  std_list.insert(std_it, 5);
+  EXPECT_EQ(our_list.front(), std_list.front());
+  EXPECT_EQ(our_list.back(), std_list.back());
+  our_list.insert(our_it, 7);
+  std_list.insert(std_it, 7);
+  our_list.insert(our_it, 9);
+  std_list.insert(std_it, 9);
+  EXPECT_EQ(our_list.front(), std_list.front());
+  EXPECT_EQ(our_list.back(), std_list.back());
+}
+
+TEST(List, Erase) {
+  s21::list<int> our_list = {1, 2, 3, 4, 5};
+  std::list<int> std_list = {1, 2, 3, 4, 5};
+  our_list.erase(our_list.begin());
+  std_list.erase(std_list.begin());
+  EXPECT_EQ(our_list.front(), std_list.front());
+  EXPECT_EQ(our_list.back(), std_list.back());
+  s21::list<int>::iterator our_it;
+  our_it = our_list.begin();
+  ++our_it;
+  std::list<int>::iterator std_it;
+  std_it = std_list.begin();
+  ++std_it;
+  EXPECT_EQ(our_list.front(), std_list.front());
+  EXPECT_EQ(our_list.back(), std_list.back());
+}
+
+TEST(List, Splice) {
+  s21::list<int> our_list_first = {1};
+  s21::list<int> our_list_second = {2, 3, 4, 5};
+  std::list<int> std_list_first = {1};
+  std::list<int> std_list_second = {2, 3, 4, 5};
+  s21::list<int>::iterator our_it = our_list_first.begin();
+  std::list<int>::iterator std_it = std_list_first.begin();
+  our_list_first.splice(our_it, our_list_second);
+  std_list_first.splice(std_it, std_list_second);
+  EXPECT_EQ(our_list_first.front(), std_list_first.front());
+  EXPECT_EQ(our_list_first.back(), std_list_first.back());
+}
+
+TEST(List, Merge) {
+  s21::list<int> our_list_first = {1};
+  s21::list<int> our_list_second = {2, 3, 4, 5};
+  std::list<int> std_list_first = {1};
+  std::list<int> std_list_second = {2, 3, 4, 5};
+  our_list_first.merge(our_list_second);
+  std_list_first.merge(std_list_second);
+  EXPECT_EQ(our_list_first.front(), std_list_first.front());
+  EXPECT_EQ(our_list_first.back(), std_list_first.back());
+  EXPECT_EQ(our_list_second.empty(), std_list_second.empty());
+}
+
+TEST(List, Reverse) {
+  s21::list<int> our_list = {1, 2, 3, 4, 5};
+  std::list<int> std_list = {1, 2, 3, 4, 5};
+  our_list.reverse();
+  std_list.reverse();
+  EXPECT_EQ(our_list.front(), std_list.front());
+  EXPECT_EQ(our_list.back(), std_list.back());
+}
+
+TEST(List, Unique) {
+  s21::list<int> our_list = {1, 2, 2, 3, 3};
+  std::list<int> std_list = {1, 2, 2, 3, 3};
+  s21::list<int>::iterator our_it;
+  std::list<int>::iterator std_it;
+  our_list.unique();
+  std_list.unique();
+  our_it = our_list.begin();
+  std_it = std_list.begin();
+  EXPECT_EQ(*our_it, *std_it);
+  ++our_it;
+  ++std_it;
+  EXPECT_EQ(*our_it, *std_it);
+  ++our_it;
+  ++std_it;
+  EXPECT_EQ(*our_it, *std_it);
+}
+
+TEST(List, Sort) {
+  s21::list<int> our_list = {2, 4, 1, 3, 5};
+  std::list<int> std_list = {2, 4, 1, 3, 5};
+  s21::list<int>::iterator our_it;
+  std::list<int>::iterator std_it;
+  our_list.sort();
+  std_list.sort();
+  our_it = our_list.begin();
+  std_it = std_list.begin();
+  EXPECT_EQ(*our_it, *std_it);
+  ++our_it;
+  ++std_it;
+  EXPECT_EQ(*our_it, *std_it);
+  ++our_it;
+  ++std_it;
+  EXPECT_EQ(*our_it, *std_it);
+  ++our_it;
+  ++std_it;
+  EXPECT_EQ(*our_it, *std_it);
+  ++our_it;
+  ++std_it;
+  EXPECT_EQ(*our_it, *std_it);
+}
+
+
+
