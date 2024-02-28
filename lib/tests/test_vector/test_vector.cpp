@@ -382,19 +382,37 @@ TEST_F(TEST_VECTOR, push_pop_2) {
 }
 
 TEST_F(TEST_VECTOR, swap_test_1) {
-  // s21::vector<int> v21_1{32, 3, 23, 2, 3};
-  // std::vector<int> v21_2{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
-  // s21::vector<int> vstd_1{32, 3, 23, 2, 3};
-  // std::vector<int> vstd_2{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
+  s21::vector<int> v21_1{32, 3, 23, 2, 3};
+  s21::vector<int> v21_2{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
+  std::vector<int> vstd_1{32, 3, 23, 2, 3};
+  std::vector<int> vstd_2{32, 3, 23, 2, 3, 1, 2, 4, 7, -1, 5, -64, -1, -334};
+  v21_1.swap(v21_2);
+  vstd_1.swap(vstd_2);
+  EXPECT_TRUE(eq_vector(v21_1, vstd_1));
+  EXPECT_TRUE(eq_vector(v21_2, vstd_2));
+  vstd_1.swap(vstd_2);
+  v21_1.swap(v21_2);
+  EXPECT_TRUE(eq_vector(v21_1, vstd_1));
+  EXPECT_TRUE(eq_vector(v21_2, vstd_2));
+  v21_1.swap(v21_2);
+  EXPECT_FALSE(eq_vector(v21_1, vstd_1));
+  EXPECT_FALSE(eq_vector(v21_2, vstd_2));
+}
 
-  // std::pair<int,int> a = std::make_pair(1,4); 
-  // std::pair<int,int> b = std::make_pair(1,2); 
-
-
-  // std::cout << (a < b) << std::endl;
-
-
-
-
-  // EXPECT_EQ(vstd.size(), v21.size());
+TEST_F(TEST_VECTOR, swap_test_2) {
+  s21::vector<int> v21_1;
+  s21::vector<int> v21_2;
+  std::vector<int> vstd_1;
+  std::vector<int> vstd_2;
+  v21_1.swap(v21_2);
+  vstd_1.swap(vstd_2);
+  EXPECT_TRUE(eq_vector(v21_1, vstd_1));
+  EXPECT_TRUE(eq_vector(v21_2, vstd_2));
+  vstd_1.swap(vstd_2);
+  v21_1.swap(v21_2);
+  EXPECT_TRUE(eq_vector(v21_1, vstd_1));
+  EXPECT_TRUE(eq_vector(v21_2, vstd_2));
+  v21_1.swap(v21_2);
+  EXPECT_TRUE(eq_vector(v21_1, vstd_1));
+  EXPECT_TRUE(eq_vector(v21_2, vstd_2));
 }
