@@ -1,13 +1,21 @@
 #include <list>
-// #include <algorithm>
+#include "s21_list.h"
 #include <iostream>
 
 // #include "s21_list.h"
 int main() {
-  std::list<int> a{1, 1, 2, 3, 2, 1, 2, 3, 3, 3, 3, 4, 5};
-  a.unique();
-  for (auto it = a.begin(); it != a.end(); it++) std::cout << *it << " ";
-  std::cout << std::endl;
-  auto it = a.begin();
+  s21::list<int> a {1,2,3,4,5,6};
+  std::list<int> b {1,2,3,4,5,6};
+
+
+  auto ita = a.begin();
+  auto itb = b.begin();
+  auto itb2 = b.begin();
+  
+
+  std::cout << *ita << std::endl;
+  std::cout << *itb << std::endl;
+  std::cout << (itb == itb2) << std::endl;
+
   return 0;
 }

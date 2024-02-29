@@ -9,6 +9,7 @@ namespace s21 {
 template <typename T>
 class list {
  private:
+
   struct Node {
     T value;
     Node *prev;
@@ -16,23 +17,23 @@ class list {
     Node(T val) : value(val), prev(nullptr), next(nullptr) {}
   };
 
-  class Iterator {
+  class ListIterator {
    public:
-    Iterator() {}
-    Iterator(Node *node) : node_(node) {}
+    ListIterator() {}
+    ListIterator(Node *node) : node_(node) {}
     T &operator*() const { return node_->value; }
 
-    Iterator &operator++();
-    Iterator operator++(int);
+    ListIterator &operator++();
+    ListIterator operator++(int);
 
-    Iterator &operator--();
-    Iterator operator--(int);
+    ListIterator &operator--();
+    ListIterator operator--(int);
 
     Node *get_node() { return node_; }
-    bool operator==(const Iterator &other) const {
+    bool operator==(const ListIterator &other) const {
       return node_ == other.node_;
     }
-    bool operator!=(const Iterator &other) const {
+    bool operator!=(const ListIterator &other) const {
       return node_ != other.node_;
     }
 
@@ -40,19 +41,19 @@ class list {
     Node *node_ = nullptr;
   };
 
-  class const_Iterator : public Iterator {
+  class ListConstIterator : public ListIterator {
    public:
-    const_Iterator(){};
-    const_Iterator(const Iterator &node_) : Iterator(node_){};
-    T &operator*() const { return Iterator::operator*(); };
+    ListConstIterator(){};
+    ListConstIterator(const ListIterator &node_) : ListIterator(node_){};
+    T &operator*() const { return ListIterator::operator*(); };
   };
 
  public:
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
-  using iterator = Iterator;
-  using const_iterator = const_Iterator;
+  using iterator = ListIterator;
+  using const_iterator = ListConstIterator;
   using size_type = std::size_t;
 
  private:
@@ -82,7 +83,7 @@ class list {
 
   bool empty() const { return !size_; }
   size_type size() const { return size_; }
-  size_type max_size() const { return std::numeric_limits<size_type>::max(); }
+  size_type max_size() const { return std::numeric_limits<size_type>::max() / sizeof(Node) / 2; }
 
   void clear();
   iterator insert(iterator pos, const_reference value);
@@ -92,13 +93,13 @@ class list {
   void pop_back();
   void push_front(const_reference value);
   void pop_front();
-  void sort();
 
   void swap(list &other);
   void merge(list &other);
   void splice(const_iterator pos, list &other);
   void reverse();
   void unique();
+  void sort();
 
   template <typename... Args>
   void emplace_front(Args &&...args);
