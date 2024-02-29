@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Feb 27 04:37:18 2024
+# Make data base, printed on Thu Feb 29 20:19:25 2024
 
 # Variables
 
@@ -51,7 +51,7 @@ VSCODE_CODE_CACHE_PATH = /home/dannamer/.config/Code/CachedData/903b1e9d8990623e
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.R74TJ2
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.WJPQJ2
 # default
 .LOADED := 
 # default
@@ -87,13 +87,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 35061
+VSCODE_PID = 4899
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/1778,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/1778
+SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/1756,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/1756
 # automatic
 *F = $(notdir $*)
 # environment
@@ -135,7 +135,7 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 77b8f6320f184229bf2dbc1517b057fe
+INVOCATION_ID = 1320d33e1fe542cd96d645cec0f92be7
 # environment
 USERNAME = dannamer
 # environment
@@ -161,7 +161,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1797
+SYSTEMD_EXEC_PID = 1782
 # environment
 DISPLAY = :0
 # environment
@@ -171,9 +171,9 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1576
+MANAGERPID = 1552
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 35061
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4899
 # environment
 _ = /usr/share/code/code
 # environment
@@ -181,7 +181,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # makefile (from 'Makefile', line 2)
 CFLAGS = -std=c++17 -Wall -Werror -Wextra -Ilib/stack/ -Ilib/queue/ -Ilib/ContainerBase/
 # environment
-JOURNAL_STREAM = 8:30293
+JOURNAL_STREAM = 8:34150
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -219,10 +219,10 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 66311, inode 7477527): 32 files, no impossibilities.
+# . (device 66311, inode 7477527): 23 files, no impossibilities.
 # tests (device 66311, inode 7477665): 7 files, no impossibilities.
 
-# 39 files, no impossibilities in 2 directories.
+# 30 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -278,6 +278,7 @@ push:
 	$(eval MSG := $(shell bash -c 'read -p "Enter commit message: " msg; echo $$msg'))
 	git add .
 	git commit -m "$(MSG)"
+ 
 	git push
 
 # Not a target:
@@ -286,7 +287,6 @@ OBJ/testVector.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 OBJ/main.o: tests/main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
@@ -377,12 +377,12 @@ OBJ/testList.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 54 / storage = 601 B / avg = 11 B
-# current buf: size = 8162 B / used = 601 B / count = 54 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 46 / storage = 451 B / avg = 9 B
+# current buf: size = 8162 B / used = 451 B / count = 46 / avg = 9 B
 
-# strcache performance: lookups = 76 / hit rate = 28%
+# strcache performance: lookups = 67 / hit rate = 31%
 # hash-table stats:
-# Load=54/8192=1%, Rehash=0, Collisions=0/76=0%
-# Finished Make data base on Tue Feb 27 04:37:18 2024
+# Load=46/8192=1%, Rehash=0, Collisions=0/67=0%
+# Finished Make data base on Thu Feb 29 20:19:25 2024
 
  

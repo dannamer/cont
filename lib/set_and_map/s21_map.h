@@ -62,7 +62,7 @@ class map : public BinaryTree<std::pair<Key, T>> {
     }
     return it;
   }
-  void erase(iterator pos) { this->root = this->deleteNode(this->root, std::make_pair(pos->first, pos->second)); }
+  
   bool contains(const Key &key) {
     return search(key) != this->end() ? true : false;
   }

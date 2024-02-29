@@ -163,7 +163,7 @@ bool BinaryTree<Key>::contains(const Key& key) {
 }
 template <class Key>
 void BinaryTree<Key>::erase(iterator pos) {
-  deleteNode(root, *pos);
+  root = deleteNode(root, *pos);
 }
 
 template <class Key>
