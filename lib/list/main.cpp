@@ -5,9 +5,11 @@
 // #include "s21_list.h"
 int main() {
   s21::list<int> a;
-  s21::list<int> b {23, 8, 123123, 2, 3};
-  b.sort();
-  
+  s21::list<int> b;
+  b.push_front(2);
+  b.push_front(1);
+
+b.reverse();  
 
 
   return 0;
