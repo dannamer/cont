@@ -4,7 +4,7 @@ namespace s21 {
 // ITERATOR
 template <typename T>
 typename list<T>::ListIterator& list<T>::ListIterator::operator++() {
-  node_ = node_->next;
+  if (node_ != nullptr) node_ = node_->next;
   return *this;
 }
 
@@ -180,9 +180,13 @@ void list<value_type>::swap(list& other) {
 
 template <typename value_type>
 void list<value_type>::merge(list<value_type>& other) {
-  while (!other.empty()) {
-    this->push_back(other.front());
-    other.pop_front();
+  if (!this->empty() && !other.empty()) {
+    this->size_ += other.size_;
+    this->tail_->next = other.head_;
+    other.head_->prev = this->tail_;
+    this->tail_ = other.tail_;
+    other.tail_ = other.head_ = nullptr;
+    other.size_ = 0;
   }
   this->sort();
 }

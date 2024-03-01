@@ -9,7 +9,6 @@ namespace s21 {
 template <typename T>
 class list {
  private:
-
   struct Node {
     T value;
     Node *prev;
@@ -40,7 +39,7 @@ class list {
    private:
     Node *node_ = nullptr;
   };
-
+  
   class ListConstIterator : public ListIterator {
    public:
     ListConstIterator(){};

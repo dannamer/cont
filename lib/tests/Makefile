@@ -14,15 +14,11 @@ SOURCE = *.cpp
 # SOURCE = $(DIR_MAP)*.cpp $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp $(DIR_VECTOR)*.cpp $(DIR_SET)*.cpp *.cpp
 OBJ-FILE = *.o
 
-<<<<<<< HEAD
-test: SOURCE += $(DIR_MAP)*.cpp 
-=======
 OPEN_CMD = xdg-open
 GCOVR = ~/.local/bin/gcovr
 
 # you need to specify the source files
 test: SOURCE += $(DIR_LIST)*.cpp 
->>>>>>> refs/remotes/origin/dannamer
 test: obj-file
 	$(CC) $(OBJ-FILE) $(CFLAG) $(TESTFLAG) -o test_exe
 
@@ -41,8 +37,6 @@ grp:
 obj-file: $(SOURCE)
 	$(CC) -c $(SOURCE) $(CFLAG) $(TESTFLAG) 
 	
-
-
 clean_gcov:
 	rm -rf *.gcno *.gcda *.gcov coverage_report.html *.html *.css OBJ_gcov
 
