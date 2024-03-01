@@ -4,9 +4,9 @@
 
 // #include "s21_list.h"
 int main() {
-  std::list<int> a {10,1,2,2,4,5};
-  std::list<int> b {23, 8, 123123};
-  a.merge(b);
+  s21::list<int> a;
+  s21::list<int> b {23, 8, 123123, 2, 3};
+  b.sort();
   
 
 
