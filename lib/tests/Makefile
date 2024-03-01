@@ -10,6 +10,8 @@ DIR_STACK = $(SRC)test_stack/
 DIR_VECTOR = $(SRC)test_vector/
 DIR_SET = $(SRC)test_set/
 DIR_MAP = $(SRC)test_map/
+DIR_ARRAY = $(SRC)test_array/
+DIR_MULTIMAP = $(SRC)test_multiset/
 SOURCE = *.cpp
 # SOURCE = $(DIR_MAP)*.cpp $(DIR_LIST)*.cpp $(DIR_QUEUE)*.cpp $(DIR_STACK)*.cpp $(DIR_VECTOR)*.cpp $(DIR_SET)*.cpp *.cpp
 OBJ-FILE = *.o
@@ -18,7 +20,7 @@ OPEN_CMD = xdg-open
 GCOVR = ~/.local/bin/gcovr
 
 # you need to specify the source files
-test: SOURCE += $(DIR_LIST)*.cpp 
+test: SOURCE += $(DIR_MULTIMAP)*.cpp 
 test: obj-file
 	$(CC) $(OBJ-FILE) $(CFLAG) $(TESTFLAG) -o test_exe
 

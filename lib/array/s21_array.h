@@ -1,5 +1,6 @@
 #ifndef ARRAY_H
 #define ARRAY_H
+#include <iostream>
 namespace s21 {
 template <class T, std::size_t N>
 class array {
@@ -39,11 +40,11 @@ class array {
       ++(*this);
       return tmp;
     }
-    iterator &operator++() {
+    iterator &operator--() {
       --ptr;
       return *this;
     }
-    iterator operator++(int) {
+    iterator operator--(int) {
       iterator tmp = *this;
       --(*this);
       return tmp;
@@ -60,10 +61,10 @@ class array {
   void swap(array &other);
   void fill(const_reference value);
   iterator begin() { return iterator(data); }
-  iterator end() { return iterator(data + N); }
+  iterator end() { return nullptr; }
 
  private:
-  T data[N];
+  T data[N]{};
 };
 #include "s21_array.tpp"
 }  // namespace s21

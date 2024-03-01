@@ -2,30 +2,6 @@
 #define MULTISET_
 #include <vector>
 namespace s21 {
-// template <typename T>
-// struct Node {
-//   T value;
-//   unsigned int count;
-//   Node* left;
-//   Node* right;
-//   Node* parent;
-//   Node(const T& val, Node* par = nullptr)
-//       : value(val), count(1), left(nullptr), right(nullptr), parent(par) {}
-// };
-
-// template <class Key>
-// class iterator {
-//  public:
-//   using value_type = Key;
-//   using reference = value_type&;
-//   using pointer = value_type*;
-//   iterator(Node<Key>* node_) : node(node_);
-//   reference operator*() const;
-
-//  private:
-//   Node<Key>* node;
-// };
-// s21::multiset<int>::iterator
 template <class Key>
 class multiset {
  public:
@@ -43,8 +19,6 @@ class multiset {
   };
 
  public:
-  // using iterator = iterator<Key>;
-  // using const_iterator = const_iterator<Key>;
   using size_type = std::size_t;
   class iterator {
    public:
@@ -54,6 +28,10 @@ class multiset {
     Node* operator&() { return node; }
     iterator operator++();
     iterator operator++(int);
+    bool operator==(const iterator& other) const {
+      return *itNode == other.itNode;
+    }
+    bool operator!=(const iterator& other) const { return !(*this == other); }
 
    private:
     Node* node;
