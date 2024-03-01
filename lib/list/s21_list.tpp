@@ -6,6 +6,9 @@ template <typename T>
 typename list<T>::ListIterator& list<T>::ListIterator::operator++() {
   if (node_ != nullptr) node_ = node_->next;
   return *this;
+
+
+  
 }
 
 template <typename T>
