@@ -6,9 +6,6 @@ template <typename T>
 typename list<T>::ListIterator& list<T>::ListIterator::operator++() {
   if (node_ != nullptr) node_ = node_->next;
   return *this;
-
-
-  
 }
 
 template <typename T>
@@ -190,8 +187,10 @@ void list<value_type>::merge(list<value_type>& other) {
     this->tail_ = other.tail_;
     other.tail_ = other.head_ = nullptr;
     other.size_ = 0;
+    this->sort();
+  } else if (this->empty()) {
+    *this = std::move(other);
   }
-  this->sort();
 }
 
 template <typename value_type>
@@ -217,13 +216,15 @@ void list<value_type>::splice(const_iterator pos, list& other) {
 template <typename value_type>
 void list<value_type>::reverse() {
   if (!empty()) {
-    list<value_type> new_list;
-    while (!empty()) {
-      new_list.push_front(this->front());
-      this->pop_front();
+    Node* tmpChange = this->head_;
+
+    while (tmpChange->next) {
+      Node* tmpNext = tmpChange->next;
+      std::swap(tmpChange->prev, tmpChange->next);
+      tmpChange = tmpNext;
     }
-    clear();
-    *this = std::move(new_list);
+    std::swap(tmpChange->prev, tmpChange->next);
+    std::swap(head_, tail_);
   }
 }
 
